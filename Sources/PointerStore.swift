@@ -7,9 +7,13 @@ final class PointerStore: ObservableObject {
     @Published private(set) var fill: RGBA
     @Published private(set) var outline: RGBA
     @Published private(set) var customPresets: [Preset] = []
+    #if !APP_STORE // the App Store build draws its own pointer: no permission, no system setting
     @Published private(set) var hasFullDiskAccess = CursorController.hasFullDiskAccess
+    #endif
     @Published private(set) var launchAtLogin = LaunchAtLogin.isEnabled
+    #if !APP_STORE
     @Published private(set) var shakeToLocate = CursorController.shakeToLocate
+    #endif
     /// Pointer colors need macOS 12 or later; size works everywhere.
     let colorsSupported = CursorController.colorsSupported
     /// Our own shake-to-find: briefly grows the pointer at any size.
@@ -45,6 +49,9 @@ final class PointerStore: ObservableObject {
     private var isApplyingPreset = false
 
     init() {
+        #if APP_STORE
+        size = CursorController.size
+        #else
         // The system only keeps up to 4×, so restore a larger size ourselves.
         let systemSize = CursorController.size
         let savedSize = UserDefaults.standard.double(forKey: Self.sizeKey)
@@ -55,6 +62,7 @@ final class PointerStore: ObservableObject {
         } else {
             size = systemSize
         }
+        #endif
         fill = CursorController.fill ?? .black
         outline = CursorController.outline ?? .white
         loadPresets()
@@ -75,7 +83,9 @@ final class PointerStore: ObservableObject {
         customPresets = presets
         appRules = rules
         selectedPresetID = preset.id
+        #if !APP_STORE
         hasFullDiskAccess = true
+        #endif
         isSnapshot = true
     }
 
@@ -93,9 +103,13 @@ final class PointerStore: ObservableObject {
         size = CursorController.size
         fill = CursorController.fill ?? fill
         outline = CursorController.outline ?? outline
+        #if !APP_STORE
         hasFullDiskAccess = CursorController.hasFullDiskAccess
+        #endif
         launchAtLogin = LaunchAtLogin.isEnabled
+        #if !APP_STORE
         shakeToLocate = CursorController.shakeToLocate
+        #endif
     }
 
     // MARK: Live adjustments
@@ -128,6 +142,9 @@ final class PointerStore: ObservableObject {
 
     /// Coalesces rapid color changes (e.g. dragging in the color panel).
     private func scheduleColorApply() {
+        #if APP_STORE
+        revealIfOff()
+        #endif
         applyColorsWork?.cancel()
         let work = DispatchWorkItem { [fill, outline] in CursorController.setColors(fill: fill, outline: outline) }
         applyColorsWork = work
@@ -139,14 +156,19 @@ final class PointerStore: ObservableObject {
         isApplyingPreset = true
         defer { isApplyingPreset = false }
         setSize(preset.size)
+        #if !APP_STORE
         let colorsChange = !preset.fill.isClose(to: fill) || !preset.outline.isClose(to: outline)
+        #endif
         fill = preset.fill
         outline = preset.outline
         applyColorsWork?.cancel()
         CursorController.setColors(fill: fill, outline: outline)
+        #if !APP_STORE
         if colorsChange { checkColorsAllowed(for: preset) }
+        #endif
     }
 
+    #if !APP_STORE
     /// Called once per launch when a preset's colors couldn't be applied, so the
     /// missing permission doesn't fail silently (e.g. an app rule switching in the background).
     var onColorsBlocked: ((Preset) -> Void)?
@@ -159,6 +181,7 @@ final class PointerStore: ObservableObject {
         warnedColorsBlocked = true
         onColorsBlocked?(preset)
     }
+    #endif
 
     /// While a preset is being edited, every change to the pointer saves into it live.
     private func syncEditingPreset() {
@@ -449,10 +472,12 @@ final class PointerStore: ObservableObject {
         superShake?.setEnabled(on)
     }
 
+    #if !APP_STORE
     func setShakeToLocate(_ on: Bool) {
         CursorController.setShakeToLocate(on)
         shakeToLocate = CursorController.shakeToLocate
     }
+    #endif
 
     // MARK: Launch at login
 

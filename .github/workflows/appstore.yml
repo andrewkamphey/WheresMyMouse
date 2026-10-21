@@ -1,0 +1,52 @@
+name: App Store build
+
+# Checks the Mac App Store version: builds it with the Command Line Tools script and with
+# Xcode (from AppStore/project.yml), then fails if either build uses a private API or isn't
+# sandboxed. Builds are signed ad-hoc; nothing is uploaded to Apple.
+on:
+  pull_request:
+    paths: ['AppStore/**', 'Sources/**', 'Resources/**', '.github/workflows/appstore.yml']
+  push:
+    branches: [main]
+    paths: ['AppStore/**', 'Sources/**', 'Resources/**', '.github/workflows/appstore.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Use the newest release Xcode on the runner
+        run: |
+          XCODE="$(ls -d /Applications/Xcode_*.app | grep -v -i -E 'beta|_rc|release_candidate' | sort -V | tail -1)"
+          sudo xcode-select -s "$XCODE"
+          xcodebuild -version
+
+      - name: Command Line Tools build (AppStore/build.sh)
+        env:
+          ARCH: universal
+        run: AppStore/build.sh
+
+      - name: Xcode build (AppStore/project.yml)
+        run: |
+          brew install xcodegen
+          xcodegen generate --spec AppStore/project.yml
+          xcodebuild -project AppStore/WheresMyMouse.xcodeproj -scheme WheresMyMouse -configuration Release \
+            -derivedDataPath build/xcode -destination 'generic/platform=macOS' \
+            CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY=- DEVELOPMENT_TEAM= build
+          AppStore/check-public-api.sh "build/xcode/Build/Products/Release/Where's My Mouse.app"
+          plutil -p "build/xcode/Build/Products/Release/Where's My Mouse.app/Contents/Info.plist"
+
+      - name: Upload the generated Xcode project and app
+        uses: actions/upload-artifact@v7
+        with:
+          name: WheresMyMouse-AppStore
+          path: |
+            AppStore/WheresMyMouse.xcodeproj
+            build/xcode/Build/Products/Release/Where's My Mouse.app

@@ -5,3 +5,4 @@ spike/*
 .DS_Store
 .claude/
 .wrangler/
+AppStore/*.xcodeproj/
