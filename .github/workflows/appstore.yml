@@ -1,8 +1,8 @@
 name: App Store build
 
 # Checks the Mac App Store version: builds it with the Command Line Tools script and with
-# Xcode (from AppStore/project.yml), then fails if either build uses a private API or isn't
-# sandboxed. Builds are signed ad-hoc; nothing is uploaded to Apple.
+# Xcode (from AppStore/project.yml), fails if either build uses a private API or isn't
+# sandboxed, and runs AppStore/test.sh. Builds are signed ad-hoc; nothing goes to Apple.
 on:
   pull_request:
     paths: ['AppStore/**', 'Sources/**', 'Resources/**', '.github/workflows/appstore.yml']
@@ -32,6 +32,9 @@ jobs:
         env:
           ARCH: universal
         run: AppStore/build.sh
+
+      - name: Quick toggle checks (AppStore/test.sh)
+        run: AppStore/test.sh
 
       - name: Xcode build (AppStore/project.yml)
         run: |
