@@ -6,7 +6,9 @@ The pages in `site/guides/` show a dashed box for each screenshot until its file
 - Light or dark mode, but use the same for every shot.
 - Use `Shift-Command-4`, then `Space`, then click the window: a whole-window shot with its shadow. For close-ups, drag a box instead.
 - Keep each file under about 1,600 px wide. Retina is fine.
-- **The "after" shots need a screen recording, not a screenshot.** macOS draws the pointer at normal size, or leaves it out, in still screenshots. Record a few seconds with `Shift-Command-5` → Record, open the video in QuickTime, pause on a good frame, and press `Command-C`. Then in Preview choose File → New from Clipboard and save it as a PNG.
+- **The "after" shots need the pointer in the picture.** In the `Shift-Command-5` toolbar, open **Options** and tick **Show Mouse Pointer**. Without it, the pointer is left out of screenshots and recordings.
+- **Big pointer (`size-after.png`): record with OBS.** OBS is the setup the site says was tested. macOS draws the pointer at normal size in still screenshots, and it isn't confirmed that the built-in recorder keeps the enlarged size. Try a `Shift-Command-5` recording too: if the pointer comes out big, that also settles Q1 in `research/seo/QUESTIONS.md`. To grab a frame: open the video in QuickTime, pause on a good frame, press `Command-C`, then in Preview choose File → New from Clipboard and save as PNG.
+- **Colored pointer (`fill-after`, `both-after`):** a still screenshot with Show Mouse Pointer ticked should show the colors at normal size. Check the first one; if the colors don't show, use a recording frame instead.
 
 | # | File | Used on | What to capture |
 |---|---|---|---|
@@ -14,7 +16,7 @@ The pages in `site/guides/` show a dashed box for each screenshot until its file
 | 2 | `accessibility-display.png` | all four | System Settings with **Accessibility** selected in the sidebar and the **Display** row visible |
 | 3 | `pointer-section.png` | all four | Display scrolled to **Pointer**, with all five controls showing (shake, size, outline, fill, Reset Colors) |
 | 4 | `size-slider.png` | size | Close-up of **Pointer size** dragged about halfway |
-| 5 | `size-after.png` | size | **Recording frame:** the big pointer over a busy window |
+| 5 | `size-after.png` | size | **OBS recording frame:** the big pointer over a busy window |
 | 6 | `fill-well.png` | color | The **Pointer fill color** well clicked, with the color choices open |
 | 7 | `fill-after.png` | color | **Recording frame:** the pointer with a bright fill (for example yellow) |
 | 8 | `outline-well.png` | color | The **Pointer outline color** well clicked, with the color choices open |
