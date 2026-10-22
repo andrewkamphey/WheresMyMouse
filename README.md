@@ -79,7 +79,7 @@ cd WheresMyMouse
 
 ## Website
 
-`site/` is the promo page at [wheresmymouse.com](https://wheresmymouse.com), served by Cloudflare Workers static assets (`wrangler.jsonc`). Deploy with `npx wrangler deploy`. `site-redirect/` is a tiny Worker that 301-redirects whereismymouse.com to it (`cd site-redirect && npx wrangler deploy`).
+`site/` is the promo page at [wheresmymouse.com](https://wheresmymouse.com), served by Cloudflare Workers static assets (`wrangler.jsonc`). Deploy with `npx wrangler deploy`. `worker/index.js` counts page views and downloads in a D1 database (`wheresmymouse-stats`, schema in `worker/schema.sql`) and serves them at [wheresmymouse.com/stats](https://wheresmymouse.com/stats). `site-redirect/` is a tiny Worker that 301-redirects whereismymouse.com to it (`cd site-redirect && npx wrangler deploy`).
 
 ## How it works
 

@@ -15,7 +15,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Where's My Mouse? — Make your Mac's pointer impossible to miss</title>
 <meta name="description" content="A free, open-source macOS menu bar app that makes your mouse pointer up to 30× bigger, in any color, with one-click presets and per-app rules. For screen recordings, demos and video calls.">
-<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
 <link rel="apple-touch-icon" href="assets/icon.png">
 <meta property="og:title" content="Where's My Mouse?">
 <meta property="og:description" content="Make your Mac's pointer impossible to miss. Up to 30×, any color, presets per app. Free & open source.">
@@ -751,5 +752,6 @@
 </script>
 <script src="assets/recipes.js"></script>
 <script src="assets/get-app.js"></script>
+<script>navigator.sendBeacon && navigator.sendBeacon('/api/hit');</script>
 </body>
 </html>

@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Stats — Where's My Mouse?</title>
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<style>
+  :root {
+    --bg: #0d0e16;
+    --panel: #171a2a;
+    --line: rgba(255, 255, 255, 0.08);
+    --grid: rgba(255, 255, 255, 0.06);
+    --text: #f3f4fa;
+    --muted: #a7abc2;
+    --faint: #6f7390;
+    --link: #6aa6ff;
+    --visitors: #4a8dff;
+    --downloads: #2fae4f;
+    --up: #5fd17f;
+    --down: #ff7a70;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.5 system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: var(--link); text-decoration: none; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px 64px; }
+  header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 24px 0 8px; }
+  h1 { font-size: 28px; margin: 0; letter-spacing: -0.02em; }
+  h1 a { color: var(--text); }
+  .sub { color: var(--muted); font-size: 14px; margin: 0 0 20px; }
+  .seg { display: inline-flex; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 3px; }
+  .seg button { font: inherit; font-size: 14px; color: var(--muted); background: none; border: 0; padding: 6px 12px; border-radius: 7px; cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: #2a2f4a; color: var(--text); }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 16px; }
+  .tile { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+  .tile .k { color: var(--muted); font-size: 13px; display: flex; align-items: center; gap: 8px; }
+  .tile .k i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+  .tile .v { font-size: 34px; font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; margin: 2px 0; }
+  .tile .d { font-size: 13px; color: var(--faint); }
+  .tile .d b { font-weight: 600; }
+  .up { color: var(--up); } .down { color: var(--down); }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px 16px 8px; margin-bottom: 16px; position: relative; }
+  .card h2 { font-size: 15px; margin: 0 0 8px; font-weight: 600; }
+  .card h2 span { color: var(--faint); font-weight: 400; }
+  svg { display: block; width: 100%; height: auto; overflow: visible; }
+  svg text { fill: var(--faint); font-size: 11px; font-variant-numeric: tabular-nums; }
+  .hit { fill: transparent; }
+  .bar.dim { opacity: 0.45; }
+  .tip { position: absolute; pointer-events: none; background: #0d0e16; border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; font-size: 13px; white-space: nowrap; opacity: 0; transform: translate(-50%, -110%); transition: opacity .1s; }
+  .tip b { font-variant-numeric: tabular-nums; }
+  .tip .t { color: var(--muted); font-size: 12px; }
+  details { margin-top: 8px; }
+  summary { cursor: pointer; color: var(--muted); font-size: 14px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; margin-top: 8px; }
+  th, td { text-align: right; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+  th:first-child, td:first-child { text-align: left; }
+  th { color: var(--muted); font-weight: 500; }
+  .note { color: var(--faint); font-size: 13px; }
+  .empty { color: var(--muted); padding: 40px 0; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1><a href="/">Where's My Mouse?</a> stats</h1>
+    <div class="seg" role="group" aria-label="Range">
+      <button type="button" data-range="30">30 days</button>
+      <button type="button" data-range="90">90 days</button>
+      <button type="button" data-range="m">By month</button>
+    </div>
+  </header>
+  <p class="sub" id="sub">Loading…</p>
+
+  <div class="tiles" id="tiles"></div>
+
+  <div class="card"><h2 id="h-vis">Visitors</h2><div id="c-vis"></div><div class="tip"></div></div>
+  <div class="card"><h2 id="h-dl">Downloads</h2><div id="c-dl"></div><div class="tip"></div></div>
+
+  <details>
+    <summary>Show as a table</summary>
+    <table id="table"></table>
+  </details>
+  <p class="note">Visitors are counted once per day without cookies; bots are filtered by user agent. Downloads are clicks through wheresmymouse.com/download. Times are UTC.</p>
+</div>
+
+<script>
+(function () {
+  var data = {}, gh = null;
+  var range = localGet('wmm-stats-range') || '30';
+  var fmt = new Intl.NumberFormat('en-US');
+  var MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+  function localGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function localSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function iso(d) { return d.toISOString().slice(0, 10); }
+  function addDays(d, n) { var x = new Date(d); x.setUTCDate(x.getUTCDate() + n); return x; }
+  function todayUTC() { return new Date(iso(new Date()) + 'T00:00:00Z'); }
+  function get(day, m) { return (data[day] && data[day][m]) || 0; }
+  function label(key) {
+    if (key.length === 7) return MON[+key.slice(5) - 1] + ' ' + key.slice(0, 4);
+    return MON[+key.slice(5, 7) - 1] + ' ' + +key.slice(8);
+  }
+
+  // Buckets for the chosen range: [{key, view, visitor, download}], oldest first.
+  function buckets(r) {
+    var out = [], t = todayUTC();
+    if (r === 'm') {
+      var start = new Date(Date.UTC(t.getUTCFullYear(), t.getUTCMonth() - 11, 1));
+      for (var i = 0; i < 12; i++) {
+        var m = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth() + i, 1));
+        out.push({ key: iso(m).slice(0, 7), view: 0, visitor: 0, download: 0 });
+      }
+      Object.keys(data).forEach(function (day) {
+        var b = out.find(function (o) { return o.key === day.slice(0, 7); });
+        if (b) ['view', 'visitor', 'download'].forEach(function (m) { b[m] += get(day, m); });
+      });
+    } else {
+      for (var n = +r - 1; n >= 0; n--) {
+        var d = iso(addDays(t, -n));
+        out.push({ key: d, view: get(d, 'view'), visitor: get(d, 'visitor'), download: get(d, 'download') });
+      }
+    }
+    return out;
+  }
+
+  function sumRange(from, to, m) { // inclusive ISO days
+    var s = 0; Object.keys(data).forEach(function (d) { if (d >= from && d <= to) s += get(d, m); }); return s;
+  }
+  function delta(cur, prev, what) {
+    if (!prev) return cur ? '<span class="up">new</span> vs ' + what : 'no change vs ' + what;
+    var p = Math.round((cur - prev) / prev * 100);
+    var cls = p > 0 ? 'up' : p < 0 ? 'down' : '';
+    return '<b class="' + cls + '">' + (p > 0 ? '+' : p < 0 ? '−' : '±') + Math.abs(p) + '%</b> vs ' + what + ' (' + fmt.format(prev) + ')';
+  }
+
+  function tiles() {
+    var t = todayUTC(), td = iso(t), yd = iso(addDays(t, -1));
+    var ms = td.slice(0, 8) + '01';
+    var pm = new Date(Date.UTC(t.getUTCFullYear(), t.getUTCMonth() - 1, 1));
+    var pms = iso(pm), pme = iso(new Date(Date.UTC(t.getUTCFullYear(), t.getUTCMonth() - 1, t.getUTCDate())));
+    var all = function (m) { return sumRange('0000', '9999', m); };
+    var monthVis = sumRange(ms, td, 'visitor'), monthDl = sumRange(ms, td, 'download');
+    var rate = monthVis ? (monthDl / monthVis * 100).toFixed(1) + '%' : '—';
+    var prevVis = sumRange(pms, pme, 'visitor'), prevDl = sumRange(pms, pme, 'download');
+    var prevRate = prevVis ? (prevDl / prevVis * 100).toFixed(1) + '%' : '—';
+    var html = [
+      tile('Visitors today', get(td, 'visitor'), delta(get(td, 'visitor'), get(yd, 'visitor'), 'yesterday'), 'var(--visitors)'),
+      tile('Downloads today', get(td, 'download'), delta(get(td, 'download'), get(yd, 'download'), 'yesterday'), 'var(--downloads)'),
+      tile('Visitors this month', monthVis, delta(monthVis, prevVis, 'same point last month'), 'var(--visitors)'),
+      tile('Downloads this month', monthDl, delta(monthDl, prevDl, 'same point last month'), 'var(--downloads)'),
+      tile('Download rate this month', rate, 'downloads ÷ visitors · last month ' + prevRate),
+      tile('All-time downloads', gh !== null ? gh : all('download'),
+        gh !== null ? fmt.format(all('download')) + ' via the site since tracking began · total from GitHub Releases'
+                    : 'via the site since tracking began'),
+      tile('All-time page views', all('view'), fmt.format(all('visitor')) + ' visitor-days')
+    ];
+    document.getElementById('tiles').innerHTML = html.join('');
+  }
+  function tile(k, v, d, color) {
+    return '<div class="tile"><div class="k">' + (color ? '<i style="background:' + color + '"></i>' : '') + k + '</div>' +
+      '<div class="v">' + (typeof v === 'number' ? fmt.format(v) : v) + '</div><div class="d">' + d + '</div></div>';
+  }
+
+  function niceMax(v) {
+    if (v <= 4) return 4;
+    var p = Math.pow(10, Math.floor(Math.log10(v))), f = v / p;
+    return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * p;
+  }
+
+  function bars(el, rows, metric, color, extra) {
+    var W = 1000, H = 220, L = 40, B = 24, T = 8;
+    var n = rows.length, max = niceMax(Math.max.apply(null, rows.map(function (r) { return r[metric]; })));
+    var step = (W - L) / n, bw = Math.max(2, step - 2);
+    var y = function (v) { return T + (H - T - B) * (1 - v / max); };
+    var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + metric + ' per ' + (range === 'm' ? 'month' : 'day') + '">';
+    for (var g = 0; g <= 4; g++) {
+      var gv = max / 4 * g, gy = y(gv);
+      s += '<line x1="' + L + '" x2="' + W + '" y1="' + gy + '" y2="' + gy + '" stroke="var(--grid)"/>';
+      s += '<text x="' + (L - 8) + '" y="' + (gy + 4) + '" text-anchor="end">' + fmt.format(Math.round(gv * 10) / 10) + '</text>';
+    }
+    var every = Math.ceil(n / 8);
+    rows.forEach(function (r, i) {
+      var x = L + i * step + 1, v = r[metric], top = y(v), h = H - B - top;
+      if (v > 0) {
+        var rr = Math.min(4, bw / 2, h);
+        s += '<path class="bar" data-i="' + i + '" fill="' + color + '" d="M' + x + ',' + (H - B) + 'V' + (top + rr) +
+          'q0,-' + rr + ' ' + rr + ',-' + rr + 'H' + (x + bw - rr) + 'q' + rr + ',0 ' + rr + ',' + rr + 'V' + (H - B) + 'Z"/>';
+      }
+      if ((n - 1 - i) % every === 0) s += '<text x="' + (x + bw / 2) + '" y="' + (H - 6) + '" text-anchor="middle">' + label(r.key) + '</text>';
+      s += '<rect class="hit" data-i="' + i + '" x="' + (L + i * step) + '" y="0" width="' + step + '" height="' + (H - B) + '"/>';
+    });
+    s += '<line x1="' + L + '" x2="' + W + '" y1="' + (H - B) + '" y2="' + (H - B) + '" stroke="var(--faint)"/></svg>';
+    el.innerHTML = s;
+
+    var tip = el.parentNode.querySelector('.tip'), svg = el.firstChild;
+    svg.addEventListener('mousemove', function (e) {
+      var i = e.target.getAttribute && e.target.getAttribute('data-i');
+      if (i === null) return hide();
+      var r = rows[i];
+      svg.querySelectorAll('.bar').forEach(function (b) { b.classList.toggle('dim', b.getAttribute('data-i') !== i); });
+      tip.innerHTML = '<div class="t">' + label(r.key) + '</div><b>' + fmt.format(r[metric]) + '</b> ' + extra(r);
+      var box = el.parentNode.getBoundingClientRect(), sb = svg.getBoundingClientRect();
+      var cx = sb.left - box.left + (L + (+i + 0.5) * step) / W * sb.width;
+      tip.style.left = Math.min(Math.max(cx, 70), box.width - 70) + 'px';
+      tip.style.top = (sb.top - box.top + y(r[metric]) / H * sb.height) + 'px';
+      tip.style.opacity = 1;
+    });
+    svg.addEventListener('mouseleave', hide);
+    function hide() { tip.style.opacity = 0; svg.querySelectorAll('.bar').forEach(function (b) { b.classList.remove('dim'); }); }
+  }
+
+  function render() {
+    document.querySelectorAll('.seg button').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.range === range); });
+    var rows = buckets(range), per = range === 'm' ? 'per month' : 'per day';
+    var tv = rows.reduce(function (s, r) { return s + r.visitor; }, 0), tdl = rows.reduce(function (s, r) { return s + r.download; }, 0);
+    document.getElementById('h-vis').innerHTML = 'Visitors <span>' + per + ' · ' + fmt.format(tv) + ' total</span>';
+    document.getElementById('h-dl').innerHTML = 'Downloads <span>' + per + ' · ' + fmt.format(tdl) + ' total' +
+      (tv ? ' · ' + (tdl / tv * 100).toFixed(1) + '% of visitors' : '') + '</span>';
+    bars(document.getElementById('c-vis'), rows, 'visitor', 'var(--visitors)', function (r) { return 'visitors · ' + fmt.format(r.view) + ' page views'; });
+    bars(document.getElementById('c-dl'), rows, 'download', 'var(--downloads)', function (r) {
+      return 'downloads' + (r.visitor ? ' · ' + (r.download / r.visitor * 100).toFixed(1) + '% of visitors' : '');
+    });
+    var t = '<tr><th>' + (range === 'm' ? 'Month' : 'Day') + '</th><th>Page views</th><th>Visitors</th><th>Downloads</th></tr>';
+    rows.slice().reverse().forEach(function (r) {
+      t += '<tr><td>' + label(r.key) + '</td><td>' + fmt.format(r.view) + '</td><td>' + fmt.format(r.visitor) + '</td><td>' + fmt.format(r.download) + '</td></tr>';
+    });
+    document.getElementById('table').innerHTML = t;
+    tiles();
+  }
+
+  document.querySelectorAll('.seg button').forEach(function (b) {
+    b.addEventListener('click', function () { range = b.dataset.range; localSet('wmm-stats-range', range); render(); });
+  });
+
+  fetch('/api/stats').then(function (r) { if (!r.ok) throw r.status; return r.json(); }).then(function (rows) {
+    rows.forEach(function (r) { (data[r.day] = data[r.day] || {})[r.metric] = r.n; });
+    var days = Object.keys(data).sort();
+    document.getElementById('sub').textContent = days.length
+      ? 'Tracking since ' + label(days[0]) + ', ' + days[0].slice(0, 4) + '. Updated ' + new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) + '.'
+      : 'Tracking just started — numbers appear as people visit.';
+    render();
+  }).catch(function () {
+    document.getElementById('sub').textContent = 'Couldn’t load stats right now.';
+    render();
+  });
+
+  // All-time total from GitHub Releases, which includes downloads from before site tracking began.
+  fetch('https://api.github.com/repos/andrewkamphey/WheresMyMouse/releases?per_page=100').then(function (r) { return r.json(); }).then(function (rel) {
+    gh = rel.reduce(function (s, r) { return s + r.assets.reduce(function (a, x) { return a + x.download_count; }, 0); }, 0);
+    tiles();
+  }).catch(function () {});
+})();
+</script>
+</body>
+</html>

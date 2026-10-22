@@ -1,8 +1,17 @@
-// wheresmymouse.com: the promo page in site/, served as static assets.
+// wheresmymouse.com: the promo page in site/, served as static assets. worker/index.js counts
+// page views and downloads in D1 (shown at /stats); it only runs first for the paths below.
 {
   "name": "wheresmymouse",
   "compatibility_date": "2026-10-01",
-  "assets": { "directory": "./site" },
+  "main": "worker/index.js",
+  "assets": {
+    "directory": "./site",
+    "binding": "ASSETS",
+    "run_worker_first": ["/download", "/download.zip", "/api/*"]
+  },
+  "d1_databases": [
+    { "binding": "DB", "database_name": "wheresmymouse-stats", "database_id": "dd587a8e-e2bc-48fa-9bc3-952ac2394d51" }
+  ],
   "routes": [
     { "pattern": "wheresmymouse.com", "custom_domain": true },
     { "pattern": "www.wheresmymouse.com", "custom_domain": true }
