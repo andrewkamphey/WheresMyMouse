@@ -6,9 +6,9 @@ The pages in `site/guides/` show a dashed box for each screenshot until its file
 - Light or dark mode, but use the same for every shot.
 - Use `Shift-Command-4`, then `Space`, then click the window: a whole-window shot with its shadow. For close-ups, drag a box instead.
 - Keep each file under about 1,600 px wide. Retina is fine.
-- **The "after" shots need the pointer in the picture.** In the `Shift-Command-5` toolbar, open **Options** and tick **Show Mouse Pointer**. Without it, the pointer is left out of screenshots and recordings.
+- **The "after" shots need the pointer in the picture.** Screen recordings (`Shift-Command-5` recording, or OBS with Capture Cursor on) include it by default. Regular screenshots leave it out; for a still with the pointer, run `screencapture -C -T 5 ~/Desktop/pointer-shot.png` in Terminal (`-C` includes the pointer, `-T 5` gives you 5 seconds to position it), then crop it in Preview.
 - **Big pointer (`size-after.png`): record with OBS.** OBS is the setup the site says was tested. macOS draws the pointer at normal size in still screenshots, and it isn't confirmed that the built-in recorder keeps the enlarged size. Try a `Shift-Command-5` recording too: if the pointer comes out big, that also settles Q1 in `research/seo/QUESTIONS.md`. To grab a frame: open the video in QuickTime, pause on a good frame, press `Command-C`, then in Preview choose File → New from Clipboard and save as PNG.
-- **Colored pointer (`fill-after`, `both-after`):** a still screenshot with Show Mouse Pointer ticked should show the colors at normal size. Check the first one; if the colors don't show, use a recording frame instead.
+- **Colored pointer (`fill-after`, `both-after`):** a still from `screencapture -C` should show the colors at normal size. Check the first one; if the colors don't show, use a recording frame instead.
 
 | # | File | Used on | What to capture |
 |---|---|---|---|
