@@ -245,7 +245,8 @@ HEAD = """<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title>
 <meta name="description" content="{description}">
-<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png">
 <link rel="apple-touch-icon" href="/assets/icon.png">
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{description}">
@@ -283,6 +284,7 @@ FOOT = """</div>
     if (a && window.gtag) gtag('event', 'download', { file_name: 'WheresMyMouse.dmg', link_url: a.href, transport_type: 'beacon' });
   });
 </script>
+<script>navigator.sendBeacon && navigator.sendBeacon('/api/hit');</script>
 </body>
 </html>
 """
