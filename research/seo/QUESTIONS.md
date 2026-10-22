@@ -14,6 +14,8 @@ The site FAQ says "Yes. We tested it in OBS." Some of these reports are old, and
 
 **Decision:** test at 4×, 10× and 30× in QuickTime, the macOS screenshot toolbar recorder, OBS (display and window capture), Loom, Zoom (full screen and window share), Google Meet, Teams, and Screen Sharing. Then decide what the site may claim. I assumed it works only in OBS until tested.
 
+**Update 2026-10-22:** confirmed again in OBS while capturing the guide screenshots: a recording shows the enlarged pointer, while still screenshots draw it at normal size. QuickTime, `Shift-Command-5`, Loom, Zoom, Meet, Teams and Screen Sharing are still untested.
+
 ## Q2. What goes in the paid version?
 
 The research suggests features people ask for that no competitor has: different pointer sizes per monitor, a hotkey toggle, a longer or bigger shake-to-locate, click highlights that are guaranteed to show in shares. **Decision:** which stay free and which are paid. I assumed the core (size, color, presets, app rules) stays free, since "free and open source" is the main trust signal against $8–15 single-feature apps.
