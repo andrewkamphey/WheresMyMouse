@@ -74,7 +74,7 @@ GUIDES = [
                   "Close-up of the Pointer size slider dragged about halfway toward Large.")),
             ("Check it",
              "<p>Move the mouse around a busy window. If it still gets lost, try a brighter fill color too: see <a href=\"/guides/change-cursor-color-mac\">how to change cursor color</a>.</p>",
-             shot("size-after", "A large Mac pointer over a busy window",
+             shot("size-after", "A large Mac pointer over a spreadsheet",
                   "The enlarged pointer over a busy window. Take it as a frame from a screen recording: still screenshots draw the pointer at normal size.")),
         ],
         "body": OLDER_MACOS + """
@@ -112,14 +112,14 @@ GUIDES = [
 
 <h2 id="fill">How to change the cursor fill color</h2>
 <ol class="steps">
-<li><h3>Click the Pointer fill color well</h3><p>It's the color swatch next to <b>Pointer fill color</b>.</p>{shot("fill-well", "Pointer fill color well clicked, showing color choices", "The Pointer fill color well clicked, with the color choices showing.")}</li>
-<li><h3>Pick a color</h3><p>Choose a swatch, or open the full Colors window to choose any color. The pointer updates right away.</p>{shot("fill-after", "Mac pointer with a custom fill color", "The pointer with a bright fill (for example yellow) over a window. Take it as a frame from a screen recording.")}</li>
+<li><h3>Click the Pointer fill color well</h3><p>It's the color swatch next to <b>Pointer fill color</b>.</p>{shot("fill-well", "The Colors window open for Pointer fill color", "The Pointer fill color well clicked, with the Colors window open.")}</li>
+<li><h3>Pick a color in the Colors window</h3><p>A Colors window opens. Click a color on the wheel and drag the slider below it to set how dark it is. The pointer updates right away; close the window when you're done.</p>{shot("fill-after", "Yellow Mac pointer next to the yellow Pointer fill color setting", "The pointer with a bright fill (for example yellow). Frame from a screen recording.")}</li>
 </ol>
 
 <h2 id="outline">How to change the cursor outline color</h2>
 <ol class="steps">
-<li><h3>Click the Pointer outline color well</h3><p>It's the swatch next to <b>Pointer outline color</b>.</p>{shot("outline-well", "Pointer outline color well clicked, showing color choices", "The Pointer outline color well clicked, with the color choices showing.")}</li>
-<li><h3>Pick a color</h3><p>A dark outline helps on light backgrounds; a light outline helps on dark ones.</p></li>
+<li><h3>Click the Pointer outline color well</h3><p>It's the swatch next to <b>Pointer outline color</b>.</p>{shot("outline-well", "The Colors window open for Pointer outline color, set to magenta", "The Pointer outline color well clicked, with the Colors window open.")}</li>
+<li><h3>Pick a color in the Colors window</h3><p>Same window as for the fill. A dark outline helps on light backgrounds; a light outline helps on dark ones.</p></li>
 </ol>
 
 <h2 id="both">How to change both fill and outline</h2>
@@ -131,7 +131,7 @@ GUIDES = [
 <tr><td><i class="sw" style="background:#ff3b30"></i>Red</td><td><i class="sw" style="background:#fff"></i>White</td><td>Presenting and projectors</td></tr>
 <tr><td><i class="sw" style="background:#0a84ff"></i>Blue</td><td><i class="sw" style="background:#fff"></i>White</td><td>Screen recordings and tutorials</td></tr>
 </table>
-{shot("both-after", "Mac pointer with a yellow fill and black outline", "The pointer with both colors changed (yellow fill, black outline) over a light window. Frame from a screen recording.")}
+{shot("both-after", "Mac pointer with a yellow fill and magenta outline over a spreadsheet", "The pointer with both colors changed over a light window. Frame from a screen recording.")}
 
 <h2 id="exact-color">How to pick an exact color</h2>
 <p>In the full Colors window, choose the sliders tab and set it to RGB. There you can type a hex code such as <code>#FF3B30</code>, handy for matching a brand color in product videos.</p>
