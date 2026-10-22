@@ -1,0 +1,84 @@
+/* The how-to guides in /guides/. Generated pages: see scripts/build_guides.py. */
+:root {
+  --bg: #0d0e16;
+  --panel: #171a2a;
+  --panel-2: #1e2236;
+  --line: rgba(255, 255, 255, 0.08);
+  --text: #f3f4fa;
+  --muted: #a7abc2;
+  --faint: #6f7390;
+  --blue: #2f7bff;
+  --blue-soft: #6aa6ff;
+  --radius: 18px;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: radial-gradient(1200px 700px at 80% -10%, #1d2452 0%, transparent 60%), var(--bg);
+  color: var(--text);
+  font: 17px/1.6 system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--blue-soft); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+nav { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 800; color: var(--text); }
+.brand img { width: 30px; height: 30px; }
+nav .links { display: flex; gap: 22px; font-size: 15px; align-items: center; }
+nav .links a { color: var(--muted); }
+.dl { background: var(--text); color: #0d0e16 !important; font-weight: 800; padding: 6px 14px; border-radius: 999px; white-space: nowrap; }
+.dl:hover { text-decoration: none; }
+@media (max-width: 560px) { nav .links a.hide-sm { display: none; } }
+
+.guide { max-width: 760px; margin: 0 auto; padding: 8px 0 72px; }
+.guide h1 { font-size: clamp(32px, 5vw, 48px); line-height: 1.08; letter-spacing: -0.03em; margin: 8px 0 10px; font-weight: 900; }
+.guide h2 { font-size: 26px; letter-spacing: -0.02em; margin: 48px 0 12px; line-height: 1.2; }
+.guide h3 { font-size: 19px; margin: 0 0 6px; }
+.guide p, .guide li { color: #dfe1ee; }
+.crumbs, .updated, .fine { color: var(--faint); font-size: 14px; margin: 0; }
+.lede { color: var(--muted); font-size: 19px; }
+code { background: var(--panel-2); padding: 1px 6px; border-radius: 6px; font-size: 15px; }
+
+.answer { margin: 24px 0 8px; padding: 18px 20px; border-radius: var(--radius); background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--blue); }
+
+.steps { list-style: none; counter-reset: s; padding: 0; margin: 28px 0 0; }
+.steps > li { counter-increment: s; position: relative; padding-left: 48px; margin: 0 0 32px; }
+.steps > li::before { content: counter(s); position: absolute; left: 0; top: -2px; width: 32px; height: 32px; border-radius: 50%; background: var(--text); color: #0d0e16; display: grid; place-items: center; font-weight: 900; font-size: 15px; }
+.steps p { margin: 0 0 12px; }
+
+.shot { margin: 12px 0 0; }
+.shot img { display: block; max-width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--line); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45); }
+.shot .todo { display: none; }
+.shot.missing img { display: none; }
+.shot.missing .todo { display: block; padding: 28px 20px; border: 2px dashed rgba(255, 255, 255, 0.18); border-radius: 12px; color: var(--muted); font-size: 15px; }
+.shot.missing .todo b { display: block; color: var(--text); margin-bottom: 4px; }
+
+.pairs { width: 100%; border-collapse: collapse; margin: 8px 0 16px; font-size: 16px; }
+.pairs th, .pairs td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+.pairs th { color: var(--muted); font-weight: 600; }
+.sw { display: inline-block; width: 16px; height: 16px; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.35); vertical-align: -3px; margin-right: 8px; }
+
+blockquote { margin: 16px 0; padding: 4px 0 4px 18px; border-left: 3px solid var(--line); color: var(--text); font-style: italic; }
+blockquote cite { display: block; font-style: normal; font-size: 14px; margin-top: 4px; }
+
+.pitch { display: flex; gap: 18px; align-items: flex-start; margin: 48px 0 0; padding: 22px; border-radius: var(--radius); background: linear-gradient(135deg, #1b2350, #171a2a); border: 1px solid rgba(106, 166, 255, 0.25); }
+.pitch img { flex: none; border-radius: 12px; }
+.pitch p { margin: 0 0 12px; }
+.pitch .acts { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+@media (max-width: 560px) { .pitch { flex-direction: column; } }
+
+.faq details { border-bottom: 1px solid var(--line); padding: 12px 0; }
+.faq summary { cursor: pointer; font-weight: 700; }
+.faq p { margin: 8px 0 0; color: var(--muted); }
+.more { padding-left: 20px; }
+
+.cards { display: grid; gap: 16px; margin-top: 28px; }
+.card { display: block; padding: 22px; border-radius: var(--radius); background: var(--panel); border: 1px solid var(--line); color: var(--text); }
+.card:hover { text-decoration: none; border-color: rgba(106, 166, 255, 0.4); }
+.card h2 { font-size: 21px; margin: 0 0 6px; }
+.card p { margin: 0; color: var(--muted); font-size: 16px; }
+
+footer { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--faint); font-size: 14px; }
+footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
