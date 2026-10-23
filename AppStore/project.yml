@@ -1,0 +1,44 @@
+# Xcode project for the Mac App Store version, generated with XcodeGen
+# (https://github.com/yonaskolb/XcodeGen):
+#
+#   brew install xcodegen
+#   xcodegen generate --spec AppStore/project.yml     # writes AppStore/WheresMyMouse.xcodeproj
+#
+# Settings (name, bundle ID, version, team) live in AppStore.xcconfig. The source list must
+# match SHARED in AppStore/build.sh.
+name: WheresMyMouse
+targets:
+  WheresMyMouse:
+    type: application
+    platform: macOS
+    configFiles:
+      Debug: AppStore.xcconfig
+      Release: AppStore.xcconfig
+    settings:
+      base:
+        INFOPLIST_FILE: Info.plist
+        GENERATE_INFOPLIST_FILE: NO
+        CODE_SIGN_ENTITLEMENTS: WheresMyMouse.entitlements
+        CODE_SIGN_IDENTITY: Apple Development
+    sources:
+      # Shared with the direct-download build (APP_STORE switches the differences).
+      - path: ../Sources/Preset.swift
+      - path: ../Sources/Recipes.swift
+      - path: ../Sources/PointerStore.swift
+      - path: ../Sources/SuperShake.swift
+      - path: ../Sources/RecipeMenu.swift
+      - path: ../Sources/MenuView.swift
+      - path: ../Sources/LaunchAtLogin.swift
+      # App Store only: entry point, drawn pointer, shortcut, menu additions.
+      - path: Sources
+      - path: ../Resources/AppIcon.icns
+        buildPhase: resources
+      - path: PrivacyInfo.xcprivacy
+        buildPhase: resources
+schemes:
+  WheresMyMouse:
+    build:
+      targets:
+        WheresMyMouse: all
+    archive:
+      config: Release

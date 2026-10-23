@@ -25,8 +25,10 @@ enum RecipeMenu {
             item.submenu = submenu
             menu.addItem(item)
         }
+        #if !APP_STORE // no links out of the App Store build (see FEASIBILITY.md)
         menu.addItem(.separator())
         menu.addItem(ActionItem(title: "Browse recipes on wheresmymouse.com…") { NSWorkspace.shared.open(galleryURL) })
+        #endif
         menu.popUp(positioning: nil, at: NSEvent.mouseLocation, in: nil)
     }
 
