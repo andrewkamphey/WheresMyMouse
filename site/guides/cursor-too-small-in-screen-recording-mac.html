@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5TJXXCL2K"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-M5TJXXCL2K');
+</script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cursor Too Small in Your Screen Recording? How to Fix It on a Mac</title>
+<meta name="description" content="Why the mouse pointer looks tiny or vanishes in Mac screen recordings and tutorials, and how to make viewers see it: size, color, OBS settings and a quick test.">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png">
+<link rel="apple-touch-icon" href="/assets/icon.png">
+<meta property="og:title" content="Cursor Too Small in Your Screen Recording? How to Fix It on a Mac">
+<meta property="og:description" content="Why the mouse pointer looks tiny or vanishes in Mac screen recordings and tutorials, and how to make viewers see it: size, color, OBS settings and a quick test.">
+<meta property="og:image" content="https://wheresmymouse.com/assets/og.png">
+<meta property="og:url" content="https://wheresmymouse.com/guides/cursor-too-small-in-screen-recording-mac">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://wheresmymouse.com/guides/cursor-too-small-in-screen-recording-mac">
+<link rel="stylesheet" href="/assets/guides.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Guides", "item": "https://wheresmymouse.com/guides/"}, {"@type": "ListItem", "position": 2, "name": "Cursor too small in recordings", "item": "https://wheresmymouse.com/guides/cursor-too-small-in-screen-recording-mac"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Why is my cursor so small in my screen recording?", "acceptedAnswer": {"@type": "Answer", "text": "The default pointer is tiny, and it shrinks further when the video is scaled down or compressed. Make it bigger and brighter before you record."}}, {"@type": "Question", "name": "Why doesn't my bigger cursor show in a screenshot?", "acceptedAnswer": {"@type": "Answer", "text": "macOS draws the pointer at normal size in still screenshots. Video recordings show the size you set."}}, {"@type": "Question", "name": "How do I make my cursor bigger for a screen recording on Mac?", "acceptedAnswer": {"@type": "Answer", "text": "Open System Settings → Accessibility → Display and drag Pointer size to the right before you start recording."}}, {"@type": "Question", "name": "Why is my cursor missing from my OBS recording?", "acceptedAnswer": {"@type": "Answer", "text": "Check that your capture source has the show-cursor option turned on, and try capturing the whole display instead of a single window."}}]}]}</script>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="brand" href="/"><img src="/assets/icon.png" alt="">Where's My Mouse?</a>
+    <div class="links">
+      <a class="hide-sm" href="/guides/">Guides</a>
+      <a class="hide-sm" href="/recipes">Recipes</a>
+      <a class="hide-sm" href="https://github.com/andrewkamphey/WheresMyMouse">GitHub</a>
+      <a class="dl btn-dl" href="https://wheresmymouse.com/download"><span class="dl-label">Download free</span></a>
+    </div>
+  </nav>
+  <main class="guide">
+    <p class="crumbs"><a href="/guides/">Guides</a> › Cursor too small in recordings</p>
+    <h1>Cursor Too Small in Your Screen Recording? How to Fix It on a Mac</h1>
+    <p class="updated">Updated 2026-10-23 · macOS 12 Monterey to macOS 26 Tahoe</p>
+    <div class="answer"><b>Quick answer:</b> Before you record, make the pointer bigger and brighter in <b>System Settings → Accessibility → Display → Pointer</b>, make sure your recorder is set to capture the cursor, and do a 5-second test recording. Still screenshots always show the pointer at normal size, so judge from a video, not a screenshot.</div>
+    
+    <figure class="shot"><img src="/assets/guides/size-after.png" alt="A large pointer captured in an OBS screen recording" loading="lazy"></figure>
+<h2 id="why">Why the cursor gets lost in recordings</h2>
+<ul>
+<li><b>It's small to begin with.</b> The default arrow is tiny next to a full screen. Once the video is shrunk to a phone, a YouTube player or a social feed, it's a few pixels.</li>
+<li><b>Compression smears it.</b> Video compression and screen-share compression blur small, fast-moving details first.</li>
+<li><b>Black on busy backgrounds.</b> A black arrow with a thin white edge disappears over code, spreadsheets and photos.</li>
+<li><b>Window capture may leave it out.</b> When you capture a single window, some setups don't record the pointer at all.</li>
+</ul>
+<blockquote>“I enlarged the cursor to capture the screen. In the recording, however, the cursor is as small as before.” <cite><a href="https://obsproject.com/forum/threads/screencast-and-cursor.164575/post-603888">OBS forum</a></cite></blockquote>
+<blockquote>“my learners pointed out to the fact that they almost could not see where my cursor was moving to in the screen.” <cite><a href="https://community.adobe.com/questions-567/how-do-i-make-my-cursor-more-visible-or-bigger-for-an-online-presentation-194266">Adobe Community</a></cite></blockquote>
+
+<h2 id="fix">How to fix it</h2>
+<ol class="steps">
+<li><h3>Make the pointer bigger</h3><p>System Settings → Accessibility → Display → Pointer size. For tutorials, about halfway is a good start. Step by step: <a href="/guides/change-cursor-size-mac">how to change cursor size</a>.</p></li>
+<li><h3>Give it colors that stand out</h3><p>A bright fill with a dark or contrasting outline is easy to follow on any background. See <a href="/guides/change-cursor-color-mac">how to change cursor color</a>.</p></li>
+<li><h3>Make sure the recorder captures the cursor</h3><p>In OBS, open the properties of your screen capture source and check that the option to show the cursor is on. Capturing the whole display is more reliable than capturing one window.</p></li>
+<li><h3>Do a 5-second test</h3><p>Record a few seconds, then watch it at the size your viewers will: on your phone, or in a small window. If you can't follow the pointer there, go bigger.</p></li>
+<li><h3>Don't judge from a screenshot</h3><p>macOS draws the pointer at normal size in still screenshots, whatever size you set. Recordings show the size you chose; ours above was recorded in OBS.</p></li>
+</ol>
+
+<h2 id="after">Fixing it after recording</h2>
+<p>If the video is already recorded, an editor can only add highlights on top. Screen Studio, Camtasia and ScreenFlow can add cursor effects in editing; Screen Studio records without the cursor and redraws it bigger. For the next recording, fixing the pointer first is quicker.</p>
+
+    <aside class="pitch">
+      <img src="/assets/icon.png" alt="" width="56" height="56">
+      <div>
+        <p>With <b>Where's My Mouse?</b> you don't have to remember any of this: add OBS (or Loom, or Keynote) to a "Recording" preset and the pointer turns big and blue whenever that app is open, then goes back to normal when you quit it. Up to 15× with the real pointer.</p>
+        <p class="acts"><a class="dl btn-dl" href="https://wheresmymouse.com/download"><span class="dl-label">Download free</span></a> <a href="/">See how it works</a></p>
+        <p class="fine">Free and open source · macOS 11 and later · signed and notarized by Apple</p>
+      </div>
+    </aside>
+    <h2 id="faq">Questions</h2>
+    <div class="faq"><details><summary>Why is my cursor so small in my screen recording?</summary><p>The default pointer is tiny, and it shrinks further when the video is scaled down or compressed. Make it bigger and brighter before you record.</p></details><details><summary>Why doesn&#x27;t my bigger cursor show in a screenshot?</summary><p>macOS draws the pointer at normal size in still screenshots. Video recordings show the size you set.</p></details><details><summary>How do I make my cursor bigger for a screen recording on Mac?</summary><p>Open System Settings → Accessibility → Display and drag Pointer size to the right before you start recording.</p></details><details><summary>Why is my cursor missing from my OBS recording?</summary><p>Check that your capture source has the show-cursor option turned on, and try capturing the whole display instead of a single window.</p></details></div>
+    <h2>More guides</h2>
+    <ul class="more"><li><a href="/guides/change-cursor-size-mac">Change cursor size</a></li><li><a href="/guides/change-cursor-color-mac">Change cursor color</a></li><li><a href="/guides/reset-cursor-mac">Reset your cursor</a></li><li><a href="/guides/shake-to-find-cursor-mac">Shake to find your cursor</a></li><li><a href="/guides/best-cursor-highlighter-mac">Best cursor highlighters</a></li><li><a href="/guides/cursor-disappears-mac">Cursor disappears</a></li></ul>
+  </main>
+</div>
+<footer>
+  <div class="wrap">
+    <span>Made by <a href="https://github.com/andrewkamphey">Andrew Kamphey</a>, who kept losing his mouse.</span>
+    <span>MIT License · Not affiliated with Apple.</span>
+  </div>
+</footer>
+<script src="/assets/get-app.js"></script>
+<script>
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href*="/download"]');
+    if (a && window.gtag) gtag('event', 'download', { file_name: 'WheresMyMouse.dmg', link_url: a.href, transport_type: 'beacon' });
+  });
+</script>
+<script>navigator.sendBeacon && navigator.sendBeacon('/api/hit');</script>
+</body>
+</html>

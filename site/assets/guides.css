@@ -82,3 +82,5 @@ blockquote cite { display: block; font-style: normal; font-size: 14px; margin-to
 
 footer { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--faint); font-size: 14px; }
 footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.scroll { overflow-x: auto; }
+.scroll table { min-width: 640px; }
