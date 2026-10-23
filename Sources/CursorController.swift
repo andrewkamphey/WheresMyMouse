@@ -124,12 +124,21 @@ enum CursorController {
 
     // MARK: Permissions
 
-    /// Full Disk Access probe: the TCC database is only readable with it.
+    /// Full Disk Access probe: the TCC databases are only readable with it.
+    /// macOS 27 dropped the per-user one, so the system one is checked too.
+    /// A probe file that doesn't exist says nothing either way.
     static var hasFullDiskAccess: Bool {
-        let path = NSHomeDirectory() + "/Library/Application Support/com.apple.TCC/TCC.db"
-        guard let handle = FileHandle(forReadingAtPath: path) else { return false }
-        try? handle.close()
-        return true
+        let probes = [
+            NSHomeDirectory() + "/Library/Application Support/com.apple.TCC/TCC.db",
+            "/Library/Application Support/com.apple.TCC/TCC.db",
+        ]
+        var denied = false
+        for path in probes {
+            let fd = open(path, O_RDONLY)
+            if fd >= 0 { close(fd); return true }
+            if errno != ENOENT { denied = true }
+        }
+        return !denied
     }
 
     static func openFullDiskAccessSettings() {
