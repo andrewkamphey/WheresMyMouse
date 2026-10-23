@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Stats — Where's My Mouse?</title>
+<title>Stats · Where's My Mouse?</title>
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <style>
   :root {
@@ -142,9 +142,9 @@
     var pms = iso(pm), pme = iso(new Date(Date.UTC(t.getUTCFullYear(), t.getUTCMonth() - 1, t.getUTCDate())));
     var all = function (m) { return sumRange('0000', '9999', m); };
     var monthVis = sumRange(ms, td, 'visitor'), monthDl = sumRange(ms, td, 'download');
-    var rate = monthVis ? (monthDl / monthVis * 100).toFixed(1) + '%' : '—';
+    var rate = monthVis ? (monthDl / monthVis * 100).toFixed(1) + '%' : 'n/a';
     var prevVis = sumRange(pms, pme, 'visitor'), prevDl = sumRange(pms, pme, 'download');
-    var prevRate = prevVis ? (prevDl / prevVis * 100).toFixed(1) + '%' : '—';
+    var prevRate = prevVis ? (prevDl / prevVis * 100).toFixed(1) + '%' : 'n/a';
     var html = [
       tile('Visitors today', get(td, 'visitor'), delta(get(td, 'visitor'), get(yd, 'visitor'), 'yesterday'), 'var(--visitors)'),
       tile('Downloads today', get(td, 'download'), delta(get(td, 'download'), get(yd, 'download'), 'yesterday'), 'var(--downloads)'),
@@ -239,7 +239,7 @@
     var days = Object.keys(data).sort();
     document.getElementById('sub').textContent = days.length
       ? 'Tracking since ' + label(days[0]) + ', ' + days[0].slice(0, 4) + '. Updated ' + new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) + '.'
-      : 'Tracking just started — numbers appear as people visit.';
+      : 'Tracking just started. Numbers appear as people visit.';
     render();
   }).catch(function () {
     document.getElementById('sub').textContent = 'Couldn’t load stats right now.';
