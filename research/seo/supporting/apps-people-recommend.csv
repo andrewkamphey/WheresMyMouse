@@ -1,0 +1,78 @@
+app_or_setting,context,source_url
+ScreenFlow,reply: lets you adjust the mouse size after you edit the video,https://discussions.apple.com/thread/7067031
+QuickTime Player screen recording,enlarged pointer not captured at larger size,https://discussions.apple.com/thread/7067031
+Screenflick,enlarged pointer not captured at larger size,https://discussions.apple.com/thread/7067031
+Accessibility > Display > Pointer size,built-in answer to 'make cursor larger',https://discussions.apple.com/thread/253741733
+Cursor Highlighter,"recommended: circle of chosen thickness/diameter/colour around cursor, $2.99 App Store",https://discussions.apple.com/thread/255625526
+Shake mouse pointer to locate,user says not enough for people with no peripheral vision,https://discussions.apple.com/thread/253926296
+Shake mouse pointer to locate,reply: cursor grows much larger for a moment then returns to normal,https://discussions.apple.com/thread/256229037
+MouseLocator (prefpane),works much of the time but flaky and 32-bit,https://discussions.apple.com/thread/8601868
+Presentify,tried; did not fix pointer missing in window-only capture,https://discussions.apple.com/thread/252575547
+OBS,pointer not captured in window capture mode,https://discussions.apple.com/thread/252575547
+Keynote > Settings > Slideshow > Show pointer when using the mouse or trackpad,setting suggested for pointer visible in Keynote play,https://discussions.apple.com/thread/8248740
+KeyCastr,"tried for keystroke overlay, 'can't get it to work'",https://discussions.apple.com/thread/251657826
+ScreenFlow,"reply: highlight the cursor and clicks, keystrokes, callouts; may be outside budget",https://discussions.apple.com/thread/251657826
+Simple Mouse Locator,App Store app recommended for showing pointer location without wiggling,https://apple.stackexchange.com/questions/413001
+Accessibility > Zoom > Picture-in-picture (locator box),answer: toggle zoom shortcut shows window around cursor briefly,https://apple.stackexchange.com/questions/413001
+Mousecape,HN: custom pointer themes on macOS (needs fork for 10.15),https://news.ycombinator.com/item?id=23103296
+Mouseposé,HN: simpler highlighter-effect utility for macOS,https://news.ycombinator.com/item?id=23103296
+Pinpoint,HN: highlighter-effect utility for macOS,https://news.ycombinator.com/item?id=23103296
+Presentify,HN Show HN: draw on screen / highlight cursor on video calls and presentations,https://news.ycombinator.com/item?id=22938604
+ZoomShot,"Show HN: live zoom, cursor highlight, drawing on macOS",https://news.ycombinator.com/item?id=47111927
+CursorFlow,Show HN: visual trails/click effects/keystrokes on macOS screen shares,https://news.ycombinator.com/item?id=43714695
+Screen Studio,"Show HN: makes cursor movement smooth, zooms on clicks",https://news.ycombinator.com/item?id=34045110
+OpenScreen / CursorLens,open-source Screen Studio alternatives (Show HN),https://news.ycombinator.com/item?id=47079466
+Debut,"Show HN: $25 Screen Studio alternative, smooth cursor animations",https://news.ycombinator.com/item?id=46506458
+Mouse Trails (missing on macOS),HN: people miss it for tracking fast cursor,https://news.ycombinator.com/item?id=41941491
+Simple Mouse Locator,MacRumors reply: used for some years to find the cursor,https://forums.macrumors.com/threads/anyone-noticing-the-cursor-is-harder-to-find-on-a-busy-screen-after-the-last-couple-of-ventura-updates.2385686/post-32076600
+Accessibility > Display > Pointer outline/fill colour,MacRumors: used to make pointer easier to find,https://forums.macrumors.com/threads/anyone-noticing-the-cursor-is-harder-to-find-on-a-busy-screen-after-the-last-couple-of-ventura-updates.2385686/post-32074323
+Cursor Pro (ixeau),paid cursor highlighter; poster wanted a free open-source alternative,https://forums.macrumors.com/threads/cursor-highlight-on-large-screens.2356682/
+Presentify,has cursor highlight option with shortcut toggle,https://forums.macrumors.com/threads/cursor-highlight-on-large-screens.2356682/post-31387703
+Jibapps Displays,"suggested: cursor highlight functions, $14.99",https://forums.macrumors.com/threads/cursor-highlight-on-large-screens.2356682/post-31387698
+Mousecape,create custom cursor sets for visibility,https://forums.macrumors.com/threads/cursor-highlight-on-large-screens.2356682/post-31387698
+Cursorcerer,hide cursor at will (Doomlaser),https://forums.macrumors.com/threads/cursor-highlight-on-large-screens.2356682/post-31387698
+defaults read/write com.apple.universalaccess mouseDriverCursorSize,MacRumors: Terminal workaround to set pointer size for login screen,https://forums.macrumors.com/threads/enlarge-mouse-pointer.2011811/post-23852383
+FocusCursor,"cursor highlighting tool for presentations/screen recording, posted on MacRumors",https://forums.macrumors.com/threads/focuscursor-a-cursor-highlighting-tool-for-presentations-and-screen-recording-featuring-mouse-tracking-click-animations-screen-drawing-and-focus.2457909/
+ScreenFlow,"MacRumors: callout effects for the cursor, zoom-ins; not cheap",https://forums.macrumors.com/threads/smooth-screen-recording-software.2345385/post-31115047
+Camtasia,mentioned as lacking smooth cursor + spotlight zoom look,https://forums.macrumors.com/threads/smooth-screen-recording-software.2345385/post-31115072
+OBS Studio Window Capture > Capture Cursor,OBS Forums: setting for showing cursor; missing in some Mac versions,https://obsproject.com/forum/threads/mouse-pointer-display.156206/
+PointerFocus,OBS forum: suggested cursor highlighter (Windows); adds slight delay per one user,https://obsproject.com/forum/threads/option-to-highlight-mouse-cursor-and-mouse-clicks.81966/
+Mouse Locator App (2point5fish),"OBS forum: cursor highlighter for Mac, 'not very polished and has few configuration options'",https://obsproject.com/forum/threads/option-to-highlight-mouse-cursor-and-mouse-clicks.81966/
+Screenbrush,OBS forum: draw on screen / highlight with shift key,https://obsproject.com/forum/threads/option-to-highlight-mouse-cursor-and-mouse-clicks.81966/
+PowerToys Mouse Highlighter,Windows highlighter; not captured by OBS window capture,https://obsproject.com/forum/threads/how-to-capture-mouse-highlighter-with-window-capture.182382/
+OBS Lua cursor skin fx / OBS Cursor Recorder,"scripts for cursor effects in OBS recordings (Windows-only for skin fx), per OBS forum poster",https://obsproject.com/forum/threads/how-to-capture-mouse-highlighter-with-window-capture.182382/
+ActivePresenter,screen recorder; rendered cursor too small on macOS Retina (bug confirmed by vendor),https://talk.atomisystems.com/t/replay-cursor-size-too-small/1684
+Zoom Annotate tool,community answer when cursor isn't visible to participants,https://community.zoom.com/events-18/show-my-mouse-cursor-while-a-presenter-sharing-screens-62780
+Camtasia (cursor scale),answer: set default cursor scale in Edit > Preferences > Project,https://blog.iconlogic.com/2023/05
+iShowU,screen recorder used for tutorials; poster asks how to get cursor halo,https://discussions.apple.com/thread/2508443
+Mouse Locator / Mouseposé,listed in Apple Community thread as cursor highlighting tools,https://discussions.apple.com/thread/2508443
+Mouse Locator (Mac),Software Recs answers: highlight cursor on shortcut or after idle timer,https://softwarerecs.stackexchange.com/questions/3828/highlight-mouse-position-on-os-x
+Presentify,"Software Recs answer (by developer, disclosed): ring/circle around cursor, click animations",https://softwarerecs.stackexchange.com/questions/3828/highlight-mouse-position-on-os-x
+PowerToys Mouse Highlighter (Windows),click highlights not recorded by Windows 10 screen recording,https://softwarerecs.stackexchange.com/questions/37287/highlight-mouse-cursor-when-clicking
+Mouselight (Mac App Store),teacher blog: spotlight on mouse for screencasts,https://alicekeeler.com/2014/05/23/mac-tip-a-really-big-cursor/
+Adobe Captivate mouse object 'Double Size',answer: use Double Size on mouse objects,https://community.adobe.com/questions-567/how-do-i-make-my-cursor-more-visible-or-bigger-for-an-online-presentation-194266
+Loom,lacks cursor highlight on web version / free desktop tier (per Show HN maker),https://news.ycombinator.com/item?id=45088527
+BigCursor (GitHub callumreid/bigCursor),HN: shake-to-find that grows the cursor far bigger than macOS default,https://news.ycombinator.com/item?id=46279468
+Pro Mouse,Ask Different answer: mouse locator app,https://apple.stackexchange.com/questions/189006/mouse-pointer-locator
+Simple Mouse Locator,Ask Different answer: 'EXACTLY what I was looking for',https://apple.stackexchange.com/questions/189006/mouse-pointer-locator
+PinPoint,Ask Different: highlights cursor on keypress/menu item/idle,https://apple.stackexchange.com/questions/189006/mouse-pointer-locator
+myPoint Light S,Ask Different: circle around cursor on shake,https://apple.stackexchange.com/a/281466
+Find My Mouse,Ask Different: locate pointer / jump between displays by shortcut,https://apple.stackexchange.com/questions/189006/mouse-pointer-locator
+Mouse Locator (green circle on keypress),Ask Different answer,https://apple.stackexchange.com/questions/189006/mouse-pointer-locator
+Mouseposé,"Ask Different: dims rest of screen, can zoom to cursor",https://apple.stackexchange.com/questions/189006/mouse-pointer-locator
+Pointer Finder,Ask Different: circle around cursor on keypress,https://apple.stackexchange.com/questions/189006/mouse-pointer-locator
+Cmd+scroll (Accessibility Zoom),Ask Different: zooms whole screen centered on mouse,https://apple.stackexchange.com/questions/189006/mouse-pointer-locator
+OmniDazzle,old go-to cursor highlighter; 'no longer works on most current Macs',https://apple.stackexchange.com/a/150384
+Presentify,"Ask Different answer by developer (disclosed): highlight, zoom, spotlight, draw",https://apple.stackexchange.com/questions/189006/mouse-pointer-locator
+Kap,open-source Mac screen recorder; click highlight not customisable (system API),https://github.com/wulkano/kap/issues/458
+Cursor Pro,maintainers prefer its approach: overlay that follows the cursor,https://github.com/wulkano/kap/issues/458
+Jump Desktop,remote desktop app; pointer size problem in remote sessions,https://support.jumpdesktop.com/hc/en-us/community/posts/115000042986
+Accessibility > Display > Pointer size,built-in answer in many threads; users report it is not captured by some recorders or too blunt,https://discussions.apple.com/thread/251780265
+Accessibility > Display > Pointer outline/fill color,"used by posters to make the pointer easier to find (e.g. white outline, red or green fill)",https://forums.macrumors.com/threads/cursor-highlight-on-large-screens.2356682/post-31387632
+Shake mouse pointer to locate (Accessibility > Display),built-in temporary enlarge; reported as too small/too weak on large or busy screens,https://forums.macrumors.com/threads/anyone-noticing-the-cursor-is-harder-to-find-on-a-busy-screen-after-the-last-couple-of-ventura-updates.2385686/post-32073477
+Cmd+Shift+5 Options > Show cursor toggle,Apple Community: built-in recording option to show/hide the pointer,https://discussions.apple.com/thread/250356470
+Keynote > Settings > Slideshow > Show pointer when using mouse or trackpad (or press C),answers to 'pointer not visible in Keynote',https://discussions.apple.com/thread/254634112
+Universal Control,one Apple Community poster links disappearing cursor to Universal Control,https://discussions.apple.com/thread/255185905
+Accessibility > Zoom > use keyboard shortcuts / scroll gesture to zoom,users report unticking fixed pointer disappearing,https://discussions.apple.com/thread/6726461
+Mission Control swipe to bring cursor back,Apple Community reply: workaround when the cursor disappears,https://discussions.apple.com/thread/255766625
+Cursor Highlighter (Mac App Store),$2.99 circle around cursor,https://discussions.apple.com/thread/255625526

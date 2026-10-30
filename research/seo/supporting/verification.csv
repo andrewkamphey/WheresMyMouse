@@ -1,0 +1,208 @@
+dataset,row_index,key,source_url,status,note,checked_by
+quotes,1,"On 2021 24-inch iMac with Monterey, how to make the cursor l",https://discussions.apple.com/thread/253741733,MATCH,WebFetch confirms title text and 2022-03-14 date; Apple page not directly fetchable (bot-verification page),haiku verifier
+quotes,4,The number one concern is losing the cursor on the screen. I,https://discussions.apple.com/thread/253926296,MINOR_DIFF,First sentence confirmed; WebFetch reports wording differences in second sentence; date 2022-05-27 confirmed,haiku verifier
+quotes,5,I would like to toggle between standard pointer size and lar,https://discussions.apple.com/thread/256229037,MATCH,Partial: first two sentences confirmed via WebFetch; final 'Automator' sentence unconfirmed; date 2026-01-20 confirmed,haiku verifier
+quotes,7,I do not see the mouse pointer when I move the mouse to the ,https://discussions.apple.com/thread/255816882,MATCH,Partial: first sentence confirmed via WebFetch; remainder unconfirmed; date 2024-10-25 confirmed,haiku verifier
+quotes,13,I want show cursor not only in Macbook but also in the proje,https://discussions.apple.com/thread/8248740,MATCH,Partial: text up to 'better guide to my audience' confirmed via WebFetch; trailing clause unconfirmed; date 2018-01-21 confirmed,haiku verifier
+quotes,29,Is there a way to temporarily enlarge the mouse pointer like,https://apple.stackexchange.com/questions/331645,MATCH,Title matches exactly (SE API); date 2018-07-20 confirmed,haiku verifier
+quotes,30,"I want to be able to briefly ""pulse"" the size of the pointer",https://apple.stackexchange.com/questions/360178,MATCH,Body text matches (SE API); date 2019-05-15 confirmed,haiku verifier
+quotes,32,Accessibility: Mouse Pointer goes back to default Size durin,https://apple.stackexchange.com/questions/443757,MATCH,Title matches exactly (SE API); date 2022-07-13 confirmed,haiku verifier
+quotes,37,Increase shaken pointer size,https://apple.stackexchange.com/questions/351348,MATCH,Title matches exactly (SE API); date 2019-02-13 confirmed,haiku verifier
+quotes,41,"Trying to decipher icons, or even just track a mouse cursor,",https://news.ycombinator.com/item?id=31778599,MATCH,Verbatim on page (curl); date 2022-06-17 confirmed,haiku verifier
+quotes,49,Cursor often disappears on my second screen. Have to bounce ,https://forums.macrumors.com/threads/anyone-noticing-the-cursor-is-harder-to-find-on-a-busy-screen-after-the-last-couple-of-ventura-updates.2385686/post-32074608,UNREACHABLE,HTTP 403 from both curl and WebFetch; not bypassed,haiku verifier
+quotes,58,How did you make the mouse curser bigger? I see in some of t,https://obsproject.com/forum/threads/showing-a-cursor-or-pointer-in-the-obs-virtual-camera.157462/post-606710,MATCH,Verbatim on page (curl); date 2023-03-21 confirmed; source typos 'curser'/'curer' preserved,haiku verifier
+quotes,61,This sort of thing is very hard to find for the mac. Thank y,https://obsproject.com/forum/threads/option-to-highlight-mouse-cursor-and-mouse-clicks.81966/post-426381,MATCH,Verbatim on page (curl); date 2019-11-27 confirmed,haiku verifier
+quotes,62,Most tools like PointerFocus add a slight delay when you mov,https://obsproject.com/forum/threads/how-to-add-a-cursor-highlight.148318/post-542295,MATCH,Verbatim on page (curl); date 2021-09-17 confirmed,haiku verifier
+quotes,69,I teach programming on 1on1 zoom call... Is it possible to s,https://community.zoom.com/events-18/show-my-mouse-cursor-while-a-presenter-sharing-screens-62780,MATCH,"Matches with '...' elision (page has 'I'm a licensed zoom user' between sentences); dataset date blank, page says posted 3 years ago. Situation 'remote-help' looks wrong, suggest 'teaching'",haiku verifier
+quotes,72,I'm currently using the zoom through my macbook but recently,https://community.zoom.com/meetings-2/mouse-cursor-trouble-while-screen-sharing-26227,MATCH,"Verbatim on page (curl); dataset date blank, page says posted 4 years ago",haiku verifier
+quotes,74,I have seen some professionally made lessons where the curso,https://discussions.apple.com/thread/2508443,MATCH,Partial: text up to 'coloured halo' confirmed via WebFetch; trailing clause unconfirmed; date 2010-07-16 confirmed,haiku verifier
+quotes,78,the displays are getting bigger and bigger and people are of,https://forums.macrumors.com/threads/it-the-mouse-cursor-too-small-in-osx.96310/post-1116330,UNREACHABLE,HTTP 403 from both curl and WebFetch; not bypassed,haiku verifier
+quotes,86,"I am building an online tutorial, and during the testing pha",https://community.adobe.com/questions-567/how-do-i-make-my-cursor-more-visible-or-bigger-for-an-online-presentation-194266,MATCH,Verbatim on page (curl); dataset date blank; WebFetch reports 2013-11-09 vs note '~2014',haiku verifier
+quotes,90,"I noticed that when I shake my mouse around a lot, the curso",https://news.ycombinator.com/item?id=46279468,MATCH,"Verbatim on page (curl); page shows relative date '10 months ago', consistent with 2025-12-15",haiku verifier
+quotes,92,I don't find the built-in facility to be enough; growing the,https://apple.stackexchange.com/a/281466,MATCH,Answer body matches verbatim (SE API); date 2017-04-20 confirmed,haiku verifier
+quotes,96,6 years later fans the mouse pointer size is still a problem,https://support.jumpdesktop.com/hc/en-us/community/posts/115000042986,UNREACHABLE,HTTP 403 from both curl and WebFetch; not bypassed,haiku verifier
+keywords,23,A_volume:custom cursor mac,https://www.google.com/search?q=custom+cursor+mac,MATCH,search_volume 880 = volume_us 880,haiku verifier
+keywords,3,A_volume:screen studio,https://www.google.com/search?q=screen+studio,MATCH,8100 = 8100,haiku verifier
+keywords,12,A_volume:zoomit,https://www.google.com/search?q=zoomit,MATCH,2400 = 2400,haiku verifier
+keywords,379,A_volume:presentify screen annotation,https://www.google.com/search?q=presentify+screen+annotation,UNVERIFIED,API returned item with no search_volume; dataset 10,haiku verifier
+keywords,140,A_volume:mac cursor highlight,https://www.google.com/search?q=mac+cursor+highlight,MATCH,40 = 40,haiku verifier
+keywords,125,A_volume:screen studio free trial,https://www.google.com/search?q=screen+studio+free+trial,UNVERIFIED,API returned item with no search_volume; dataset 50,haiku verifier
+keywords,114,A_volume:how to highlight cursor,https://www.google.com/search?q=how+to+highlight+cursor,MATCH,50 = 50,haiku verifier
+keywords,71,A_volume:i can't find my cursor on my laptop,https://www.google.com/search?q=i+can%27t+find+my+cursor+on+my+laptop,MATCH,110 = 110,haiku verifier
+keywords,377,A_volume:presentify login,https://www.google.com/search?q=presentify+login,UNVERIFIED,API returned item with no search_volume; dataset 10,haiku verifier
+keywords,52,A_volume:screen studio alternatives,https://www.google.com/search?q=screen+studio+alternatives,MATCH,260 = 260,haiku verifier
+keywords,346,A_volume:mouse locator mac,https://www.google.com/search?q=mouse+locator+mac,UNVERIFIED,keyword missing from API response (response truncated to 10 of 20 items); not retried,haiku verifier
+keywords,279,A_volume:how to change the size of your cursor on mac,https://www.google.com/search?q=how+to+change+the+size+of+your+cursor+on+mac,UNVERIFIED,keyword missing from API response (response truncated to 10 of 20 items); not retried,haiku verifier
+keywords,44,A_volume:how to change cursor color on mac,https://www.google.com/search?q=how+to+change+cursor+color+on+mac,UNVERIFIED,keyword missing from API response (response truncated to 10 of 20 items); not retried,haiku verifier
+keywords,302,A_volume:keycastr app,https://www.google.com/search?q=keycastr+app,UNVERIFIED,keyword missing from API response (response truncated to 10 of 20 items); not retried,haiku verifier
+keywords,216,A_volume:big cursor windows 11,https://www.google.com/search?q=big+cursor+windows+11,UNVERIFIED,keyword missing from API response (response truncated to 10 of 20 items); not retried,haiku verifier
+keywords,16,A_volume:mouse cursor download,https://www.google.com/search?q=mouse+cursor+download,UNVERIFIED,keyword missing from API response (response truncated to 10 of 20 items); not retried,haiku verifier
+keywords,15,A_volume:cursor icons,https://www.google.com/search?q=cursor+icons,UNVERIFIED,keyword missing from API response (response truncated to 10 of 20 items); not retried,haiku verifier
+keywords,47,A_volume:mac cursor size change,https://www.google.com/search?q=mac+cursor+size+change,UNVERIFIED,keyword missing from API response (response truncated to 10 of 20 items); not retried,haiku verifier
+keywords,111,A_volume:custom cursor macbook,https://www.google.com/search?q=custom+cursor+macbook,UNVERIFIED,keyword missing from API response (response truncated to 10 of 20 items); not retried,haiku verifier
+keywords,119,A_volume:mac increase cursor size,https://www.google.com/search?q=mac+increase+cursor+size,UNVERIFIED,keyword missing from API response (response truncated to 10 of 20 items); not retried,haiku verifier
+keywords,131,B_ranking:cursor highlighter mac,https://www.google.com/search?q=cursor+highlighter+mac,MINOR_DIFF,"3 of 5 dataset top-5 domains in live top-5 organic (apps.apple.com, reddit.com present; facebook.com, forums.macrumors.com absent)",haiku verifier
+keywords,55,B_ranking:mouse highlighter,https://www.google.com/search?q=mouse+highlighter,MATCH,"4 of 5 domains present (reddit, youtube, apps.microsoft.com x2); makeuseof.com absent",haiku verifier
+keywords,159,B_ranking:powertoys find my mouse,https://www.google.com/search?q=powertoys+find+my+mouse,MATCH,5 of 5 domains present,haiku verifier
+keywords,21,B_ranking:why is my cursor not showing up,https://www.google.com/search?q=why+is+my+cursor+not+showing+up,MATCH,4 of 5 domains present; techcommunity.microsoft.com absent,haiku verifier
+keywords,243,C_intent:cursor missing mac,https://www.google.com/search?q=cursor+missing+mac,MATCH,intent use ok: troubleshooting query; use is right,haiku verifier
+keywords,606,C_intent:how to make cursor size bigger on mac,https://www.google.com/search?q=how+to+make+cursor+size+bigger+on+mac,MISMATCH,intent info -> use: how-to query; should be use,haiku verifier
+keywords,557,C_intent:highlight cursor for tutorial videos,https://www.google.com/search?q=highlight+cursor+for+tutorial+videos,MISMATCH,intent info -> purchase: looking for a tool to highlight cursor; low confidence,haiku verifier
+keywords,133,C_intent:find mouse pointer windows 11,https://www.google.com/search?q=find+mouse+pointer+windows+11,MATCH,intent use ok: how-to; use is right,haiku verifier
+keywords,378,C_intent:presentify macos,https://www.google.com/search?q=presentify+macos,MISMATCH,intent use -> purchase: brand name (Presentify) = purchase per rubric,haiku verifier
+keywords,618,C_intent:how to use custom cursor on macbook air,https://www.google.com/search?q=how+to+use+custom+cursor+on+macbook+air,MISMATCH,intent info -> use: how-to query; should be use,haiku verifier
+keywords,485,C_intent:cursor hard to find on ultrawide monitor,https://www.google.com/search?q=cursor+hard+to+find+on+ultrawide+monitor,MATCH,intent use ok: problem statement; use is acceptable,haiku verifier
+keywords,640,C_intent:loom big cursor,https://www.google.com/search?q=loom+big+cursor,MISMATCH,intent use -> purchase: brand (Loom) plus feature lookup,haiku verifier
+keywords,594,C_intent:how to get pointer in keynote presentation,https://www.google.com/search?q=how+to+get+pointer+in+keynote+presentation,MISMATCH,intent info -> use: how-to query; should be use,haiku verifier
+keywords,67,C_intent:cursor size mac,https://www.google.com/search?q=cursor+size+mac,MATCH,intent use ok: settings/how-to; use is right,haiku verifier
+keywords,620,C_intent:is mousecape free,https://www.google.com/search?q=is+mousecape+free,MISMATCH,intent info -> purchase: question about a specific app (Mousecape) price/availability,haiku verifier
+keywords,13,C_intent:animated cursors,https://www.google.com/search?q=animated+cursors,MATCH,"intent use ok: cursor packs, off-topic for pointer-visibility fit; intent kept",haiku verifier
+keywords,480,C_intent:cursor enlarger mac,https://www.google.com/search?q=cursor+enlarger+mac,MISMATCH,intent use -> purchase: looking for an enlarger app/tool,haiku verifier
+keywords,265,C_intent:free mouse highlighter mac,https://www.google.com/search?q=free+mouse+highlighter+mac,MISMATCH,intent use -> purchase: looking for a free app/tool,haiku verifier
+keywords,564,C_intent:highlight mouse clicks mac,https://www.google.com/search?q=highlight+mouse+clicks+mac,MISMATCH,intent use -> purchase: feature lookup for a tool; low confidence,haiku verifier
+keywords,239,C_intent:cursor highlighter mac free,https://www.google.com/search?q=cursor+highlighter+mac+free,MISMATCH,intent use -> purchase: looking for a free app/tool,haiku verifier
+keywords,196,C_intent:macos cursor size,https://www.google.com/search?q=macos+cursor+size,MATCH,intent use ok: settings/how-to; use is right,haiku verifier
+keywords,734,C_intent:mouse trail mac,https://www.google.com/search?q=mouse+trail+mac,MISMATCH,intent use -> purchase: looking for an app that adds trails,haiku verifier
+keywords,481,C_intent:cursor for visually impaired mac,https://www.google.com/search?q=cursor+for+visually+impaired+mac,MATCH,intent use ok: accessibility settings; use is right,haiku verifier
+keywords,553,C_intent:high contrast mouse cursor,https://www.google.com/search?q=high+contrast+mouse+cursor,MATCH,intent use ok: settings/how-to; use is right,haiku verifier
+keywords,562,C_intent:highlight cursor macbook,https://www.google.com/search?q=highlight+cursor+macbook,MATCH,intent use ok: how-to; use is acceptable,haiku verifier
+keywords,487,C_intent:cursor highlight app mac,https://www.google.com/search?q=cursor+highlight+app+mac,MISMATCH,intent use -> purchase: explicitly looking for an app,haiku verifier
+keywords,406,C_intent:spotlight cursor,https://www.google.com/search?q=spotlight+cursor,MATCH,intent use ok: feature term; use is acceptable,haiku verifier
+keywords,654,C_intent:mac cursor highlight download,https://www.google.com/search?q=mac+cursor+highlight+download,MISMATCH,intent use -> purchase: download intent for a tool,haiku verifier
+keywords,154,C_intent:i can't find my cursor on my lenovo laptop,https://www.google.com/search?q=i+can%27t+find+my+cursor+on+my+lenovo+laptop,MATCH,intent use ok: troubleshooting; use is right,haiku verifier
+keywords,,consistency:volume_filled_demand_source_est,,MATCH,0 rows,haiku verifier
+keywords,,consistency:demand_source_dataforseo_empty_volume,,MATCH,0 rows,haiku verifier
+a11y_quotes,1,subgroup_row,https://www.applevis.com/forum/low-vision-accessibility-apple-products/setting-mac-mini-low-vision,UNREACHABLE,applevis.com returned HTTP 403 (not read via mirror). Subgroup low-vision plausible.,haiku verifier
+a11y_quotes,5,subgroup_row,https://www.applevis.com/forum/low-vision-accessibility-apple-products/strategies-finding-cursor-mac,UNREACHABLE,applevis.com returned HTTP 403. Subgroup caregiver reasonable (clinician speaking about a patient).,haiku verifier
+a11y_quotes,6,subgroup_row,https://www.applevis.com/forum/low-vision-accessibility-apple-products/strategies-finding-cursor-mac,UNREACHABLE,applevis.com returned HTTP 403. Subgroup low-vision plausible.,haiku verifier
+a11y_quotes,7,subgroup_row,https://www.applevis.com/forum/low-vision-accessibility-apple-products/high-functioning-apple-workflows-peripheral-vision,UNREACHABLE,applevis.com returned HTTP 403. Subgroup low-vision plausible.,haiku verifier
+a11y_quotes,8,subgroup_row,https://www.applevis.com/forum/low-vision-accessibility-apple-products/high-functioning-apple-workflows-peripheral-vision,UNREACHABLE,applevis.com returned HTTP 403. Subgroup low-vision plausible.,haiku verifier
+a11y_quotes,14,subgroup_row,https://www.applevis.com/forum/low-vision-accessibility-apple-products/black-text-colored-background,UNREACHABLE,applevis.com returned HTTP 403. Subgroup low-vision plausible (quote states 20/200).,haiku verifier
+a11y_quotes,15,subgroup_row,https://www.applevis.com/blog/new-features-changes-improvements-bugs-macos-12-monterey-blind-low-vision-users,UNREACHABLE,"applevis.com returned HTTP 403. Subgroup low-vision uncertain: commenter's condition not stated, only colour-control usability.",haiku verifier
+a11y_quotes,17,subgroup_row,https://www.applevis.com/forum/macos-mac-apps/mouse-pointer-speed-when-using-full-screen-zoommagnification,UNREACHABLE,applevis.com returned HTTP 403. Subgroup low-vision plausible.,haiku verifier
+a11y_quotes,34,subgroup_row,https://talk.tidbits.com/t/24525,MATCH,"Verbatim on page (thread 'Text cursor width in macOS', posted 2023-10-10). Subgroup older-user reasonable.",haiku verifier
+a11y_quotes,40,subgroup_row,https://apple.stackexchange.com/questions/56118/how-can-i-enlarge-the-cursor,UNREACHABLE,apple.stackexchange.com blocked by WebFetch. Subgroup caregiver reasonable.,haiku verifier
+a11y_quotes,43,subgroup_row,https://apple.stackexchange.com/questions/15176/how-do-i-change-the-os-x-mouse-pointers-color,UNREACHABLE,apple.stackexchange.com blocked by WebFetch. Subgroup low-vision is an inference: quote states no condition.,haiku verifier
+a11y_quotes,47,subgroup_row,https://forum.literatureandlatte.com/t/find-the-cursor-more-easily/136270,MATCH,"Verbatim on page. Subgroup older-user reasonable; thread is about the text caret, not the mouse pointer.",haiku verifier
+a11y_quotes,51,subgroup_row,https://askubuntu.com/questions/1483203/accessibilty-shortcut-to-center-the-mouse-for-visually-impaired,UNREACHABLE,"askubuntu.com blocked by WebFetch. Non-Mac (Ubuntu) source, so not Mac-audience evidence; subgroup low-vision reasonable.",haiku verifier
+a11y_quotes,56,subgroup_row,https://www.reddit.com/r/Blind/comments/1viu7xk/zoomtext/,UNREACHABLE,"reddit.com returned HTTP 403. Quote is only a Google SERP snippet, not verified.",haiku verifier
+a11y_keywords,8,high contrast cursor,https://www.google.com/search?q=high+contrast+cursor,UNREACHABLE,DataForSEO search_volume call errored (connector not responding); not retried under the 1-call cap. File volume_us=10 unverified.,haiku verifier
+a11y_keywords,9,high contrast mouse pointer,https://www.google.com/search?q=high+contrast+mouse+pointer,UNREACHABLE,DataForSEO search_volume call errored (connector not responding); not retried under the 1-call cap. File volume_us=10 unverified.,haiku verifier
+a11y_keywords,15,why is my cursor so small,https://www.google.com/search?q=why+is+my+cursor+so+small,UNREACHABLE,DataForSEO search_volume call errored (connector not responding); not retried under the 1-call cap. File volume_us=20 unverified.,haiku verifier
+a11y_keywords,24,mac pointer color,https://www.google.com/search?q=mac+pointer+color,UNREACHABLE,DataForSEO search_volume call errored (connector not responding); not retried under the 1-call cap. File volume_us=10 unverified.,haiku verifier
+a11y_keywords,50,make mouse arrow bigger mac,https://www.google.com/search?q=make+mouse+arrow+bigger+mac,UNREACHABLE,DataForSEO search_volume call errored (connector not responding); not retried under the 1-call cap. File volume_us=10 unverified.,haiku verifier
+a11y_keywords,57,mac mouse pointer size,https://www.google.com/search?q=mac+mouse+pointer+size,UNREACHABLE,DataForSEO search_volume call errored (connector not responding); not retried under the 1-call cap. File volume_us=110 unverified.,haiku verifier
+a11y_keywords,59,increase cursor size mac,https://www.google.com/search?q=increase+cursor+size+mac,UNREACHABLE,DataForSEO search_volume call errored (connector not responding); not retried under the 1-call cap. File volume_us=50 unverified.,haiku verifier
+a11y_keywords,75,cursor highlighter mac,https://www.google.com/search?q=cursor+highlighter+mac,UNREACHABLE,DataForSEO search_volume call errored (connector not responding); not retried under the 1-call cap. File volume_us=40 unverified.,haiku verifier
+a11y_keywords,77,mouse locator mac,https://www.google.com/search?q=mouse+locator+mac,UNREACHABLE,DataForSEO search_volume call errored (connector not responding); not retried under the 1-call cap. File volume_us=10 unverified.,haiku verifier
+a11y_keywords,101,enlarge cursor mac,https://www.google.com/search?q=enlarge+cursor+mac,UNREACHABLE,DataForSEO search_volume call errored (connector not responding); not retried under the 1-call cap. File volume_us=10 unverified.,haiku verifier
+a11y_keywords,113,simple mouse locator,https://www.google.com/search?q=simple+mouse+locator,UNREACHABLE,DataForSEO search_volume call errored (connector not responding); not retried under the 1-call cap. File volume_us=10 unverified.,haiku verifier
+a11y_keywords,114,mouseposé,https://www.google.com/search?q=mouseposé,UNREACHABLE,DataForSEO search_volume call errored (connector not responding); not retried under the 1-call cap. File volume_us=70 unverified.,haiku verifier
+a11y_targets,0,AppleVis,https://www.applevis.com/forum/low-vision-accessibility-apple-products,UNREACHABLE,"HTTP 403; forum, Simple Mouse Locator claim, and submission route not verified.",haiku verifier
+a11y_targets,1,AppleVis Mac App Directory,https://www.applevis.com/apps/mac,UNREACHABLE,HTTP 403; directory description and entry count not verified.,haiku verifier
+a11y_targets,2,Veronica With Four Eyes,https://veroniiiica.com/low-vision-accessibility-settings-for-macbooks/,MATCH,"Loads; AT specialist with low vision; eight-step slider, colours, Zoom, Hover Text; dates 2019-02-12 / June 2025 match. Contact-form route not checked.",haiku verifier
+a11y_targets,3,Veronica With Four Eyes (pointer article),https://veroniiiica.com/mouse-pointers-and-low-vision/,MATCH,"Loads; Windows 10/11 focus, no Mac section; dates 2019-10-11 / Sept 2024 (row says 2019 / 2024-09-17, consistent).",haiku verifier
+a11y_targets,4,AbilityNet,https://mcmw.abilitynet.org.uk/how-to-make-the-mouse-pointer-larger-in-macos-26-tahoe,MATCH,Loads; built-in settings only; condition and symptom tags present; no third-party app.,haiku verifier
+a11y_targets,5,Perkins School for the Blind,https://www.perkins.org/resource/large-mouse-pointer-low-vision/,UNREACHABLE,HTTP 403; content and downloadable cursor sets not verified.,haiku verifier
+a11y_targets,6,AFB AccessWorld,https://afb.org/aw/6/4/14605,MATCH,"Loads; 'The Mouse That Soared' by Amy Salmon, July 2005, Windows XP pointer schemes. Editor email route not checked.",haiku verifier
+a11y_targets,7,Hadley,https://hadleyhelps.org/workshops/customizing-windows-for-low-vision-series/windows-low-vision-pointer,MINOR_DIFF,"Loads and is Windows-only, but the page names no Mac zoom handout (the 5_MacLV_Zoom_Styles PDF claim is not on this page).",haiku verifier
+a11y_targets,8,RNIB,https://www.rnib.org.uk/living-with-sight-loss/assistive-aids-and-technology/computers/computer-accessibility/,MINOR_DIFF,"Partial load: first 100k of 122,826 chars read, no cursor size/shape/texture mention seen; Technology for Life only in a menu link. Claim not confirmed.",haiku verifier
+a11y_targets,9,Apple Support Community / Ask Different / MacRumors,https://apple.stackexchange.com/questions/15176/how-do-i-change-the-os-x-mouse-pointers-color,UNREACHABLE,apple.stackexchange.com blocked by WebFetch; Mouseposé/MightyMouse/Omnidazzle claims not verified.,haiku verifier
+a11y_targets,10,Mac-Forums,https://www.mac-forums.com/threads/mouse-shake-duration.374598/,MINOR_DIFF,"Loads. Cursor Pro ($10) recommended by Randy B. Singer (row says 'moderator-type poster', not verified). Simple Mouse Locator ($2.99) NOT on page. Cataract mentioned; macular degeneration not found. Shake 1-2 s to 10-15 s confirmed.",haiku verifier
+a11y_targets,11,TidBITS Talk,https://talk.tidbits.com/t/17174,MINOR_DIFF,Loads; thread is about pointer colour/visibility. Text-cursor width and migraines not on this thread.,haiku verifier
+a11y_targets,12,awesome-mac (GitHub),https://github.com/jaywcjlove/awesome-mac,MINOR_DIFF,"Repo shell loads, but the list body was not rendered: BetterMouse/Linear Mouse and docs/CONTRIBUTING.md not seen. Unverified.",haiku verifier
+a11y_targets,13,Mousecape (GitHub),https://github.com/alexzielenski/Mousecape,MINOR_DIFF,"Loads; described as a free cursor manager for Mac OS 10.8+, with non-commercial license limits. 'Open-source' label not stated on page (source is public).",haiku verifier
+a11y_targets,14,OATSoft,https://oatsoft.org/,UNREACHABLE,"DNS lookup failed (ENOTFOUND). Row note says site did not respond, which is consistent.",haiku verifier
+a11y_notes,1,LowVision app price $8.99,https://apps.apple.com/app/lowvision/id6754944613,MATCH,"App Store page loads: LowVision, $8.99.",haiku verifier
+a11y_notes,2,AppleVis AI-post policy,https://www.applevis.com/help/can-i-use-ai-tools-chatgpt-generate-posts-applevis,UNREACHABLE,HTTP 403; policy not verified.,haiku verifier
+a11y_notes,3,TidBITS 17266 Monterey memory leak,https://talk.tidbits.com/t/17266,MINOR_DIFF,"Thread loads; summary blames 'pointer changes' for the leak, and a commenter asks whether the colour feature is the cause. Notes state it as fact; it is unconfirmed.",haiku verifier
+a11y_notes,4,Mac-Forums 374598: Simple Mouse Locator $2.99 and Cursor Pro $10,https://www.mac-forums.com/threads/mouse-shake-duration.374598/,MISMATCH,Cursor Pro $10 confirmed. Simple Mouse Locator $2.99 is NOT on this page. Notes cite it here.,haiku verifier
+a11y_notes,5,TidBITS 32729 migraine quote,https://talk.tidbits.com/t/32729,MATCH,Exact sentence found in SteveLinNYC's post dated 2026-01-20.,haiku verifier
+backlinks,3,alternativeto.net,https://alternativeto.net/software/mousepos-,MATCH,"Page exists; Mousepose, KeyCastr, ClickLight listed; Add Alternatives button present (login not tested)",haiku verifier
+backlinks,5,mousepose.macupdate.com,https://mousepose.macupdate.com/,MATCH,"Page exists; Mousepose, Presentify, KeyCastr, Hyper Cursor mentioned; Add App link to macupdate submit",haiku verifier
+backlinks,6,hyper-cursor.macupdate.com,https://hyper-cursor.macupdate.com/,MATCH,Page exists; Mousepose listed as similar app; Add App link to macupdate submit,haiku verifier
+backlinks,8,reddit.com/r/macapps,https://www.reddit.com/r/macapps/comments/lv72ts/mousepos%C3%A9_alternatives/,UNREACHABLE,Reddit returned HTTP 403 to curl and fetch; not checked,haiku verifier
+backlinks,10,reddit.com/r/macapps,https://www.reddit.com/r/macapps/comments/1ikdtu1/highlight_my_cursor_free_for_many_countries_on/,UNREACHABLE,Reddit returned HTTP 403 to curl and fetch; not checked,haiku verifier
+backlinks,16,setapp.com,https://setapp.com/how-to/customize-and-highlight-cursor-on-mac,MINOR_DIFF,Presentify and Almighty both mentioned; claimed Setapp contact/X route not verified,haiku verifier
+backlinks,19,open-saas-directory,https://github.com/open-saas-directory/awesome-native-macosx-apps,MATCH,CleanShot X and ScreenKite listed; README says contribute via Pull Request (CONTRIBUTING.md not read),haiku verifier
+backlinks,20,youtube.com (Aldo James),https://www.youtube.com/watch?v=n7b3DCXJhas,MATCH,Page exists; no competitor claimed; consistent with confirmed=no; comments route not verified,haiku verifier
+backlinks,36,youtube.com (SlimothyTV),https://www.youtube.com/watch?v=VleQmydEjYw,MINOR_DIFF,Presentify in title; comments route not verifiable from truncated page,haiku verifier
+backlinks,40,forums.macrumors.com,https://forums.macrumors.com/threads/cursor-highlight-on-large-screens.2356682/,UNREACHABLE,HTTP 403 to fetch tool; thread not checked,haiku verifier
+backlinks,47,eastersealstech.com,https://eastersealstech.com/2022/05/18/annotate-anything-with-presentify,MATCH,Presentify post exists; comment form and contact email present,haiku verifier
+backlinks,48,youtube.com (The Mac Essentials),https://www.youtube.com/watch?v=MautE5ilGi4,NOT_FOUND,Cursor Highlighter not in visible title (How to Highlight Your Cursor on Mac - FREE); description truncated; check manually,haiku verifier
+backlinks,49,reddit.com/r/obs,https://www.reddit.com/r/obs/comments/ydcmdx/how_to_higlight_the_mouse_pointer_and_show_mouse/,UNREACHABLE,Reddit returned HTTP 403 to curl; not checked,haiku verifier
+backlinks,51,macstories.net,https://www.macstories.net/reviews/mousepose-mac-os-x/,MINOR_DIFF,Mousepose and ScreenFlow mentioned (spelled Screenflow); claimed site-contact route not checked,haiku verifier
+backlinks,61,hunted.space,https://hunted.space/product/cluxo,MINOR_DIFF,Cluxo listed; page spells Mousepose without accent (not Mousepose); Submit nav present; Product Hunt route not checked,haiku verifier
+backlinks,66,youtube.com (MaschiTuts),https://www.youtube.com/watch?v=1TxEg_HHZjc,MINOR_DIFF,Cursor Highlighter in title; Mouzz not seen (description truncated); comments route unverified,haiku verifier
+backlinks,84,payonceapps.com,https://payonceapps.com/application/presentify/alternatives,MATCH,Presentify mentioned; Submit link to payonceapps.com/submit present,haiku verifier
+backlinks,90,capnot.app,https://capnot.app/blog/presentify-alternatives-mac/,MINOR_DIFF,"Mousepose, Presentify, Screen Studio, CleanShot X confirmed; Cursor Highlighter only as lowercase feature phrase; contact link present",haiku verifier
+ranked_keywords,24,screen annotator,https://presentifyapp.com/,MISMATCH,SERP top 22 (depth 20): presentifyapp.com absent; Presentify App Store listing ranks #11 instead; stated #22,haiku verifier
+ranked_keywords,37,annotating apps for mac,https://presentifyapp.com/,MATCH,URL loads and is on-topic (Presentify); position not re-checked (budget),haiku verifier
+ranked_keywords,48,keycastr,https://appahead.studio/apps/keystroke-pro/,MISMATCH,SERP top 22: appahead.studio absent; stated #18; URL loads and is on-topic (Keystroke Pro); competitor label Cursor Pro differs from page product,haiku verifier
+ranked_keywords,77,keystroke application,https://github.com/keycastr/keycastr,MATCH,URL loads and is on-topic (KeyCastr); position not re-checked (budget),haiku verifier
+ranked_keywords,165,tool for screen capture,https://cleanshot.com/,MATCH,URL loads and is on-topic (CleanShot X); position not re-checked (budget),haiku verifier
+ranked_keywords,187,free screen capture tool for mac,https://cleanshot.com/,MISMATCH,SERP top 22: cleanshot.com absent; stated #9,haiku verifier
+ranked_keywords,202,screen capture with audio mac,https://cap.so/blog/record-screen-mac-system-audio,MATCH,URL loads and is on-topic (Mac screen recording with system audio); position not re-checked (budget),haiku verifier
+ranked_keywords,274,telestream screenflow,https://www.telestream.net/screenflow/overview.htm,MATCH,URL loads and is on-topic (ScreenFlow); position not re-checked (budget),haiku verifier
+competitors,0,Cursor Pro,https://itunes.apple.com/lookup?id=1447043133&country=us,MINOR_DIFF,"price $14.99, one-time, MAS, v2.16 2026-08-18, min macOS 11.5 all match. mas_rating 4.5/1957 not supported: lookup API shows userRatingCount 0.",haiku verifier
+competitors,1,Pro Mouse – Cursor Highlighter,https://itunes.apple.com/lookup?id=1505869474&country=us,MATCH,"$7.99 MAS, v2.4 2026-09-15, macOS 13.0 match lookup API.",haiku verifier
+competitors,26,Where Is My Cursor,https://itunes.apple.com/lookup?id=6770836427&country=us,MATCH,"free, v20260919.1.0 2026-09-19, macOS 14.0 match; halo options match listing text.",haiku verifier
+competitors,69,macOS Accessibility > Display > Pointer (built-in),https://support.apple.com/guide/mac-help/make-the-pointer-easier-to-see-mchlp2920/mac,MINOR_DIFF,"size slider (no numeric max), outline/fill colors, shake-to-locate confirmed. CSV says shake ""temporarily enlarges"" pointer; Apple page says only ""make the pointer larger"". Page shown is macOS 27 version.",haiku verifier
+competitors,14,Giant Cursor - Large Pointer,https://itunes.apple.com/lookup?id=6738851315&country=us,MATCH,"free MAS, v1.3 2025-01-12, macOS 13.0 match; listing describes a temporary giant cursor on shortcut.",haiku verifier
+competitors,79,Screen Studio,https://screen.studio,MATCH,"Yearly $9/mo (""Save 69%""), monthly $29/mo, students 40% off, lifetime no longer sold, ""Screen Studio 4.0 released"" (no date shown) all match.",haiku verifier
+competitors,80,CleanShot X,https://cleanshot.com/pricing,MINOR_DIFF,"Basic $35 pay-once, $19/yr renewal and Pro $10/user/mo billed annually match. CSV version 5.0.1 / 5.0 launched 2026-09-02 not shown on pricing page, so unverified.",haiku verifier
+competitors,100,CursorProMax,https://api.github.com/repos/castdrian/CursorProMax,MATCH,"exists. GitHub license GPL-3.0; README says ""Requires macOS 26 or later""; v1.0.0 and v1.1.0 both published 2026-10-14. Matches the described claim.",haiku verifier
+competitors,101,Mousecape,https://api.github.com/repos/alexzielenski/Mousecape,MINOR_DIFF,"release 1813 published 2020-06-13 matches. GitHub detects no license (NOASSERTION), while CSV says ""open source"" with no license named. ""Recent issues up to 2026-10-14"" not verified.",haiku verifier
+competitors,99,Cluxo,https://api.github.com/repos/kykim79/Cluxo,MATCH,MIT license; latest release v1.5.1 published 2026-07-26 matches.,haiku verifier
+competitors,68,Mouzz — Cursor Highlighter,https://itunes.apple.com/lookup?id=6760307235&country=us,MATCH,"MAS free, v2.3.3 2026-09-30 match. mouzz.dev: Pro $14.99 one-time, 7-day trial, free tier.",haiku verifier
+competitors,55,Presentify - Screen Annotation,https://itunes.apple.com/lookup?id=1507246666&country=us,MINOR_DIFF,"MAS $14.99 and v8.1.2 2026-07-12 match. Homebrew cask now lists 8.1.4, so CSV version is stale. Direct $14 Polar price not checked.",haiku verifier
+competitors,78,Mouseposé,https://boinx.com/mousepose/,NOT_FOUND,"price $9.99/yr NOT CONFIRMED: page shows ""Choose 1 year plan for"" with no visible amount (geo-priced); page does not say subscription vs one-time. v4.5.1 2026-06-05 matches Sparkle appcast.",haiku verifier
+competitors,17,MouseTrail: Mouse Effects,https://itunes.apple.com/lookup?id=6787651654&country=us,MATCH,"free MAS, v2.3 2026-10-12, macOS 13.0 match. IAP prices not checked.",haiku verifier
+competitors,5,Cursor Highlighter: Spotlight,https://itunes.apple.com/lookup?id=6756511601&country=us,MATCH,"free MAS, v2.2 2026-09-25, macOS 12 match.",haiku verifier
+competitors,107,CursorScope.spoon (Hammerspoon),https://api.github.com/search/repositories?q=cursor+highlight+macos,MINOR_DIFF,"repo exists (selimacerbas/CursorScope.spoon, pushed 2025-09-21, matches). Source URL is a GitHub search API query, not the repo page. min_os blank.",haiku verifier
+competitors,39,VibeCursor - Mouse Effects,https://itunes.apple.com/lookup?id=6763036198&country=us,MATCH,"$2.99 MAS, v1.1 2026-07-16, min macOS 14.6 match.",haiku verifier
+competitors,91,Screen Charm,https://screencharm.com/pricing,MATCH,"$99 launch / $149 regular, first 1,500 customers, free lifetime updates, ""No subscriptions"" all match. App version 1.11.5 not verified.",haiku verifier
+complaints,4,Cursor Pro,https://itunes.apple.com/us/rss/customerreviews/id=1447043133/sortby=mostrecent/json#review-9045944782,MATCH,verbatim in review feed; date 2022-09-02 matches; attributed to Cursor Pro.,haiku verifier
+complaints,6,Cursor Pro,https://itunes.apple.com/us/rss/customerreviews/id=1447043133/sortby=mostrecent/json#review-5828844401,NOT_FOUND,review ID not in the 50-entry most-recent feed; no other accessible source found.,haiku verifier
+complaints,7,Cursor Pro,https://itunes.apple.com/us/rss/customerreviews/id=1447043133/sortby=mostrecent/json#review-12242096502,MATCH,verbatim sentence in review; date 2025-01-28 matches; attributed to Cursor Pro.,haiku verifier
+complaints,9,Pro Mouse,https://itunes.apple.com/us/rss/customerreviews/id=1505869474/sortby=mostrecent/json#review-13201871215,NOT_FOUND,"RSS feed currently returns zero reviews for this app. CSV notes say 175 written reviews, so the feed is inconsistent with the dataset.",haiku verifier
+complaints,12,Pro Mouse,https://itunes.apple.com/us/rss/customerreviews/id=1505869474/sortby=mostrecent/json#review-6710402778,NOT_FOUND,RSS feed currently returns zero reviews for this app.,haiku verifier
+complaints,19,Mouseposé,https://forum.boinx.com/t/ill-pass-on-this-product/12231,MATCH,"verbatim forum post by StylesB, 2019-03-19, thread ""ill pass on this product"" under Mousepose.",haiku verifier
+complaints,27,Presentify,https://itunes.apple.com/us/rss/customerreviews/id=1507246666/sortby=mostrecent/json#review-9591650755,NOT_FOUND,RSS feed currently returns zero reviews for this app.,haiku verifier
+complaints,41,Screen Studio,https://www.producthunt.com/products/screen-studio/reviews,MATCH,"sentence verbatim in Dan Sagher review on Product Hunt, ""2 months ago"" matches ~2026-08. Attribution to Screen Studio via PH product page.",haiku verifier
+complaints,46,CleanShot X,https://setapp.com/apps/cleanshot/customer-reviews,MATCH,"verbatim review by Gabriel Magalhaes, 2026-09-24 (v5.0.1), on the CleanShot X Setapp reviews page. Review text does not name the app; attribution rests on the page.",haiku verifier
+complaints,50,DemoPro,https://itunes.apple.com/us/rss/customerreviews/id=1384206666/sortby=mostrecent/json#review-9151572059,NOT_FOUND,RSS feed currently returns zero reviews for this app.,haiku verifier
+complaints,64,Magic Trail,https://itunes.apple.com/us/rss/customerreviews/id=1196881996/sortby=mostrecent/json#review-13984699757,NOT_FOUND,RSS feed currently returns zero reviews for this app.,haiku verifier
+complaints,68,Simple Mouse Locator,https://itunes.apple.com/us/rss/customerreviews/id=946676425/sortby=mostrecent/json#review-3686061663,NOT_FOUND,RSS feed currently returns zero reviews for this app.,haiku verifier
+complaints,74,Screen Cursor,https://itunes.apple.com/us/rss/customerreviews/id=1577211880/sortby=mostrecent/json#review-9015660395,NOT_FOUND,RSS feed currently returns zero reviews for this app (CSV says 18 written reviews).,haiku verifier
+complaints,83,Hyper Cursor,https://itunes.apple.com/us/rss/customerreviews/id=1634220679/sortby=mostrecent/json#review-10575197304,NOT_FOUND,RSS feed currently returns zero reviews for this app (CSV says 12 written reviews).,haiku verifier
+complaints,105,PointerFocus (Windows),https://obsproject.com/forum/threads/option-to-highlight-mouse-cursor-and-mouse-clicks.81966/page-2,MINOR_DIFF,"first sentence verbatim (Excel Stuff, 2020-08-19, matches). Second sentence ""The problem was that I was using multiple monitors"" not seen in the fetched text.",haiku verifier
+a11y_quotes,21,,,MATCH,re-checked by orchestrator via Stack Exchange API / forum pages,orchestrator
+a11y_quotes,22,,,MATCH,re-checked by orchestrator via Stack Exchange API / forum pages,orchestrator
+a11y_quotes,25,,,MATCH,re-checked by orchestrator via Stack Exchange API / forum pages,orchestrator
+a11y_quotes,26,,,MATCH,re-checked by orchestrator via Stack Exchange API / forum pages,orchestrator
+a11y_quotes,29,,,MATCH,re-checked by orchestrator via Stack Exchange API / forum pages,orchestrator
+a11y_quotes,31,,,MATCH,re-checked by orchestrator via Stack Exchange API / forum pages,orchestrator
+a11y_quotes,32,,,MATCH,re-checked by orchestrator via Stack Exchange API / forum pages,orchestrator
+a11y_quotes,34,,,MATCH,re-checked by orchestrator via Stack Exchange API / forum pages,orchestrator
+a11y_quotes,36,,,MATCH,re-checked by orchestrator via Stack Exchange API / forum pages,orchestrator
+a11y_quotes,40,,,MATCH,re-checked by orchestrator via Stack Exchange API / forum pages,orchestrator
+a11y_quotes,41,,,MATCH,re-checked by orchestrator via Stack Exchange API / forum pages,orchestrator
+a11y_quotes,42,,,MATCH,re-checked by orchestrator via Stack Exchange API / forum pages,orchestrator
+a11y_quotes,43,,,MATCH,re-checked by orchestrator via Stack Exchange API / forum pages,orchestrator
+a11y_quotes,44,,,MATCH,re-checked by orchestrator via Stack Exchange API / forum pages,orchestrator
+a11y_quotes,45,,,MATCH,re-checked by orchestrator via Stack Exchange API / forum pages,orchestrator
+complaints,18,,,NOT_FOUND (row removed),orchestrator live re-check,orchestrator
+complaints,19,,,MATCH,orchestrator live re-check,orchestrator
+complaints,20,,,MATCH,orchestrator live re-check,orchestrator
+complaints,22,,,MATCH,orchestrator live re-check,orchestrator
+complaints,23,,,MATCH,orchestrator live re-check,orchestrator
+complaints,24,,,MATCH,orchestrator live re-check,orchestrator
+complaints,27,,,MATCH,orchestrator live re-check,orchestrator
+complaints,94,,,MATCH,orchestrator live re-check,orchestrator
+complaints,95,,,MATCH,orchestrator live re-check,orchestrator
+complaints,96,,,MATCH,orchestrator live re-check,orchestrator
+complaints,101,,,MATCH,orchestrator live re-check,orchestrator
+complaints,103,,,MATCH,orchestrator live re-check,orchestrator
+complaints,104,,,MATCH,orchestrator live re-check,orchestrator
+complaints,*,,,74 of 107 MATCH,complaint text found verbatim in saved source downloads (App Store RSS etc.),orchestrator
