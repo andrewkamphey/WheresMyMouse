@@ -14,12 +14,12 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Where's My Mouse? Make your Mac's pointer impossible to miss</title>
-<meta name="description" content="A free, open-source macOS menu bar app that makes your mouse pointer up to 30× bigger, in any color, with one-click presets and per-app rules. For screen recordings, demos and video calls.">
+<meta name="description" content="A macOS menu bar app that makes your mouse pointer up to 30× bigger, in any color, with one-click presets and per-app rules. Free to download. For screen recordings, demos and video calls.">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
 <link rel="apple-touch-icon" href="assets/icon.png">
 <meta property="og:title" content="Where's My Mouse?">
-<meta property="og:description" content="Make your Mac's pointer impossible to miss. Up to 30×, any color, presets per app. Free & open source.">
+<meta property="og:description" content="Make your Mac's pointer impossible to miss. Up to 30×, any color, presets per app. Free to download.">
 <meta property="og:image" content="https://wheresmymouse.com/assets/og.png">
 <meta property="og:url" content="https://wheresmymouse.com/">
 <meta property="og:type" content="website">
@@ -27,7 +27,7 @@
 <meta name="twitter:image" content="https://wheresmymouse.com/assets/og.png">
 <link rel="canonical" href="https://wheresmymouse.com/">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Where's My Mouse?","operatingSystem":"macOS 11+","applicationCategory":"UtilitiesApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"url":"https://wheresmymouse.com/","downloadUrl":"https://wheresmymouse.com/download"}
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Where's My Mouse?","operatingSystem":"macOS 14+","applicationCategory":"UtilitiesApplication","offers":[{"@type":"Offer","price":"0","priceCurrency":"USD"},{"@type":"Offer","name":"Unlock","description":"One-time in-app purchase: sizes up to 30×, presets and Cursor Recipes, and app rules","price":"9.99","priceCurrency":"USD"}],"url":"https://wheresmymouse.com/","downloadUrl":"https://wheresmymouse.com/download"}
 </script>
 <style>
   :root {
@@ -430,7 +430,6 @@
         <a class="hide-sm" href="#uses">Use cases</a>
         <a class="hide-sm" href="#features">Features</a>
         <a class="hide-sm" href="#faq">FAQ</a>
-        <a href="https://github.com/andrewkamphey/WheresMyMouse">GitHub</a>
       </div>
     </nav>
 
@@ -597,20 +596,20 @@
   <div class="wrap">
     <h2>What's new</h2>
     <div class="releases">
-      <div class="rel"><div class="v">v1.4.3<em>current</em></div><p>Fixes the “Colors need Full Disk Access” banner that stayed on macOS 27 even with access turned on.</p></div>
+      <div class="rel"><div class="v">v2.0.0<em>current</em></div><p>Free to download, with a one-time $9.99 Unlock for sizes up to 30×, presets, Cursor Recipes and app rules. Automatic updates are built in. Now needs macOS 14 (Sonoma) or later.</p></div>
+      <div class="rel"><div class="v">v1.4.3</div><p>Fixes the “Colors need Full Disk Access” banner that stayed on macOS 27 even with access turned on.</p></div>
       <div class="rel"><div class="v">v1.4.2</div><p>No more silent color failures: if a preset or app rule can't change colors because Full Disk Access is off, you get one clear warning and an orange dot on the menu bar icon.</p></div>
       <div class="rel"><div class="v">v1.4.1</div><p>Signed and notarized by Apple: no more “Apple could not verify” warning on first launch. After updating, turn Full Disk Access on again once (for colors).</p></div>
     </div>
-    <p class="fine"><a href="https://github.com/andrewkamphey/WheresMyMouse/releases">All releases on GitHub →</a></p>
   </div>
 </section>
 
 <section id="faq">
   <div class="wrap">
     <h2>Questions, answered</h2>
-    <details><summary>Is it really free?</summary><p>Yes. Free and open source under the MIT license. The code is on <a href="https://github.com/andrewkamphey/WheresMyMouse">GitHub</a>.</p></details>
-    <details id="first-launch"><summary>Is it safe? Will macOS warn me?</summary><p>From v1.4.1 the app is signed with an Apple Developer ID and notarized by Apple, so it opens like any other Mac app. The code is <a href="https://github.com/andrewkamphey/WheresMyMouse">open source</a>. On older versions, macOS said it couldn't verify the app; update to the latest to fix that.</p></details>
-    <details><summary>Does it work on older Macs?</summary><p>Yes, on macOS 11 (Big Sur) and later, on Apple Silicon and Intel. Size works everywhere, up to 30×, along with Super shake and app rules. Pointer colors need macOS 12 (Monterey) or later, because that's when macOS added them; on Big Sur the app simply hides the color options.</p></details>
+    <details><summary>Is it free?</summary><p>Yes, to download and use. The free version makes the pointer up to 5× bigger in any fill and outline color, with Super shake, macOS shake to find and launch at login. A one-time $9.99 Unlock, bought inside the app with a card or Apple Pay, adds sizes up to 30×, presets and Cursor Recipes, and app rules. No subscription. Your license key comes by email, so you can unlock it on another Mac too.</p></details>
+    <details id="first-launch"><summary>Is it safe? Will macOS warn me?</summary><p>From v1.4.1 the app is signed with an Apple Developer ID and notarized by Apple, so it opens like any other Mac app. There's no tracking or analytics, and the <a href="/privacy">privacy policy</a> lists the few things it connects to. On older versions, macOS said it couldn't verify the app; update to the latest to fix that.</p></details>
+    <details><summary>Does it work on older Macs?</summary><p>Yes, if they run macOS 14 (Sonoma) or later. It works on Apple Silicon and Intel.</p></details>
     <details><summary>Why does it need Full Disk Access?</summary><p>Only for colors. macOS keeps pointer colors in its accessibility settings and only lets apps with Full Disk Access change them. Size works without it. The app reads nothing else.</p></details>
     <details><summary>Does the big pointer show up in screen recordings?</summary><p>Yes. We tested it in OBS. Plain screenshots are the exception: macOS draws the pointer at normal size in still screenshots.</p></details>
     <details><summary>How does it go past System Settings' 4× limit?</summary><p>The window server accepts sizes up to just under 16× through an undocumented call, so that's the real pointer up to 15×. From 16× to 30× the app hides the real pointer and draws its own arrow that follows your mouse. That one is always an arrow (no hand or text cursor).</p></details>
@@ -623,9 +622,9 @@
   <div class="wrap">
     <img src="assets/icon.png" alt="">
     <h2>Stop asking.<br>Start pointing</h2>
-    <p class="lead" style="margin:0 auto 26px">Free, tiny, open source, and notarized by Apple.</p>
+    <p class="lead" style="margin:0 auto 26px">Free to download, tiny, and notarized by Apple.</p>
     <a class="btn" href="https://wheresmymouse.com/download"><span class="dl-label">Download free for Mac</span></a>
-    <a class="btn ghost" href="https://github.com/andrewkamphey/WheresMyMouse">View on GitHub</a>
+    <a class="btn ghost" href="/recipes">Browse Cursor Recipes</a>
   </div>
 </div>
 
@@ -633,7 +632,7 @@
   <div class="wrap">
     <span>Made by <a href="https://github.com/andrewkamphey">Andrew Kamphey</a>, who kept losing his mouse.</span>
     <span><a href="/guides/">Mac cursor guides</a>: <a href="/guides/change-cursor-size-mac">change cursor size</a> · <a href="/guides/change-cursor-color-mac">change cursor color</a> · <a href="/guides/reset-cursor-mac">reset your cursor</a> · <a href="/guides/shake-to-find-cursor-mac">shake to find</a></span>
-    <span>MIT License · <a href="/privacy">Privacy</a> · Not affiliated with Apple.</span>
+    <span><a href="/privacy">Privacy</a> · Not affiliated with Apple.</span>
   </div>
 </footer>
 
