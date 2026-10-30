@@ -1,0 +1,30 @@
+{
+  "identifier" : "6F1C2A4E-9B1D-4E57-A0B3-2D7A8C1E5F90",
+  "nonRenewingSubscriptions" : [ ],
+  "products" : [
+    {
+      "displayPrice" : "9.99",
+      "familyShareable" : false,
+      "internalID" : "6739416201",
+      "localizations" : [
+        {
+          "description" : "Sizes up to 30×, Halo, presets, Cursor Recipes and app rules.",
+          "displayName" : "Unlock Where's My Mouse?",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.wheresmymouse.appstore.unlock",
+      "referenceName" : "Unlock",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_failTransactionsEnabled" : false,
+    "_storeKitErrors" : [ ]
+  },
+  "subscriptionGroups" : [ ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}

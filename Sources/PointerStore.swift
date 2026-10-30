@@ -7,9 +7,13 @@ final class PointerStore: ObservableObject {
     @Published private(set) var fill: RGBA
     @Published private(set) var outline: RGBA
     @Published private(set) var customPresets: [Preset] = []
+    #if !APP_STORE // the App Store build draws its own pointer: no permission, no system setting
     @Published private(set) var hasFullDiskAccess = CursorController.hasFullDiskAccess
+    #endif
     @Published private(set) var launchAtLogin = LaunchAtLogin.isEnabled
+    #if !APP_STORE
     @Published private(set) var shakeToLocate = CursorController.shakeToLocate
+    #endif
     /// Pointer colors need macOS 12 or later; size works everywhere.
     let colorsSupported = CursorController.colorsSupported
     /// Our own shake-to-find: briefly grows the pointer at any size.
@@ -45,6 +49,9 @@ final class PointerStore: ObservableObject {
     private var isApplyingPreset = false
 
     init() {
+        #if APP_STORE
+        size = CursorController.size
+        #else
         // The system only keeps up to 4×, so restore a larger size ourselves.
         let systemSize = CursorController.size
         let savedSize = UserDefaults.standard.double(forKey: Self.sizeKey)
@@ -55,6 +62,7 @@ final class PointerStore: ObservableObject {
         } else {
             size = systemSize
         }
+        #endif
         fill = CursorController.fill ?? .black
         outline = CursorController.outline ?? .white
         loadPresets()
@@ -75,7 +83,9 @@ final class PointerStore: ObservableObject {
         customPresets = presets
         appRules = rules
         selectedPresetID = preset.id
+        #if !APP_STORE
         hasFullDiskAccess = true
+        #endif
         isSnapshot = true
     }
 
@@ -93,14 +103,21 @@ final class PointerStore: ObservableObject {
         size = CursorController.size
         fill = CursorController.fill ?? fill
         outline = CursorController.outline ?? outline
+        #if !APP_STORE
         hasFullDiskAccess = CursorController.hasFullDiskAccess
+        #endif
         launchAtLogin = LaunchAtLogin.isEnabled
+        #if !APP_STORE
         shakeToLocate = CursorController.shakeToLocate
+        #endif
     }
 
     // MARK: Live adjustments
 
     func setSize(_ newSize: Double) {
+        #if APP_STORE
+        let newSize = min(newSize, maxSize)
+        #endif
         superShake?.cancel()
         size = newSize
         syncEditingPreset()
@@ -128,6 +145,9 @@ final class PointerStore: ObservableObject {
 
     /// Coalesces rapid color changes (e.g. dragging in the color panel).
     private func scheduleColorApply() {
+        #if APP_STORE
+        revealIfOff()
+        #endif
         applyColorsWork?.cancel()
         let work = DispatchWorkItem { [fill, outline] in CursorController.setColors(fill: fill, outline: outline) }
         applyColorsWork = work
@@ -139,14 +159,19 @@ final class PointerStore: ObservableObject {
         isApplyingPreset = true
         defer { isApplyingPreset = false }
         setSize(preset.size)
+        #if !APP_STORE
         let colorsChange = !preset.fill.isClose(to: fill) || !preset.outline.isClose(to: outline)
+        #endif
         fill = preset.fill
         outline = preset.outline
         applyColorsWork?.cancel()
         CursorController.setColors(fill: fill, outline: outline)
+        #if !APP_STORE
         if colorsChange { checkColorsAllowed(for: preset) }
+        #endif
     }
 
+    #if !APP_STORE
     /// Called once per launch when a preset's colors couldn't be applied, so the
     /// missing permission doesn't fail silently (e.g. an app rule switching in the background).
     var onColorsBlocked: ((Preset) -> Void)?
@@ -159,6 +184,7 @@ final class PointerStore: ObservableObject {
         warnedColorsBlocked = true
         onColorsBlocked?(preset)
     }
+    #endif
 
     /// While a preset is being edited, every change to the pointer saves into it live.
     private func syncEditingPreset() {
@@ -180,6 +206,9 @@ final class PointerStore: ObservableObject {
     // MARK: Presets
 
     func saveNewPreset(named name: String) {
+        #if APP_STORE
+        guard Unlock.shared.check() else { return }
+        #endif
         let preset = Preset(name: name, size: size, fill: fill, outline: outline)
         customPresets.append(preset)
         selectedPresetID = preset.id
@@ -188,6 +217,9 @@ final class PointerStore: ObservableObject {
 
     /// Saves a Cursor Recipe as your own preset and uses it. Adding the same recipe again reuses it.
     func addRecipe(name: String, size: Double, fill: RGBA, outline: RGBA) {
+        #if APP_STORE
+        guard Unlock.shared.check() else { return }
+        #endif
         editingPresetID = nil
         if size > CursorController.standardMaxSize, !extendedSizes { setExtendedSizes(true) }
         if let existing = customPresets.first(where: { $0.name == name && $0.matches(size: size, fill: fill, outline: outline) }) {
@@ -299,9 +331,17 @@ final class PointerStore: ObservableObject {
 
     // MARK: Size range
 
-    var maxSize: Double { extendedSizes ? CursorController.extendedMaxSize : CursorController.standardMaxSize }
+    var maxSize: Double {
+        #if APP_STORE
+        guard Unlock.shared.isUnlocked else { return Unlock.freeMaxSize }
+        #endif
+        return extendedSizes ? CursorController.extendedMaxSize : CursorController.standardMaxSize
+    }
 
     func setExtendedSizes(_ on: Bool) {
+        #if APP_STORE
+        if on, !Unlock.shared.check() { objectWillChange.send(); return }
+        #endif
         extendedSizes = on
         UserDefaults.standard.set(on, forKey: Self.extendedSizesKey)
         if !on, size > CursorController.standardMaxSize { setSize(CursorController.standardMaxSize) }
@@ -326,6 +366,9 @@ final class PointerStore: ObservableObject {
     /// Asks for an app in /Applications and adds it to `preset`. An app belongs to one preset:
     /// if it's already in another, confirm before moving it.
     func addApp(to preset: Preset) {
+        #if APP_STORE
+        guard Unlock.shared.check() else { return }
+        #endif
         let panel = NSOpenPanel()
         panel.title = "Add an app to “\(preset.name)”"
         panel.message = "While this app is in use, your pointer switches to “\(preset.name)”."
@@ -413,6 +456,9 @@ final class PointerStore: ObservableObject {
     /// Picks the rule app per `ruleTrigger`; with no rule app left, back to Default.
     private func evaluateAppRules(force: Bool = false) {
         guard appRulesEnabled else { return }
+        #if APP_STORE
+        guard Unlock.shared.isUnlocked else { return }
+        #endif
         let ruled = Dictionary(appRules.map { ($0.bundleID, $0) }, uniquingKeysWith: { first, _ in first })
         let running = NSWorkspace.shared.runningApplications.filter { ruled[$0.bundleIdentifier ?? ""] != nil }
         let bundleID: String?
@@ -449,10 +495,12 @@ final class PointerStore: ObservableObject {
         superShake?.setEnabled(on)
     }
 
+    #if !APP_STORE
     func setShakeToLocate(_ on: Bool) {
         CursorController.setShakeToLocate(on)
         shakeToLocate = CursorController.shakeToLocate
     }
+    #endif
 
     // MARK: Launch at login
 

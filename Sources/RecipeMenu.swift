@@ -7,6 +7,9 @@ enum RecipeMenu {
 
     /// Pops up the recipes, one submenu per category, at the mouse.
     static func show(store: PointerStore) {
+        #if APP_STORE
+        guard Unlock.shared.check() else { return }
+        #endif
         let menu = NSMenu()
         let header = NSMenuItem(title: "Add a recipe as a preset", action: nil, keyEquivalent: "")
         header.isEnabled = false
@@ -25,8 +28,10 @@ enum RecipeMenu {
             item.submenu = submenu
             menu.addItem(item)
         }
+        #if !APP_STORE // no links out of the App Store build (see AppStore/FEASIBILITY.md)
         menu.addItem(.separator())
         menu.addItem(ActionItem(title: "Browse recipes on wheresmymouse.com…") { NSWorkspace.shared.open(galleryURL) })
+        #endif
         menu.popUp(positioning: nil, at: NSEvent.mouseLocation, in: nil)
     }
 
@@ -39,6 +44,9 @@ enum RecipeMenu {
         guard let size = value("size").flatMap(Double.init), (1...CursorController.extendedMaxSize).contains(size),
               let fill = value("fill").flatMap(RGBA.init(hex:)),
               let outline = value("outline").flatMap(RGBA.init(hex:)) else { return }
+        #if APP_STORE
+        guard Unlock.shared.check() else { return }
+        #endif
         let name = String((value("name") ?? "").trimmingCharacters(in: .whitespacesAndNewlines).prefix(40))
 
         let alert = NSAlert()

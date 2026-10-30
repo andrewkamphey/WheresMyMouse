@@ -1,0 +1,19 @@
+# Questions for you
+
+Each question has a default that's already built. Change any of them by answering here or in the PR. **Decide Q2 before you register the App ID**: a bundle ID can't change once a build is uploaded.
+
+| # | Question | Built default | Where to change it |
+|---|---|---|---|
+| 1 | **Price.** Free, or paid? | **Answered 2026-10-30: free to download, with a $9.99 one-time Unlock** (sizes above 5×, Halo, presets, Recipes, app rules). Built. | `AppStore/Sources/Unlock.swift`, App Store Connect |
+| 2 | **Bundle ID.** *Answered: keep `com.wheresmymouse.appstore`.* Separate from the direct build (`com.wheresmymouse.WheresMyMouse`), or the same? | **Separate: `com.wheresmymouse.appstore`.** The two builds behave differently and keep separate settings. A shared ID would make macOS treat them as one app (URL scheme, login item, Launch Services) when both are installed. | `PRODUCT_BUNDLE_IDENTIFIER` in `AppStore/AppStore.xcconfig` |
+| 3 | **Minimum macOS 13?** | **macOS 13.** Launch at login in the sandbox uses `SMAppService` (macOS 13+). Supporting 11–12 would need a separate login-item helper app inside the bundle. The direct build still covers 11–12. | `MACOSX_DEPLOYMENT_TARGET` in the xcconfig; a helper target for 11–12 |
+| 4 | **Keyboard shortcut.** Is a fixed ⌃⌥⌘M with an on/off switch enough, or do you want to pick the keys? | **Fixed ⌃⌥⌘M, switchable off.** A shortcut recorder is a follow-up (sindresorhus/KeyboardShortcuts would add one and is App Store–safe). | `AppStore/Sources/GlobalShortcut.swift` |
+| 5 | **Links to the website.** Keep the App Store build free of links to wheresmymouse.com, whose pages offer the direct download? | **No links in the app.** The Recipes menu drops "Browse recipes on wheresmymouse.com…", and nothing mentions the direct version. Guidelines don't forbid it for a free app, but it isn't confirmed safe (FEASIBILITY.md). The Support URL in App Store Connect still points to wheresmymouse.com. | The `#if !APP_STORE` in `Sources/RecipeMenu.swift` |
+| 6 | **Privacy policy page.** | **Answered: live at wheresmymouse.com/privacy** (andrewkamphey/WheresMyMouse#5). | `site/privacy.html` |
+| 7 | **First launch.** Show a 3× arrow right away, or start off? | **On at 3×.** You see what the app does at once, and so does App Review. | `firstLaunchSize` in `AppStore/Sources/CursorController.swift` |
+| 8 | **Default style.** Arrow or Halo? | **Arrow.** Closest to the direct build. Halo hides the "small real pointer at the tip" look better. | `style` default in `CursorController.swift` |
+| 9 | **Version number.** Start the store version at 1.0.0, or match the direct build (1.4.x)? | **1.0.0.** It's a different app with its own history. | `MARKETING_VERSION` in the xcconfig |
+| 10 | **Hide when the pointer is hidden.** When you type or watch full-screen video, macOS hides the real pointer but the drawn one stays. Add "hide after N seconds without moving"? | **Not built.** There's no public API to know when another app hides the pointer, and an idle timer would also hide it while you point at something during a demo. | `PointerHighlight` |
+| 11 | **Halo opacity.** The halo's disc is the fill color at 30%. Fixed, or a slider? | **Fixed 30%.** | `shapeParts()` in `PointerHighlight.swift` |
+| 12 | **Same file name as the direct build.** Both are "Where's My Mouse.app", so they can't both sit in /Applications. Rename the store one? | **Same name.** Most people will only have one. You'll need to move the direct build aside while testing TestFlight builds. | `PRODUCT_NAME` in the xcconfig |
+| 13 | **Website and README.** Mention the App Store version (badge, "also on the Mac App Store")? | **Not done.** Out of scope, and both have your uncommitted changes. | `site/`, `README.md` |

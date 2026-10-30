@@ -1,0 +1,16 @@
+// Build settings for the Mac App Store version. Read by Xcode (project.yml) and by
+// AppStore/build.sh, which fills the $(…) values into Info.plist the same way Xcode does.
+
+PRODUCT_NAME = Where's My Mouse
+// Not the direct build's com.wheresmymouse.WheresMyMouse, so both can be on one Mac (QUESTIONS.md).
+PRODUCT_BUNDLE_IDENTIFIER = com.wheresmymouse.appstore
+MARKETING_VERSION = 1.0.0
+CURRENT_PROJECT_VERSION = 1
+MACOSX_DEPLOYMENT_TARGET = 13.0
+DEVELOPMENT_TEAM = T99P47AGU6
+
+SWIFT_VERSION = 5.0
+// Shared files in Sources/ switch their App Store differences on this flag.
+SWIFT_ACTIVE_COMPILATION_CONDITIONS = APP_STORE
+CODE_SIGN_STYLE = Automatic
+ENABLE_HARDENED_RUNTIME = YES

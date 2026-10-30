@@ -16,12 +16,17 @@ struct MenuView: View {
     @State private var editName = ""
     @State private var addingPreset = false
     @State private var typing = false
+    #if APP_STORE
+    @ObservedObject private var unlock = Unlock.shared
+    #endif
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             header.padding(.bottom, Grid.section)
 
+            #if !APP_STORE
             if store.colorsSupported && !store.hasFullDiskAccess { fullDiskAccessBanner.padding(.bottom, Grid.section) }
+            #endif
             if let deleted = store.recentlyDeleted { undoBanner(deleted.preset).padding(.bottom, Grid.section) }
 
             // Flat sections split by hairlines: nothing boxed inside a box.
@@ -30,6 +35,9 @@ struct MenuView: View {
             section { colorSection }
             section { switchesSection }
             section { appRulesSection }
+            #if APP_STORE
+            if !unlock.isUnlocked { section { UnlockSection() } }
+            #endif
             section { footer }
         }
         .padding(Grid.m)
@@ -46,6 +54,9 @@ struct MenuView: View {
                 Text("Where's My Mouse?").font(.headline)
                 Spacer()
                 Text(String(format: "%.1f×", store.size)).font(Font.headline.monospacedDigit()).foregroundColor(.secondary)
+                #if APP_STORE
+                HighlightSwitch()
+                #endif
             }
             Label(store.statusText, systemImage: "cursorarrow.motionlines")
                 .font(.callout)
@@ -83,6 +94,9 @@ struct MenuView: View {
             } else {
                 HStack {
                     Button {
+                        #if APP_STORE
+                        guard Unlock.shared.check() else { return }
+                        #endif
                         addingPreset = true
                         typing = true
                     } label: {
@@ -119,8 +133,19 @@ struct MenuView: View {
 
     private var sizeSection: some View {
         VStack(alignment: .leading, spacing: Grid.s) {
+            #if APP_STORE
+            HStack {
+                sectionTitle("Size")
+                Spacer()
+                StylePicker()
+            }
+            #else
             sectionTitle("Size")
+            #endif
             SizeSlider(size: Binding(get: { store.size }, set: { store.setSize($0) }), maxSize: store.maxSize)
+            #if APP_STORE
+            HighlightHint()
+            #endif
         }
     }
 
@@ -141,6 +166,20 @@ struct MenuView: View {
         }
     }
 
+    #if APP_STORE
+    private var switchesSection: some View {
+        VStack(spacing: 0) {
+            SwitchRow(title: "Extra large sizes", detail: unlock.isUnlocked ? "Up to 30×" : "Up to 30×, with the unlock",
+                      isOn: Binding(get: { store.extendedSizes }, set: { store.setExtendedSizes($0) }))
+            Divider().padding(.leading, Grid.xs)
+            SwitchRow(title: "Super shake", detail: "Shake to show a big pointer, even when it's off",
+                      isOn: Binding(get: { store.superShakeEnabled }, set: { store.setSuperShake($0) }))
+            Divider().padding(.leading, Grid.xs)
+            SwitchRow(title: "Keyboard shortcut", detail: "\(GlobalShortcut.label) turns it on or off from any app",
+                      isOn: Binding(get: { store.shortcutEnabled }, set: { store.setShortcutEnabled($0) }))
+        }
+    }
+    #else
     private var switchesSection: some View {
         VStack(spacing: 0) {
             SwitchRow(title: "Extra large sizes", detail: "Up to 30× with a drawn pointer",
@@ -154,6 +193,7 @@ struct MenuView: View {
                 .contextMenu { Button("Open Pointer settings…") { CursorController.openPointerSettings() } }
         }
     }
+    #endif
 
     // MARK: App rules
 
@@ -169,10 +209,19 @@ struct MenuView: View {
             }
             .help("Switch to an app's preset automatically. With no rule app open, it goes back to Default.")
             if store.appRules.isEmpty {
+                #if APP_STORE
+                Text(unlock.isUnlocked
+                     ? "Add apps to a preset with its ＋ button. While that app is in use, your pointer switches to that preset."
+                     : "With the unlock, each app can have its own look: your pointer switches to that app's preset while you use it.")
+                    .font(.callout)
+                    .foregroundColor(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                #else
                 Text("Add apps to a preset with its ＋ button. While that app is in use, your pointer switches to that preset.")
                     .font(.callout)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
+                #endif
             } else {
                 Picker("Follow", selection: Binding(get: { store.ruleTrigger }, set: { store.setRuleTrigger($0) })) {
                     ForEach(RuleTrigger.allCases) { Text($0.label).tag($0) }
@@ -200,6 +249,7 @@ struct MenuView: View {
 
     // MARK: Banners
 
+    #if !APP_STORE
     private var fullDiskAccessBanner: some View {
         VStack(alignment: .leading, spacing: Grid.s) {
             Label("Colors need Full Disk Access", systemImage: "exclamationmark.triangle.fill")
@@ -217,6 +267,7 @@ struct MenuView: View {
         .padding(Grid.s + Grid.xs)
         .background(RoundedRectangle(cornerRadius: 10).fill(Color.orange.opacity(0.12)))
     }
+    #endif
 
     private func undoBanner(_ preset: Preset) -> some View {
         HStack {
@@ -484,6 +535,7 @@ private struct SizeSlider: View {
             }
             .frame(height: 24)
 
+            #if !APP_STORE
             if maxSize > drawnFrom {
                 zones
                 if isDrawn {
@@ -493,9 +545,14 @@ private struct SizeSlider: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
+            #endif
         }
     }
 
+    #if APP_STORE
+    /// The App Store build draws every size, so there's no system/drawn split to show.
+    private let isDrawn = false
+    #else
     /// Above 15× the window server won't scale the real pointer, so we draw one.
     private let drawnFrom = CursorController.overlayMinSize
     private var isDrawn: Bool { size >= drawnFrom }
@@ -525,6 +582,7 @@ private struct SizeSlider: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(RoundedRectangle(cornerRadius: 5).fill(color.opacity(active ? 0.85 : 0.15)))
     }
+    #endif
 }
 
 private struct ColorRow: View {
