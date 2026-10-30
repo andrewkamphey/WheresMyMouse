@@ -59,6 +59,24 @@
   th { color: var(--muted); font-weight: 500; }
   .note { color: var(--faint); font-size: 13px; }
   .empty { color: var(--muted); padding: 40px 0; text-align: center; }
+  .src-head { font-size: 22px; margin: 40px 0 4px; letter-spacing: -0.01em; }
+  .src-head span { color: var(--faint); font-weight: 400; font-size: 15px; }
+  .grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-bottom: 16px; }
+  @media (max-width: 700px) { .grid2 { grid-template-columns: 1fr; } }
+  .grid2 .card { margin: 0; }
+  .card .scroll { overflow-x: auto; margin: 0 -16px; padding: 0 16px 8px; }
+  .card table { margin-top: 0; }
+  .card td:first-child { overflow-wrap: break-word; }
+  .card th:not(:first-child), .card td:not(:first-child) { white-space: nowrap; width: 1%; }
+  @media (max-width: 480px) { .card th, .card td { padding: 6px 5px; } .card th:not(:first-child) { white-space: normal; } }
+  tr.total td { font-weight: 600; border-bottom: 0; }
+  td.dim { color: var(--muted); }
+  .none { color: var(--faint); font-size: 14px; margin: 4px 0 12px; }
+  .mini { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin: 4px 0 12px; }
+  .mini .v { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .mini .k { color: var(--muted); font-size: 13px; }
+  .split { display: flex; height: 10px; border-radius: 5px; overflow: hidden; background: var(--line); margin-bottom: 12px; }
+  .split i { display: block; height: 100%; }
 </style>
 </head>
 <body>
@@ -83,6 +101,22 @@
     <table id="table"></table>
   </details>
   <p class="note">Visitors are counted once per day without cookies; bots are filtered by user agent. Downloads are clicks through wheresmymouse.com/download. Times are UTC.</p>
+
+  <h2 class="src-head">Where they come from <span>· last 30 days</span></h2>
+  <p class="sub" id="src-sub">Loading…</p>
+
+  <div class="card"><h2>Sources <span>· download rate is downloads ÷ visitors</span></h2><div id="t-source"></div></div>
+  <div class="grid2">
+    <div class="card"><h2>Mac vs non-Mac <span>· the app only runs on a Mac</span></h2><div id="mac"></div></div>
+    <div class="card"><h2>Countries</h2><div id="t-country"></div></div>
+    <div class="card"><h2>UTM campaigns <span>· utm_campaign</span></h2><div id="t-campaign"></div></div>
+    <div class="card"><h2>Tagged links <span>· utm_source / utm_medium</span></h2><div id="t-utm"></div></div>
+    <div class="card"><h2>Landing pages <span>· first page of the visit</span></h2><div id="t-landing"></div></div>
+    <div class="card"><h2>Referring sites</h2><div id="t-ref"></div></div>
+    <div class="card"><h2>Browsers</h2><div id="t-browser"></div></div>
+    <div class="card"><h2>Files downloaded</h2><div id="t-file"></div></div>
+  </div>
+  <p class="note">Source is the link's utm_source if it had one, otherwise the referring site, otherwise the in-app browser (TikTok and Instagram often hide the referrer), otherwise direct. Each visitor counts once a day, under the source of their first visit that day, and a download from a Download button is credited to that visit. Downloads from a link straight to /download (like the GitHub README) count without a visit, so a download rate can pass 100%. iPads count as non-Mac. Only daily totals are stored: no cookies, no IP addresses, no full referrer URLs.</p>
 </div>
 
 <script>
@@ -251,6 +285,124 @@
     gh = rel.reduce(function (s, r) { return s + r.assets.reduce(function (a, x) { return a + x.download_count; }, 0); }, 0);
     tiles();
   }).catch(function () {});
+})();
+</script>
+<script>
+// Where they come from: visitors and downloads over the last 30 days, split by source, device and so on.
+(function () {
+  var by = {}; // by[dim][value] = { visitor: n, download: n }
+  var fmt = new Intl.NumberFormat('en-US');
+  var MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var regions = null;
+  try { regions = new Intl.DisplayNames(['en'], { type: 'region' }); } catch (e) {}
+
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return '&#' + c.charCodeAt(0) + ';'; }); }
+  function pct(a, b) { return b ? Math.round(a / b * 100) + '%' : 'n/a'; }
+  function date(d) { return +d.slice(8) + ' ' + MON[+d.slice(5, 7) - 1] + ' ' + d.slice(0, 4); }
+  function sum(rows, m) { return rows.reduce(function (s, r) { return s + r[m]; }, 0); }
+
+  // [{key, visitor, download}] for one dimension, biggest first.
+  function rows(dim) {
+    var m = by[dim] || {};
+    return Object.keys(m).map(function (k) { return { key: k, visitor: m[k].visitor || 0, download: m[k].download || 0 }; })
+      .sort(function (a, b) { return b.visitor - a.visitor || b.download - a.download || (a.key < b.key ? -1 : 1); });
+  }
+  // The first n rows, with the rest folded into one "Other" row so the columns still add up.
+  function top(list, n) {
+    if (list.length <= n) return list;
+    var rest = list.slice(n - 1), other = { label: rest.length + ' others', visitor: sum(rest, 'visitor'), download: sum(rest, 'download') };
+    return list.slice(0, n - 1).concat(other);
+  }
+
+  var VIS = ['Visitors', function (r) { return fmt.format(r.visitor); }];
+  var DL = ['Downloads', function (r) { return fmt.format(r.download); }];
+  var RATE = ['Rate', function (r) { return pct(r.download, r.visitor); }];
+
+  function table(id, head, list, cols, name) {
+    var el = document.getElementById(id);
+    if (!list.length) { el.innerHTML = '<p class="none">Nothing yet.</p>'; return; }
+    var t = '<tr><th>' + head + '</th>' + cols.map(function (c) { return '<th>' + c[0] + '</th>'; }).join('') + '</tr>';
+    list.forEach(function (r) {
+      var first = r.label ? esc(r.label) : name ? name(r.key) : esc(r.key);
+      t += '<tr' + (r.total ? ' class="total"' : '') + '><td' + (r.label && !r.total ? ' class="dim"' : '') + '>' + first + '</td>' +
+        cols.map(function (c) { return '<td>' + c[1](r) + '</td>'; }).join('') + '</tr>';
+    });
+    el.innerHTML = '<div class="scroll"><table>' + t + '</table></div>';
+  }
+
+  function country(code) {
+    if (code === 'XX') return 'Unknown';
+    if (code === 'T1') return 'Tor';
+    var name = code;
+    try { name = regions.of(code) || code; } catch (e) {}
+    var flag = /^[A-Z]{2}$/.test(code) ? String.fromCodePoint(127397 + code.charCodeAt(0), 127397 + code.charCodeAt(1)) + ' ' : '';
+    return flag + esc(name);
+  }
+
+  function sources() {
+    var list = rows('source'), mac = by.source_mac || {};
+    var macPct = ['On a Mac', function (r) {
+      var n = r.label ? r.mac : (mac[r.key] && mac[r.key].visitor) || 0;
+      return pct(n, r.visitor);
+    }];
+    var shown = top(list, 15);
+    shown.forEach(function (r) {
+      if (r.label) r.mac = list.slice(14).reduce(function (s, x) { return s + ((mac[x.key] && mac[x.key].visitor) || 0); }, 0);
+    });
+    if (list.length) {
+      shown = shown.concat({ label: 'Total', total: true, visitor: sum(list, 'visitor'), download: sum(list, 'download'),
+        mac: Object.keys(mac).reduce(function (s, k) { return s + (mac[k].visitor || 0); }, 0) });
+    }
+    table('t-source', 'Source', shown, [VIS, macPct, DL, RATE]);
+  }
+
+  function macSplit() {
+    var os = rows('os'), v = sum(os, 'visitor'), d = sum(os, 'download');
+    var m = os.find(function (r) { return r.key === 'macOS'; }) || { visitor: 0, download: 0 };
+    var el = document.getElementById('mac');
+    if (!os.length) { el.innerHTML = '<p class="none">Nothing yet.</p>'; return; }
+    el.innerHTML =
+      '<div class="mini">' +
+      '<div><div class="v">' + pct(m.visitor, v) + '</div><div class="k">of visitors on a Mac<br>' + fmt.format(m.visitor) + ' of ' + fmt.format(v) + '</div></div>' +
+      '<div><div class="v">' + pct(m.download, m.visitor) + '</div><div class="k">download rate<br>for Mac visitors</div></div>' +
+      '<div><div class="v">' + pct(m.download, d) + '</div><div class="k">of downloads<br>from a Mac</div></div>' +
+      '</div>' +
+      '<div class="split" role="img" aria-label="' + pct(m.visitor, v) + ' of visitors on a Mac">' +
+      '<i style="width:' + (v ? m.visitor / v * 100 : 0) + '%;background:var(--visitors)"></i></div>' +
+      '<div id="t-os"></div>';
+    table('t-os', 'System', os, [VIS, DL]);
+  }
+
+  function render() {
+    sources();
+    macSplit();
+    table('t-country', 'Country', top(rows('country'), 10), [VIS, DL], country);
+    table('t-campaign', 'Campaign', top(rows('campaign'), 10), [VIS, DL, RATE]);
+    table('t-utm', 'Link', top(rows('utm'), 10), [VIS, DL, RATE]);
+    table('t-landing', 'Page', top(rows('landing'), 10), [VIS, DL, RATE]);
+    table('t-ref', 'Site', top(rows('ref'), 10), [VIS, DL]);
+    table('t-browser', 'Browser', top(rows('browser'), 10), [VIS, DL]);
+    table('t-file', 'File', top(rows('file').sort(function (a, b) { return b.download - a.download; }), 10), [DL]);
+  }
+
+  fetch('/api/sources').then(function (r) { if (!r.ok) throw r.status; return r.json(); }).then(function (res) {
+    res.rows.forEach(function (r) {
+      var d = by[r.dim] = by[r.dim] || {};
+      (d[r.value] = d[r.value] || {})[r.metric] = r.n;
+    });
+    var sub = document.getElementById('src-sub');
+    if (!res.since) {
+      sub.textContent = 'Source tracking has just started. Visits and downloads from before it can’t be given a source, so they’re only in the charts above.';
+    } else {
+      var days = Math.round((Date.parse(new Date().toISOString().slice(0, 10)) - Date.parse(res.since)) / 864e5) + 1;
+      sub.textContent = 'Source tracking started on ' + date(res.since) + '. Visits and downloads from before then can’t be given a source, so they’re only in the charts above' +
+        (days < 30 ? ', and these tables cover ' + days + (days === 1 ? ' day' : ' days') + ' so far.' : '.');
+    }
+    render();
+  }).catch(function () {
+    document.getElementById('src-sub').textContent = 'Source stats aren’t available right now.';
+    render();
+  });
 })();
 </script>
 </body>

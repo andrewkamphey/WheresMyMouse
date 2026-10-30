@@ -1,6 +1,6 @@
 # Where's My Mouse?
 
-**[wheresmymouse.com](https://wheresmymouse.com)**
+**[wheresmymouse.com](https://wheresmymouse.com/?utm_source=github&utm_medium=readme)**
 
 <p align="center">
   <img src="docs/icon.png" width="128" height="128" alt="Where's My Mouse? icon">
@@ -19,7 +19,7 @@ A native macOS menu bar app for managing pointer size and color, for when you (o
 - **Size from 1× to 10×**: past System Settings' 4× limit, applied live as you drag. Tick **Extra large sizes** for up to 15×.
 - **Fill and outline colors**: quick swatches, or any color from the color picker.
 - **Presets**: starts with just Default; save the current pointer as your own (e.g. a big blue one for recording), then rename, update, or delete it.
-- **Cursor Recipes**: 32 ready-made looks (seasonal, pop culture, colors from around the world) under **Recipes** in the menu, or one click from [wheresmymouse.com/recipes](https://wheresmymouse.com/recipes). Each one becomes your own preset.
+- **Cursor Recipes**: 32 ready-made looks (seasonal, pop culture, colors from around the world) under **Recipes** in the menu, or one click from [wheresmymouse.com/recipes](https://wheresmymouse.com/recipes?utm_source=github&utm_medium=readme). Each one becomes your own preset.
 - **App rules**: add apps to a preset with its ＋ button (e.g. OBS and Loom → a big blue "Recording" preset). While one of those apps is in use, the pointer switches to that preset; an app can only belong to one preset, and moving it asks first. Follow the active app or the last one opened; with none open, it's back to Default.
 - **Super shake**: shake the mouse and the pointer briefly grows to 3× its size (at least 10×, up to 30×), at any size. macOS's own shake-to-locate tops out around 4×; there's a switch for that too.
 - **Launch at login**: and sizes above 4× are re-applied when the app starts.
@@ -52,7 +52,7 @@ Presets make the switching fast: keep "Default" for everyday work, and flip to y
 
 ### Download
 
-1. Download `WheresMyMouse.dmg` (or `WheresMyMouse.zip`) from the [latest release](https://github.com/andrewkamphey/WheresMyMouse/releases/latest), or the [nightly build](https://github.com/andrewkamphey/WheresMyMouse/releases/tag/nightly) for the newest commit.
+1. Download [`WheresMyMouse.dmg`](https://wheresmymouse.com/download?utm_source=github&utm_medium=readme) (or [`WheresMyMouse.zip`](https://wheresmymouse.com/download.zip?utm_source=github&utm_medium=readme)) from the [latest release](https://github.com/andrewkamphey/WheresMyMouse/releases/latest). For the newest commit, get the [nightly build](https://github.com/andrewkamphey/WheresMyMouse/releases/tag/nightly) instead.
 2. Open it and drag **Where's My Mouse.app** onto the **Applications** shortcut.
 3. Open it. Releases are signed with Developer ID and notarized by Apple, so macOS opens them normally.
 4. Look for the pointer icon in your menu bar.
@@ -79,7 +79,7 @@ cd WheresMyMouse
 
 ## Website
 
-`site/` is the promo page at [wheresmymouse.com](https://wheresmymouse.com), served by Cloudflare Workers static assets (`wrangler.jsonc`). Deploy with `npx wrangler deploy`. `worker/index.js` counts page views and downloads in a D1 database (`wheresmymouse-stats`, schema in `worker/schema.sql`) and serves them at [wheresmymouse.com/stats](https://wheresmymouse.com/stats). `site-redirect/` is a tiny Worker that 301-redirects whereismymouse.com to it (`cd site-redirect && npx wrangler deploy`).
+`site/` is the promo page at [wheresmymouse.com](https://wheresmymouse.com), served by Cloudflare Workers static assets (`wrangler.jsonc`). Deploy with `npx wrangler deploy`. `worker/index.js` counts page views and downloads, and where they came from, in a D1 database (`wheresmymouse-stats`, schema in `worker/schema.sql`) and serves them at [wheresmymouse.com/stats](https://wheresmymouse.com/stats). [TRACKING.md](TRACKING.md) explains how counting works and [LINKS.md](LINKS.md) has the tagged links to use when sharing the site. `site-redirect/` is a tiny Worker that 301-redirects whereismymouse.com to it (`cd site-redirect && npx wrangler deploy`).
 
 ## How it works
 
