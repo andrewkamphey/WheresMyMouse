@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M5TJXXCL2K"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-M5TJXXCL2K');
+</script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy · Where's My Mouse?</title>
+<meta name="description" content="Where's My Mouse? collects no personal data. Your settings stay on your Mac and the app makes no network connections.">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png">
+<link rel="apple-touch-icon" href="/assets/icon.png">
+<meta property="og:title" content="Privacy Policy · Where's My Mouse?">
+<meta property="og:description" content="Where's My Mouse? collects no personal data.">
+<meta property="og:image" content="https://wheresmymouse.com/assets/og.png">
+<meta property="og:url" content="https://wheresmymouse.com/privacy">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://wheresmymouse.com/privacy">
+<link rel="stylesheet" href="/assets/guides.css">
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="brand" href="/"><img src="/assets/icon.png" alt="">Where's My Mouse?</a>
+    <div class="links">
+      <a class="hide-sm" href="/guides/">Guides</a>
+      <a class="hide-sm" href="/recipes">Recipes</a>
+      <a class="hide-sm" href="https://github.com/andrewkamphey/WheresMyMouse">GitHub</a>
+      <a class="dl btn-dl" href="https://wheresmymouse.com/download"><span class="dl-label">Download free</span></a>
+    </div>
+  </nav>
+  <main class="guide">
+    <h1>Privacy Policy</h1>
+    <p class="updated">Updated 2026-10-30</p>
+    <div class="answer"><b>In short:</b> the Where's My Mouse? app doesn't collect, store or share any personal data. Your settings and presets stay on your Mac, and the app makes no network connections.</div>
+
+    <h2>The Mac app</h2>
+    <p>This covers both versions: the free download from this site and the version on the Mac App Store.</p>
+    <ul>
+      <li><b>No data collection.</b> There's no account, no analytics, no crash reporting and no advertising. The app doesn't track you.</li>
+      <li><b>No network connections.</b> The app never sends anything over the internet. The only web page it opens is one you choose, such as the Cursor Recipes gallery, which opens in your browser.</li>
+      <li><b>Settings stay on your Mac.</b> Your pointer size, colors, presets and app rules are saved in the app's own preferences on your Mac. Deleting the app and its preferences removes them.</li>
+      <li><b>Permissions.</b> The download version asks for Full Disk Access, which macOS requires before an app can change the system pointer's colors. It uses that access only to read and change pointer settings. The Mac App Store version asks for no permissions.</li>
+      <li><b>Purchases.</b> If you buy anything in the Mac App Store version, Apple handles the payment under <a href="https://www.apple.com/legal/privacy/">Apple's privacy policy</a>. We never see your name, Apple Account or payment details.</li>
+    </ul>
+
+    <h2>This website</h2>
+    <p>wheresmymouse.com uses two ways of counting visits, so we know which pages and links are useful.</p>
+    <ul>
+      <li><b>Our own counter</b> keeps daily totals only: page views, visitors and downloads, plus which country, operating system, browser and referring site they came from. It uses no cookies and stores no IP addresses. To count each visitor once a day, it keeps a one-way hash of your IP address and browser, which is deleted the next day.</li>
+      <li><b>Google Analytics</b> sets cookies and collects information such as the pages you view, your approximate location and your device type. Google's use of this data is covered by <a href="https://policies.google.com/privacy">Google's privacy policy</a>. You can block it with a content blocker or <a href="https://tools.google.com/dlpage/gaoptout">Google's opt-out add-on</a>.</li>
+      <li><b>Downloads</b> come from GitHub, which has its own <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">privacy statement</a>.</li>
+      <li>The site is hosted on Cloudflare, which processes requests to deliver the pages.</li>
+    </ul>
+    <p>We don't sell or share data with anyone, and there's no email list or sign-up.</p>
+
+    <h2>Children</h2>
+    <p>The app and site are suitable for all ages and don't knowingly collect information from anyone, including children.</p>
+
+    <h2>Changes and contact</h2>
+    <p>If this policy changes, the new version will be posted on this page with a new date. Questions? <a href="https://github.com/andrewkamphey/WheresMyMouse/issues">Open an issue on GitHub</a>.</p>
+  </main>
+</div>
+<footer>
+  <div class="wrap">
+    <span>Made by <a href="https://github.com/andrewkamphey">Andrew Kamphey</a>, who kept losing his mouse.</span>
+    <span>MIT License · <a href="/privacy">Privacy</a> · Not affiliated with Apple.</span>
+  </div>
+</footer>
+<script src="/assets/get-app.js"></script>
+<script>
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href*="/download"]');
+    if (a && window.gtag) gtag('event', 'download', { file_name: 'WheresMyMouse.dmg', link_url: a.href, transport_type: 'beacon' });
+  });
+</script>
+<script>navigator.sendBeacon && navigator.sendBeacon('/api/hit');</script>
+</body>
+</html>
