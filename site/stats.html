@@ -59,6 +59,15 @@
   th { color: var(--muted); font-weight: 500; }
   .note { color: var(--faint); font-size: 13px; }
   .empty { color: var(--muted); padding: 40px 0; text-align: center; }
+  .src-head { font-size: 22px; margin: 40px 0 4px; letter-spacing: -0.01em; }
+  .src-head span { color: var(--faint); font-weight: 400; font-size: 15px; }
+  .card .scroll { overflow-x: auto; margin: 0 -16px; padding: 0 16px 8px; }
+  .card table { margin-top: 0; }
+  .card td:first-child { overflow-wrap: break-word; }
+  .card th:not(:first-child), .card td:not(:first-child) { white-space: nowrap; width: 1%; }
+  tr.total td { font-weight: 600; border-bottom: 0; }
+  td.dim { color: var(--muted); }
+  .none { color: var(--faint); font-size: 14px; margin: 4px 0 12px; }
 </style>
 </head>
 <body>
@@ -83,6 +92,11 @@
     <table id="table"></table>
   </details>
   <p class="note">Visitors are counted once per day without cookies; bots are filtered by user agent. Downloads are clicks through wheresmymouse.com/download. Times are UTC.</p>
+
+  <h2 class="src-head">Where visitors come from <span>· last 30 days</span></h2>
+  <p class="sub" id="src-sub">Loading…</p>
+  <div class="card"><h2>Sources</h2><div id="t-source"></div></div>
+  <p class="note">Source is the site that sent the visitor (google, tiktok, github…), or direct when the browser didn't say. Each visitor counts once a day, and a download is credited to where that visitor came from. Downloads from a link straight to /download (like the one in the GitHub README) count without a visit, so a download rate can go over 100%. No cookies or IP addresses are stored.</p>
 </div>
 
 <script>
@@ -251,6 +265,56 @@
     gh = rel.reduce(function (s, r) { return s + r.assets.reduce(function (a, x) { return a + x.download_count; }, 0); }, 0);
     tiles();
   }).catch(function () {});
+})();
+</script>
+<script>
+// Where visitors come from: visitors and downloads by source over the last 30 days.
+(function () {
+  var by = {}; // by[source] = { visitor: n, download: n }
+  var fmt = new Intl.NumberFormat('en-US');
+  var MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return '&#' + c.charCodeAt(0) + ';'; }); }
+  function pct(a, b) { return b ? Math.round(a / b * 100) + '%' : 'n/a'; }
+  function date(d) { return +d.slice(8) + ' ' + MON[+d.slice(5, 7) - 1] + ' ' + d.slice(0, 4); }
+  function sum(rows, m) { return rows.reduce(function (s, r) { return s + r[m]; }, 0); }
+
+  function render() {
+    var el = document.getElementById('t-source');
+    var list = Object.keys(by).map(function (k) { return { key: k, visitor: by[k].visitor || 0, download: by[k].download || 0 }; })
+      .sort(function (a, b) { return b.visitor - a.visitor || b.download - a.download || (a.key < b.key ? -1 : 1); });
+    if (!list.length) { el.innerHTML = '<p class="none">Nothing yet.</p>'; return; }
+    var shown = list.slice(0, 15);
+    if (list.length > 15) { // fold the rest into one row so the columns still add up
+      var rest = list.slice(14);
+      shown = list.slice(0, 14).concat({ label: rest.length + ' others', visitor: sum(rest, 'visitor'), download: sum(rest, 'download') });
+    }
+    shown.push({ label: 'Total', total: true, visitor: sum(list, 'visitor'), download: sum(list, 'download') });
+    var t = '<tr><th>Source</th><th>Visitors</th><th>Downloads</th><th>Download rate</th></tr>';
+    shown.forEach(function (r) {
+      t += '<tr' + (r.total ? ' class="total"' : '') + '><td' + (r.label && !r.total ? ' class="dim"' : '') + '>' + esc(r.label || r.key) + '</td>' +
+        '<td>' + fmt.format(r.visitor) + '</td><td>' + fmt.format(r.download) + '</td><td>' + pct(r.download, r.visitor) + '</td></tr>';
+    });
+    el.innerHTML = '<div class="scroll"><table>' + t + '</table></div>';
+  }
+
+  fetch('/api/sources').then(function (r) { if (!r.ok) throw r.status; return r.json(); }).then(function (res) {
+    res.rows.forEach(function (r) {
+      if (r.dim === 'source') (by[r.value] = by[r.value] || {})[r.metric] = r.n;
+    });
+    var sub = document.getElementById('src-sub');
+    if (!res.since) {
+      sub.textContent = 'Source tracking has just started. Earlier visits and downloads have no source, so they\u2019re only in the charts above.';
+    } else {
+      var days = Math.round((Date.parse(new Date().toISOString().slice(0, 10)) - Date.parse(res.since)) / 864e5) + 1;
+      sub.textContent = 'Source tracking started on ' + date(res.since) + '. Earlier visits and downloads have no source, so they\u2019re only in the charts above' +
+        (days < 30 ? ', and this table covers ' + days + (days === 1 ? ' day' : ' days') + ' so far.' : '.');
+    }
+    render();
+  }).catch(function () {
+    document.getElementById('src-sub').textContent = 'Source stats aren\u2019t available right now.';
+    render();
+  });
 })();
 </script>
 </body>

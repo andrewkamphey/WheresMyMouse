@@ -97,6 +97,13 @@
     if (a && window.gtag) gtag('event', 'download', { file_name: 'WheresMyMouse.dmg', link_url: a.href, transport_type: 'beacon' });
   });
 </script>
-<script>navigator.sendBeacon && navigator.sendBeacon('/api/hit');</script>
+<script>(function () { // counts the visit for /stats: referring domain only, utm_* tags, this page, and touch (iPads look like Macs)
+  if (!navigator.sendBeacon) return;
+  var q = new URLSearchParams(location.search), b = new URLSearchParams({ p: location.pathname });
+  try { if (document.referrer) b.set('r', new URL(document.referrer).hostname); } catch (e) {}
+  ['utm_source', 'utm_medium', 'utm_campaign'].forEach(function (k) { if (q.get(k)) b.set(k, q.get(k)); });
+  if (navigator.maxTouchPoints > 1) b.set('t', '1');
+  navigator.sendBeacon('/api/hit', b);
+})();</script>
 </body>
 </html>
