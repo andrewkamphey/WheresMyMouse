@@ -16,6 +16,9 @@ struct MenuView: View {
     @State private var editName = ""
     @State private var addingPreset = false
     @State private var typing = false
+    #if APP_STORE
+    @ObservedObject private var unlock = Unlock.shared
+    #endif
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -32,6 +35,9 @@ struct MenuView: View {
             section { colorSection }
             section { switchesSection }
             section { appRulesSection }
+            #if APP_STORE
+            if !unlock.isUnlocked { section { UnlockSection() } }
+            #endif
             section { footer }
         }
         .padding(Grid.m)
@@ -88,6 +94,9 @@ struct MenuView: View {
             } else {
                 HStack {
                     Button {
+                        #if APP_STORE
+                        guard Unlock.shared.check() else { return }
+                        #endif
                         addingPreset = true
                         typing = true
                     } label: {
@@ -160,7 +169,7 @@ struct MenuView: View {
     #if APP_STORE
     private var switchesSection: some View {
         VStack(spacing: 0) {
-            SwitchRow(title: "Extra large sizes", detail: "Up to 30×",
+            SwitchRow(title: "Extra large sizes", detail: unlock.isUnlocked ? "Up to 30×" : "Up to 30×, with the unlock",
                       isOn: Binding(get: { store.extendedSizes }, set: { store.setExtendedSizes($0) }))
             Divider().padding(.leading, Grid.xs)
             SwitchRow(title: "Super shake", detail: "Shake to show a big pointer, even when it's off",
@@ -200,10 +209,19 @@ struct MenuView: View {
             }
             .help("Switch to an app's preset automatically. With no rule app open, it goes back to Default.")
             if store.appRules.isEmpty {
+                #if APP_STORE
+                Text(unlock.isUnlocked
+                     ? "Add apps to a preset with its ＋ button. While that app is in use, your pointer switches to that preset."
+                     : "With the unlock, each app can have its own look: your pointer switches to that app's preset while you use it.")
+                    .font(.callout)
+                    .foregroundColor(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                #else
                 Text("Add apps to a preset with its ＋ button. While that app is in use, your pointer switches to that preset.")
                     .font(.callout)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
+                #endif
             } else {
                 Picker("Follow", selection: Binding(get: { store.ruleTrigger }, set: { store.setRuleTrigger($0) })) {
                     ForEach(RuleTrigger.allCases) { Text($0.label).tag($0) }

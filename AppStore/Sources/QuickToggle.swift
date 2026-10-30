@@ -50,6 +50,7 @@ extension PointerStore {
 
     func setHighlightStyle(_ style: HighlightStyle) {
         objectWillChange.send()
+        if style != .arrow, !Unlock.shared.check() { return }
         CursorController.style = style
         revealIfOff()
     }

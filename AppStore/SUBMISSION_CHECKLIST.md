@@ -27,16 +27,17 @@ Everything here needs your Apple account, your keychain or your judgment, so non
   - Bundle ID: `com.wheresmymouse.appstore`
   - SKU: e.g. `WHERESMYMOUSE-MAS`
 - [ ] **App Information:** subtitle, category Utilities (secondary: Productivity), content rights (no third-party content), age rating 4+. Use AppStore/METADATA.md.
-- [ ] **Privacy Policy URL:** publish a privacy page first (METADATA.md has the text; QUESTIONS.md Q6).
+- [x] **Privacy Policy URL:** `https://wheresmymouse.com/privacy` (live since 2026-10-30).
 - [ ] **App Privacy:** Get Started → "No, we do not collect data from this app" → Publish.
-- [ ] **Pricing and Availability:** price (QUESTIONS.md Q1) and countries.
+- [ ] **Pricing and Availability:** Free, all countries.
+- [ ] **Business → Agreements:** the Paid Apps agreement, tax and banking must be active, or the purchase won't load (even in review). Probably already done for Keychain Maker.
+- [ ] **Monetization → In-App Purchases → +:** Non-Consumable `com.wheresmymouse.appstore.unlock`, $9.99, with the display name, description, review screenshot and notes from METADATA.md. Its status must reach "Ready to Submit".
+- [ ] On the 1.0.0 version page, under **In-App Purchases and Subscriptions**, add the Unlock so it's reviewed with the app. A first purchase can only be submitted with an app version.
 - [ ] **Version page (1.0.0):** promotional text, description, keywords, support and marketing URLs, copyright, screenshots, and App Review contact (name, phone, email). Sign-in: not required. Paste the review notes from METADATA.md.
 
 ## 4. Build and upload
 
-This Mac runs macOS 14.6.1. Xcode 26 needs macOS 15.6, but Apple has no minimum SDK for Mac uploads, and **Xcode 16.2 runs on macOS 14.5+**.
-
-- [ ] Install **Xcode 16.2**, or newer if you update macOS, from developer.apple.com/download/all. Then run `sudo xcode-select -s /Applications/Xcode.app`.
+- [x] Xcode 27.2 installed and signed in (Settings → Apple Accounts, team T99P47AGU6). Done 2026-10-30.
 - [ ] Install XcodeGen and generate the project:
   ```bash
   brew install xcodegen
@@ -53,6 +54,9 @@ This Mac runs macOS 14.6.1. Xcode 26 needs macOS 15.6, but Apple has no minimum 
 Alternative upload path: Distribute App → **Export** for App Store Connect gives a `.pkg`, which you then drag into **Transporter** (already installed). Since February 2025, files with a `com.apple.quarantine` attribute are rejected; an Xcode export doesn't have one.
 
 ## 5. Test before submitting
+
+- [ ] **The purchase, locally:** open `AppStore/WheresMyMouse.xcodeproj` and Run (⌘R). The scheme uses `AppStore/WheresMyMouse.storekit`, so Unlock shows $9.99 and buys instantly with no real charge. Debug → StoreKit → Manage Transactions lets you refund or delete it to test locking again.
+- [ ] **The purchase in TestFlight** uses a Sandbox account (developer.apple.com or App Store Connect → Users and Access → Sandbox). Also check Restore Purchase.
 
 - [ ] **Quit the direct-download app first.** Both would draw or resize the pointer at once.
 - [ ] Both builds are called "Where's My Mouse.app". Move the direct one out of /Applications while TestFlight or App Store installs the store one (QUESTIONS.md Q2).

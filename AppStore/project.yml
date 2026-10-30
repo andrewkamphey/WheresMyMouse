@@ -35,10 +35,15 @@ targets:
         buildPhase: resources
       - path: PrivacyInfo.xcprivacy
         buildPhase: resources
+      # Local StoreKit testing for the Unlock purchase (Product → Scheme → Run). Not shipped.
+      - path: WheresMyMouse.storekit
+        buildPhase: none
 schemes:
   WheresMyMouse:
     build:
       targets:
         WheresMyMouse: all
+    run:
+      storeKitConfiguration: WheresMyMouse.storekit
     archive:
       config: Release

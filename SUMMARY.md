@@ -12,6 +12,8 @@ A Mac App Store version of Where's My Mouse in `AppStore/`, next to the direct d
 - **Fill and outline colors:** swatches or any color.
 - **Also kept:** presets (⌘1–⌘9), Recipes, app rules, Super shake (now also works while off), launch at login and `wheresmymouse://` recipe links.
 
+**Free with a $9.99 Unlock** (added 2026-10-30, `AppStore/Sources/Unlock.swift`, StoreKit 2): free is Arrow at 1–5×, colors, the quick toggle, the shortcut and Super shake. The one-time Unlock adds 6–30×, Halo, presets, Recipes and app rules. Locked features show an "Unlock everything" offer with Restore Purchase; the menu has an Unlock row until bought. `AppStore/WheresMyMouse.storekit` lets you test the purchase from Xcode.
+
 **Dropped from the App Store build:**
 - Full Disk Access, which isn't needed.
 - The macOS "shake to find" switch: the sandbox can't write that setting.
@@ -32,7 +34,7 @@ A Mac App Store version of Where's My Mouse in `AppStore/`, next to the direct d
 | `AppStore/test.sh`, `AppStore/Tests/` | Quick toggle checks |
 | `AppStore/snapshot-menu.sh`, `menu.png`, `menu-dark.png` | Renders the App Store menu |
 | `AppStore/METADATA.md` | Name, subtitle, description, keywords, privacy, review notes, screenshot plan |
-| `AppStore/SUBMISSION_CHECKLIST.md` | What you do by hand: App ID, certificates, App Store Connect, Xcode 16.2, archive, upload, TestFlight, screenshots |
+| `AppStore/SUBMISSION_CHECKLIST.md` | What you do by hand: App ID, certificates, App Store Connect, the in-app purchase, archive, upload, TestFlight, screenshots |
 | `.github/workflows/appstore.yml` | On PRs and main: both builds, the API check and the tests. Nothing is uploaded. |
 | `spike/sandbox_overlay.swift` | The sandbox experiment behind FEASIBILITY.md |
 
@@ -81,7 +83,7 @@ A Mac App Store version of Where's My Mouse in `AppStore/`, next to the direct d
 1. Answer QUESTIONS.md, especially Q1 (price) and Q2 (bundle ID).
 2. Check the PR's CI result. If the Xcode step fails, it's most likely a build-setting precedence issue in `project.yml`; the step's log names it.
 3. Hand-test the items above (`AppStore/build.sh --run` with the direct app quit, or TestFlight).
-4. Follow `AppStore/SUBMISSION_CHECKLIST.md`: App ID, App Store Connect record, privacy policy page, screenshots, archive with Xcode 16.2, upload, submit.
+4. Follow `AppStore/SUBMISSION_CHECKLIST.md`: App ID, App Store Connect record, the Unlock purchase, screenshots, archive with Xcode 27, upload, submit.
 5. Optional follow-ups:
    - a shortcut recorder (Q4)
    - hide while idle (Q10)

@@ -32,15 +32,21 @@ BUNDLE_ID="$(setting PRODUCT_BUNDLE_IDENTIFIER)"
 MIN_MACOS="$(setting MACOSX_DEPLOYMENT_TARGET)"
 APP="dist/AppStore/$EXECUTABLE.app"
 ARCH="${ARCH:-$(uname -m)}"
-SDK="$(xcrun --show-sdk-path)"
+SDK="$(xcrun --sdk macosx --show-sdk-path)"
 SOURCES=("${SHARED[@]/#/Sources/}")
 SOURCES=("${SOURCES[@]/%/.swift}" AppStore/Sources/*.swift)
 
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources" build
 
+# Xcode keeps the SwiftUI macro plugins (@State) in the platform folder, which plain swiftc
+# doesn't search. The Command Line Tools don't need this.
+PLUGINS=()
+PLATFORM_PLUGINS="$(xcrun --sdk macosx --show-sdk-platform-path 2>/dev/null || true)/Developer/usr/lib/swift/host/plugins"
+if [[ -d "$PLATFORM_PLUGINS" ]]; then PLUGINS=(-plugin-path "$PLATFORM_PLUGINS"); fi
+
 compile() {
-    swiftc -O -parse-as-library -D APP_STORE -sdk "$SDK" -target "$1-apple-macos$MIN_MACOS" "${SOURCES[@]}" -o "$2"
+    swiftc -O -parse-as-library -D APP_STORE "${PLUGINS[@]}" -sdk "$SDK" -target "$1-apple-macos$MIN_MACOS" "${SOURCES[@]}" -o "$2"
 }
 
 echo "Compiling App Store build ($ARCH)…"

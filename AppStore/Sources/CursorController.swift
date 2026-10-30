@@ -50,7 +50,10 @@ enum CursorController {
     // MARK: Style
 
     static var style: HighlightStyle {
-        get { UserDefaults.standard.string(forKey: styleKey).flatMap(HighlightStyle.init) ?? .arrow }
+        get {
+            guard Unlock.shared.isUnlocked else { return .arrow }
+            return UserDefaults.standard.string(forKey: styleKey).flatMap(HighlightStyle.init) ?? .arrow
+        }
         set {
             UserDefaults.standard.set(newValue.rawValue, forKey: styleKey)
             PointerHighlight.shared.style = newValue
@@ -62,7 +65,7 @@ enum CursorController {
         let highlight = PointerHighlight.shared
         highlight.style = style
         highlight.setColors(fill: fill ?? .black, outline: outline ?? .white)
-        highlight.size = savedSize
+        highlight.size = Unlock.shared.isUnlocked ? savedSize : min(savedSize, Unlock.freeMaxSize)
     }
 
     /// The Pointer section of Accessibility settings, where people can recolor the real

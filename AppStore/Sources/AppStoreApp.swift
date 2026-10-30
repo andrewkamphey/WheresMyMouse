@@ -21,6 +21,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var store: PointerStore?
     private var hosting: NSHostingController<AnyView>?
     private var changes: AnyCancellable?
+    private var unlockChanges: AnyCancellable?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         CursorController.restore()
@@ -37,6 +38,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // Right-click (or Control-click) is the quick toggle; a plain click opens the menu.
         item.button?.sendAction(on: [.leftMouseUp, .rightMouseUp])
         statusItem = item
+
+        // Unlocking (or a refund) changes the size range, the style and app rules.
+        unlockChanges = Unlock.shared.$isUnlocked.dropFirst().removeDuplicates().sink { [weak store] unlocked in
+            DispatchQueue.main.async {
+                guard let store else { return }
+                PointerHighlight.shared.style = CursorController.style
+                if !unlocked, store.size > Unlock.freeMaxSize { store.setSize(Unlock.freeMaxSize) }
+                store.setAppRulesEnabled(store.appRulesEnabled)
+                store.objectWillChange.send()
+            }
+        }
+        Unlock.shared.start()
 
         GlobalShortcut.shared.onPress = { [weak store] in store?.toggleHighlight() }
         GlobalShortcut.shared.start()

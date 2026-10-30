@@ -40,6 +40,10 @@ Paste-ready text for App Store Connect. Character limits are Apple's. Nothing he
 > APP RULES
 > • Add apps to a preset. While one of them is in use, your pointer switches to that preset automatically. With none in use, it goes back to normal.
 >
+> FREE, WITH ONE UNLOCK
+> • Free: the big arrow up to 5×, any colors, the shortcut and Super shake.
+> • One purchase unlocks sizes up to 30×, the Halo style, presets, Cursor Recipes and app rules. No subscription.
+>
 > PRIVATE AND LIGHTWEIGHT
 > • Lives in the menu bar. No account, no tracking, no data collected.
 > • Needs no special permissions.
@@ -61,7 +65,8 @@ About 1,450 characters.
 
 ## URLs
 
-- Support URL (required): `https://wheresmymouse.com` (or a support or contact page there; QUESTIONS.md Q5)
+- Support URL (required): `https://wheresmymouse.com`. Support email: support@wheresmymouse.com
+- Privacy Policy URL (required): `https://wheresmymouse.com/privacy` (live)
 - Marketing URL (optional): `https://wheresmymouse.com`
 - Privacy Policy URL (required for all apps): a page saying the app collects no data. The site doesn't have one yet (QUESTIONS.md Q6). Suggested text:
 
@@ -83,7 +88,23 @@ The app uses no encryption. `ITSAppUsesNonExemptEncryption` is `NO` in Info.plis
 
 ## Price
 
-Free, or paid (QUESTIONS.md Q1). Both are allowed. No in-app purchases are set up.
+**Free to download**, with one in-app purchase.
+
+## In-app purchase
+
+| Field | Value |
+|---|---|
+| Type | Non-Consumable |
+| Product ID | `com.wheresmymouse.appstore.unlock` (must match `Unlock.productID`) |
+| Reference name | Unlock |
+| Price | $9.99 (USD tier) |
+| Display name (35 max) | Unlock Where's My Mouse? |
+| Description (55 max) | Sizes to 30×, Halo, presets, Recipes and app rules |
+| Family Sharing | Off (your call; can be turned on later, not off) |
+| Review screenshot | The "Unlock everything" alert (click Halo while locked), 1280×800 or larger |
+| Review notes | "Unlocks sizes above 5×, the Halo style, presets, Cursor Recipes and app rules. Click Halo, Extra large sizes, New preset or Recipes to see the offer. The menu's Unlock row has Restore Purchase." |
+
+Free vs unlocked is set in `AppStore/Sources/Unlock.swift` and the `#if APP_STORE` gates in `Sources/PointerStore.swift`, `MenuView.swift` and `RecipeMenu.swift`.
 
 ## Copyright
 
@@ -110,6 +131,9 @@ Free, or paid (QUESTIONS.md Q1). Both are allowed. No in-app purchases are set u
 > • com.apple.security.files.user-selected.read-only: only to read the app the user picks in the Open panel for an app rule (its name, bundle ID and icon).
 > • No Accessibility, Input Monitoring, Screen Recording or network access is requested. Mouse movement comes from NSEvent mouse-moved monitors, which need no permission. The keyboard shortcut is a registered hot key (RegisterEventHotKey), not a key logger.
 > • "Launch at login" is off by default and uses SMAppService only when the user turns it on.
+>
+> IN-APP PURCHASE
+> The app is free with one non-consumable purchase, "Unlock". Before unlocking, sizes stop at 5× and Halo, Extra large sizes, New preset, Recipes and app rules show the "Unlock everything" offer (Unlock, Not Now, Restore Purchase). The menu also has an Unlock row with Restore Purchase above Launch at login.
 >
 > The drawn pointer pauses while the App Store app is in front, because macOS hides the App Store's install button under other apps' windows.
 

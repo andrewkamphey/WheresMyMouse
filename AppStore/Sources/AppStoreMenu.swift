@@ -57,3 +57,31 @@ struct HighlightHint: View {
         .fixedSize(horizontal: false, vertical: true)
     }
 }
+
+/// Above the footer until the app is unlocked.
+struct UnlockSection: View {
+    @ObservedObject private var unlock = Unlock.shared
+
+    var body: some View {
+        HStack(alignment: .center, spacing: 8) {
+            VStack(alignment: .leading, spacing: 1) {
+                Text("Unlock everything")
+                Text("Up to 30×, Halo, presets, Recipes and app rules")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                Button("Restore Purchase") { Task { await unlock.restore() } }
+                    .buttonStyle(.link)
+                    .font(.caption)
+                    .foregroundColor(.accentColor)
+                    .padding(.top, 2)
+            }
+            Spacer()
+            Button(unlock.priceText.isEmpty ? "Unlock" : unlock.priceText) { Task { await unlock.buy() } }
+                .controlSize(.large)
+                .disabled(unlock.isBusy)
+                .help("A one-time purchase")
+        }
+        .padding(.horizontal, 4)
+    }
+}
