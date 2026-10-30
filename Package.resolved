@@ -1,0 +1,33 @@
+{
+  "originHash" : "5eaca4d15532a6bc391df1fb3ddcce09a921c2feec237ff28d7390a5156a5541",
+  "pins" : [
+    {
+      "identity" : "amorekit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/AmoreComputer/AmoreKit",
+      "state" : {
+        "revision" : "56b513a1cc64ab0336c0e4ec9ba57e98ccd7dac5",
+        "version" : "0.8.0"
+      }
+    },
+    {
+      "identity" : "swift-asn1",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-asn1.git",
+      "state" : {
+        "revision" : "3b6410f7dee09eb33cdd26260c5fd47fda19b0e2",
+        "version" : "1.7.3"
+      }
+    },
+    {
+      "identity" : "swift-crypto",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-crypto.git",
+      "state" : {
+        "revision" : "da9d28d69ebe3894b18376c8f2395c2f37b8448f",
+        "version" : "4.5.2"
+      }
+    }
+  ],
+  "version" : 3
+}

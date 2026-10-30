@@ -16,9 +16,7 @@ struct MenuView: View {
     @State private var editName = ""
     @State private var addingPreset = false
     @State private var typing = false
-    #if APP_STORE
     @ObservedObject private var unlock = Unlock.shared
-    #endif
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -35,9 +33,7 @@ struct MenuView: View {
             section { colorSection }
             section { switchesSection }
             section { appRulesSection }
-            #if APP_STORE
             if !unlock.isUnlocked { section { UnlockSection() } }
-            #endif
             section { footer }
         }
         .padding(Grid.m)
@@ -94,9 +90,7 @@ struct MenuView: View {
             } else {
                 HStack {
                     Button {
-                        #if APP_STORE
                         guard Unlock.shared.check() else { return }
-                        #endif
                         addingPreset = true
                         typing = true
                     } label: {
@@ -182,7 +176,7 @@ struct MenuView: View {
     #else
     private var switchesSection: some View {
         VStack(spacing: 0) {
-            SwitchRow(title: "Extra large sizes", detail: "Up to 30× with a drawn pointer",
+            SwitchRow(title: "Extra large sizes", detail: unlock.isUnlocked ? "Up to 30× with a drawn pointer" : "Up to 30×, with the unlock",
                       isOn: Binding(get: { store.extendedSizes }, set: { store.setExtendedSizes($0) }))
             Divider().padding(.leading, Grid.xs)
             SwitchRow(title: "Super shake", detail: "Shake to triple the pointer, at any size",
@@ -209,19 +203,12 @@ struct MenuView: View {
             }
             .help("Switch to an app's preset automatically. With no rule app open, it goes back to Default.")
             if store.appRules.isEmpty {
-                #if APP_STORE
                 Text(unlock.isUnlocked
                      ? "Add apps to a preset with its ＋ button. While that app is in use, your pointer switches to that preset."
                      : "With the unlock, each app can have its own look: your pointer switches to that app's preset while you use it.")
                     .font(.callout)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
-                #else
-                Text("Add apps to a preset with its ＋ button. While that app is in use, your pointer switches to that preset.")
-                    .font(.callout)
-                    .foregroundColor(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
-                #endif
             } else {
                 Picker("Follow", selection: Binding(get: { store.ruleTrigger }, set: { store.setRuleTrigger($0) })) {
                     ForEach(RuleTrigger.allCases) { Text($0.label).tag($0) }
@@ -240,12 +227,40 @@ struct MenuView: View {
         HStack {
             Toggle("Launch at login", isOn: Binding(get: { store.launchAtLogin }, set: { store.setLaunchAtLogin($0) }))
             Spacer()
+            #if !APP_STORE
+            moreMenu
+            #endif
             Button("Quit") { NSApp.terminate(nil) }
                 .controlSize(.large)
                 .keyboardShortcut("q")
                 .help("Quit Where's My Mouse (⌘Q)")
         }
     }
+
+    #if !APP_STORE
+    /// Updates and the license (the App Store handles both for its build).
+    private var moreMenu: some View {
+        Menu {
+            Button("Check for Updates…") { Updates.check() }
+                .disabled(!Updates.isAvailable)
+            Divider()
+            if unlock.isUnlocked {
+                Text(unlock.licensedTo.map { "Unlocked for \($0)" } ?? "Unlocked")
+                Button("Remove License from This Mac…") { Task { await unlock.deactivate() } }
+            } else {
+                Button("Enter License Key…") { Task { await unlock.enterLicenseKey() } }
+            }
+            Button("Find My License Key…") { unlock.openPortal() }
+        } label: {
+            Image(systemName: "ellipsis.circle")
+        }
+        .menuStyle(.borderlessButton)
+        .menuIndicator(.hidden)
+        .fixedSize()
+        .help("Updates and license")
+        .accessibilityLabel("Updates and license")
+    }
+    #endif
 
     // MARK: Banners
 
@@ -341,6 +356,42 @@ struct MenuView: View {
 }
 
 // MARK: - Rows
+
+#if !APP_STORE
+/// Above the footer until the app is unlocked (the App Store build has its own, in AppStoreMenu.swift).
+private struct UnlockSection: View {
+    @ObservedObject private var unlock = Unlock.shared
+
+    var body: some View {
+        HStack(alignment: .center, spacing: 8) {
+            VStack(alignment: .leading, spacing: 1) {
+                Text("Unlock everything")
+                Text(unlock.isBusy ? "Finish paying in your browser. It unlocks right after." : "Up to 30×, presets, Recipes and app rules")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                Group {
+                    if unlock.isBusy {
+                        Button("Cancel") { unlock.cancelPurchase() }
+                    } else {
+                        Button("Enter License Key…") { Task { await unlock.enterLicenseKey() } }
+                    }
+                }
+                .buttonStyle(.link)
+                .font(.caption)
+                .foregroundColor(.accentColor)
+                .padding(.top, 2)
+            }
+            Spacer()
+            Button(unlock.isBusy ? "Waiting…" : unlock.priceText.isEmpty ? "Unlock" : unlock.priceText) { Task { await unlock.buy() } }
+                .controlSize(.large)
+                .disabled(unlock.isBusy)
+                .help("A one-time purchase")
+        }
+        .padding(.horizontal, 4)
+    }
+}
+#endif
 
 private struct PresetRow: View {
     @EnvironmentObject private var store: PointerStore

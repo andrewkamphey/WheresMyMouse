@@ -21,8 +21,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var store: PointerStore?
     private var hosting: NSHostingController<AnyView>?
     private var resize: AnyCancellable?
+    private var unlockChanges: AnyCancellable?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        Unlock.shared.start()
+        Updates.start()
         let store = PointerStore()
         let hosting = NSHostingController(rootView: AnyView(MenuView().environmentObject(store)))
         popover.contentViewController = hosting
@@ -37,9 +40,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         item.button?.action = #selector(togglePopover(_:))
         statusItem = item
 
+        // Unlocking (or a refund) changes the size range and app rules. A size saved by 1.x, or
+        // before a refund, comes down to the free range at launch.
+        if !Unlock.shared.isUnlocked, store.size > Unlock.freeMaxSize { store.setSize(Unlock.freeMaxSize) }
+        unlockChanges = Unlock.shared.$isUnlocked.dropFirst().removeDuplicates().sink { [weak store] unlocked in
+            DispatchQueue.main.async {
+                guard let store else { return }
+                if !unlocked, store.size > Unlock.freeMaxSize { store.setSize(Unlock.freeMaxSize) }
+                store.setAppRulesEnabled(store.appRulesEnabled)
+                store.objectWillChange.send()
+            }
+        }
+
         // Keep the popover sized to its SwiftUI content as sections grow or shrink,
         // and badge the menu bar icon while colors are blocked.
-        resize = store.objectWillChange.sink { [weak self] _ in
+        resize = store.objectWillChange.merge(with: Unlock.shared.objectWillChange).sink { [weak self] _ in
             DispatchQueue.main.async { self?.fitPopover(); self?.updateIcon() }
         }
         store.onColorsBlocked = { [weak self] preset in self?.warnColorsBlocked(preset) }
@@ -63,6 +78,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private func showPopover() {
         guard let sender = statusItem?.button, !popover.isShown else { return }
         store?.refresh()
+        Unlock.shared.refresh()
         fitPopover()
         NSApp.activate(ignoringOtherApps: true) // so text fields take typing
         popover.show(relativeTo: sender.bounds, of: sender, preferredEdge: .minY)

@@ -115,9 +115,7 @@ final class PointerStore: ObservableObject {
     // MARK: Live adjustments
 
     func setSize(_ newSize: Double) {
-        #if APP_STORE
         let newSize = min(newSize, maxSize)
-        #endif
         superShake?.cancel()
         size = newSize
         syncEditingPreset()
@@ -206,9 +204,7 @@ final class PointerStore: ObservableObject {
     // MARK: Presets
 
     func saveNewPreset(named name: String) {
-        #if APP_STORE
         guard Unlock.shared.check() else { return }
-        #endif
         let preset = Preset(name: name, size: size, fill: fill, outline: outline)
         customPresets.append(preset)
         selectedPresetID = preset.id
@@ -217,9 +213,7 @@ final class PointerStore: ObservableObject {
 
     /// Saves a Cursor Recipe as your own preset and uses it. Adding the same recipe again reuses it.
     func addRecipe(name: String, size: Double, fill: RGBA, outline: RGBA) {
-        #if APP_STORE
         guard Unlock.shared.check() else { return }
-        #endif
         editingPresetID = nil
         if size > CursorController.standardMaxSize, !extendedSizes { setExtendedSizes(true) }
         if let existing = customPresets.first(where: { $0.name == name && $0.matches(size: size, fill: fill, outline: outline) }) {
@@ -332,16 +326,12 @@ final class PointerStore: ObservableObject {
     // MARK: Size range
 
     var maxSize: Double {
-        #if APP_STORE
         guard Unlock.shared.isUnlocked else { return Unlock.freeMaxSize }
-        #endif
         return extendedSizes ? CursorController.extendedMaxSize : CursorController.standardMaxSize
     }
 
     func setExtendedSizes(_ on: Bool) {
-        #if APP_STORE
         if on, !Unlock.shared.check() { objectWillChange.send(); return }
-        #endif
         extendedSizes = on
         UserDefaults.standard.set(on, forKey: Self.extendedSizesKey)
         if !on, size > CursorController.standardMaxSize { setSize(CursorController.standardMaxSize) }
@@ -366,9 +356,7 @@ final class PointerStore: ObservableObject {
     /// Asks for an app in /Applications and adds it to `preset`. An app belongs to one preset:
     /// if it's already in another, confirm before moving it.
     func addApp(to preset: Preset) {
-        #if APP_STORE
         guard Unlock.shared.check() else { return }
-        #endif
         let panel = NSOpenPanel()
         panel.title = "Add an app to “\(preset.name)”"
         panel.message = "While this app is in use, your pointer switches to “\(preset.name)”."
@@ -456,9 +444,7 @@ final class PointerStore: ObservableObject {
     /// Picks the rule app per `ruleTrigger`; with no rule app left, back to Default.
     private func evaluateAppRules(force: Bool = false) {
         guard appRulesEnabled else { return }
-        #if APP_STORE
         guard Unlock.shared.isUnlocked else { return }
-        #endif
         let ruled = Dictionary(appRules.map { ($0.bundleID, $0) }, uniquingKeysWith: { first, _ in first })
         let running = NSWorkspace.shared.runningApplications.filter { ruled[$0.bundleIdentifier ?? ""] != nil }
         let bundleID: String?
