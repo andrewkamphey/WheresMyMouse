@@ -16,7 +16,7 @@ cd "$(dirname "$0")/.."
 # (AppStore/Sources has its own entry point and CursorController). Every file in Sources/
 # must be in one list, so a new file isn't silently left out of (or added to) this build.
 SHARED=(Preset Recipes PointerStore SuperShake RecipeMenu MenuView LaunchAtLogin)
-DIRECT_ONLY=(WheresMyMouseApp CursorController OverlayPointer)
+DIRECT_ONLY=(WheresMyMouseApp CursorController OverlayPointer Unlock Updates)
 for file in Sources/*.swift; do
     name="$(basename "$file" .swift)"
     if [[ ! " ${SHARED[*]} ${DIRECT_ONLY[*]} " =~ " $name " ]]; then

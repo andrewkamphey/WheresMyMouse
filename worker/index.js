@@ -3,6 +3,9 @@
 
 const RELEASES = 'https://github.com/andrewkamphey/WheresMyMouse/releases/latest/download/';
 const DOWNLOADS = { '/download': 'WheresMyMouse.dmg', '/download.zip': 'WheresMyMouse.zip' };
+// Amore's appcast, the update feed Sparkle checks (SUFeedURL in Resources/Info.plist). Once it's
+// set, both download links go to the newest release Amore hosts; until then, to GitHub's.
+const FEED = '';
 const BOT = /bot|crawl|spider|slurp|preview|facebookexternalhit|embedly|headless|lighthouse|curl|wget|python|go-http|java\/|node-fetch|axios/i;
 
 const today = () => new Date().toISOString().slice(0, 10);
@@ -164,8 +167,39 @@ async function recordDownload(req, env, url, day) {
   }
 }
 
-// The tag /releases/latest points to right now ('v1.4.3'), cached for 10 minutes.
+// The newest stable release in the appcast, { build, version: 'v2.0.0', url }, cached for 10 minutes.
+async function latestRelease() {
+  const key = new Request('https://wheresmymouse.com/_cache/latest-release');
+  const hit = await caches.default.match(key);
+  if (hit) return hit.json();
+  const xml = await (await fetch(FEED)).text();
+  const field = (item, name) => item.match(new RegExp(`<sparkle:${name}>([^<]+)<`))?.[1] ?? item.match(new RegExp(`sparkle:${name}="([^"]+)"`))?.[1];
+  let best = null;
+  for (const [, item] of xml.matchAll(/<item>([\s\S]*?)<\/item>/g)) {
+    if (field(item, 'channel')) continue; // betas
+    const url = item.match(/<enclosure[^>]*\surl="([^"]+)"/)?.[1]?.replaceAll('&amp;', '&');
+    const build = Number(field(item, 'version'));
+    if (url && (!best || build > best.build)) best = { build, url, version: `v${field(item, 'shortVersionString') ?? build}` };
+  }
+  if (!best) throw new Error('no release in the appcast');
+  await caches.default.put(key, new Response(JSON.stringify(best), { headers: { 'cache-control': 'max-age=600' } }));
+  return best;
+}
+
+async function downloadURL(path) {
+  if (FEED) {
+    try {
+      return (await latestRelease()).url;
+    } catch (e) {
+      console.error('appcast:', e.message);
+    }
+  }
+  return RELEASES + DOWNLOADS[path];
+}
+
+// The newest version ('v2.0.0'): from the appcast, or the tag GitHub's /releases/latest points to.
 async function latestVersion() {
+  if (FEED) return (await latestRelease().catch(() => null))?.version ?? 'unknown';
   try {
     const key = new Request('https://wheresmymouse.com/_cache/latest-version');
     const hit = await caches.default.match(key);
@@ -186,7 +220,7 @@ export default {
 
     if (url.pathname in DOWNLOADS) {
       if (!isBot(req) && req.method === 'GET') ctx.waitUntil(countDownload(req, env, url));
-      return Response.redirect(RELEASES + DOWNLOADS[url.pathname], 302);
+      return Response.redirect(await downloadURL(url.pathname), 302);
     }
 
     if (url.pathname === '/api/hit' && req.method === 'POST') {

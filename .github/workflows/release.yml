@@ -1,18 +1,17 @@
 name: Build and Release
 
+# Releases go out from a Mac with `./build.sh --release` (Amore publishes them, and Sparkle
+# delivers them as updates). This manual workflow is the fallback: a notarized DMG to download
+# from the run's artifacts. Run it by hand only; macOS minutes on a private repo aren't free.
 on:
-  push:
-    branches: [main]
-    tags:
-      - 'v*'
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build:
-    runs-on: macos-14
+    runs-on: macos-26   # Xcode 26 (Swift 6.2), which AmoreKit needs
 
     steps:
       - name: Checkout
@@ -54,27 +53,3 @@ jobs:
           path: |
             dist/WheresMyMouse.zip
             dist/WheresMyMouse.dmg
-
-      - name: Update nightly release
-        if: github.ref == 'refs/heads/main'
-        uses: softprops/action-gh-release@v3
-        with:
-          tag_name: nightly
-          name: Nightly Build
-          body: |
-            Automated build from the latest commit on main.
-
-            **Commit:** ${{ github.sha }}
-          files: |
-            dist/WheresMyMouse.zip
-            dist/WheresMyMouse.dmg
-          prerelease: true
-
-      - name: Create tagged release
-        if: startsWith(github.ref, 'refs/tags/v')
-        uses: softprops/action-gh-release@v3
-        with:
-          files: |
-            dist/WheresMyMouse.zip
-            dist/WheresMyMouse.dmg
-          generate_release_notes: true

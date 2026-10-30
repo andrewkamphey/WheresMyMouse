@@ -8,9 +8,8 @@
 
 A native macOS menu bar app for managing pointer size and color, for when you (or everyone watching your screen) can't find the mouse. Make the pointer bigger (up to 15×), change its fill and outline colors, and switch between presets in one click, live, without opening System Settings.
 
-![macOS 11+](https://img.shields.io/badge/macOS-11%2B-blue)
-![Swift](https://img.shields.io/badge/Swift-5.10-orange)
-![License](https://img.shields.io/badge/license-MIT-green)
+![macOS 14+](https://img.shields.io/badge/macOS-14%2B-blue)
+![Swift](https://img.shields.io/badge/Swift-6.2-orange)
 
 ![Where's My Mouse?](docs/social-preview.png)
 
@@ -23,6 +22,11 @@ A native macOS menu bar app for managing pointer size and color, for when you (o
 - **App rules**: add apps to a preset with its ＋ button (e.g. OBS and Loom → a big blue "Recording" preset). While one of those apps is in use, the pointer switches to that preset; an app can only belong to one preset, and moving it asks first. Follow the active app or the last one opened; with none open, it's back to Default.
 - **Super shake**: shake the mouse and the pointer briefly grows to 3× its size (at least 10×, up to 30×), at any size. macOS's own shake-to-locate tops out around 4×; there's a switch for that too.
 - **Launch at login**: and sizes above 4× are re-applied when the app starts.
+- **Automatic updates**: Sparkle checks daily and asks before installing.
+
+### Free, with a one-time Unlock
+
+Free: sizes up to 5×, fill and outline colors, Super shake, macOS shake to find, launch at login. A one-time $9.99 **Unlock**, bought in the app, adds sizes up to 30×, presets and Cursor Recipes, and app rules. Checkout is Amore's (Stripe, in the browser); the license activates by itself, and the emailed license key unlocks other Macs. The Mac App Store version (`AppStore/`) has the same free tier and the same Unlock as an in-app purchase.
 
 <img src="docs/menu-dark.png" width="300" alt="The Where's My Mouse? menu">
 
@@ -47,12 +51,11 @@ Presets make the switching fast: keep "Default" for everyday work, and flip to y
 
 ### Requirements
 
-- macOS 11 (Big Sur) or later, Apple Silicon or Intel
-- Pointer **colors** need macOS 12 (Monterey) or later, because that's when macOS added them. On macOS 11, size (up to 30×), Super shake and app rules all work.
+- macOS 14 (Sonoma) or later, Apple Silicon or Intel. Version 1.4.3, the last free-with-everything release, ran on macOS 11.
 
 ### Download
 
-1. Download [`WheresMyMouse.dmg`](https://wheresmymouse.com/download?utm_source=github&utm_medium=readme) (or [`WheresMyMouse.zip`](https://wheresmymouse.com/download.zip?utm_source=github&utm_medium=readme)) from the [latest release](https://github.com/andrewkamphey/WheresMyMouse/releases/latest). For the newest commit, get the [nightly build](https://github.com/andrewkamphey/WheresMyMouse/releases/tag/nightly) instead.
+1. Download [`WheresMyMouse.dmg`](https://wheresmymouse.com/download) from wheresmymouse.com. Amore hosts the releases; updates after that arrive in the app.
 2. Open it and drag **Where's My Mouse.app** onto the **Applications** shortcut.
 3. Open it. Releases are signed with Developer ID and notarized by Apple, so macOS opens them normally.
 4. Look for the pointer icon in your menu bar.
@@ -66,16 +69,26 @@ Size works right away. Colors need **Full Disk Access**, because macOS only lets
 
 ### Build from source
 
-Needs only the Xcode Command Line Tools (`xcode-select --install`), not Xcode.
+Needs Xcode 26 or later (Swift 6.2, for AmoreKit). `build.sh` builds with SwiftPM (`Package.swift`) and downloads Sparkle itself, checksum-verified.
 
 ```bash
-git clone https://github.com/andrewkamphey/WheresMyMouse.git
 cd WheresMyMouse
 ./scripts/setup-signing.sh   # optional, once per Mac: keeps Full Disk Access across rebuilds
 ./build.sh --install         # builds, copies to /Applications, launches
 ```
 
 `./build.sh --dmg` also makes `dist/WheresMyMouse.dmg`. `./build.sh` alone puts the app at `dist/Where's My Mouse.app`. `ARCH=universal ./build.sh` builds for both Apple Silicon and Intel.
+
+Until Amore's values replace the `REPLACE_WITH_…` placeholders in `Resources/Info.plist`, builds run with updates off and everything locked, and `--dmg`, `--notarize` and `--release` refuse to run.
+
+### Releasing
+
+1. In Amore, set up the app (bundle ID `com.wheresmymouse.WheresMyMouse`) and copy three values into `Resources/Info.plist`: the Sparkle feed URL (`SUFeedURL`), the Sparkle public key (`SUPublicEDKey`) and the licensing public key (`AmoreLicensingPublicKey`). Back up the Sparkle private key: if it changes, installed copies stop updating.
+2. Bump `CFBundleShortVersionString` and `CFBundleVersion` in `Resources/Info.plist`.
+3. `./build.sh --release`: a universal, Developer ID signed build, handed to `amore release`, which notarizes it, makes the DMG, signs the update and publishes it to the appcast.
+4. Put the same feed URL in `FEED` in `worker/index.js` once, and deploy the site: wheresmymouse.com/download then always points at the newest release.
+
+`.github/workflows/release.yml` is a manual fallback that builds a notarized DMG in CI.
 
 ## Website
 
@@ -105,6 +118,8 @@ WheresMyMouse/
 │   ├── Preset.swift             # Preset, app rule and color models
 │   ├── RecipeMenu.swift         # Recipes menu and wheresmymouse://recipe links
 │   ├── Recipes.swift            # Generated by scripts/build_recipes.py
+│   ├── Unlock.swift             # The $9.99 Unlock: Amore checkout and license
+│   ├── Updates.swift            # Sparkle
 │   └── MenuView.swift           # The menu UI
 ├── Resources/                   # Info.plist, AppIcon.icns
 ├── scripts/
@@ -113,9 +128,10 @@ WheresMyMouse/
 │   ├── snapshot-menu.sh         # Renders the menu to docs/menu*.png
 │   └── make_social.swift        # Draws docs/social-preview.png
 ├── spike/                       # The experiments that proved each approach
+├── Package.swift                # SwiftPM: AmoreKit, Sparkle
 └── build.sh
 ```
 
 ## License
 
-MIT License. See [LICENSE](LICENSE).
+Version 2.0 and later is proprietary; all rights reserved. Versions up to 1.4.3 were released under the MIT License. See [LICENSE](LICENSE).

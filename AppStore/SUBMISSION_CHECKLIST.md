@@ -38,6 +38,7 @@ Everything here needs your Apple account, your keychain or your judgment, so non
 ## 4. Build and upload
 
 - [x] Xcode 27.2 installed and signed in (Settings → Apple Accounts, team T99P47AGU6). Done 2026-10-30.
+- [x] Build 1.0.0 (1) uploaded 2026-10-30, built with Xcode 27.1 (27A9275) at /Applications/Xcode-27.1.app. App Store Connect refused builds from Xcode 27.2 (27B52) on its release week. To build with 27.1 without xcode-select: `export DEVELOPER_DIR=/Applications/Xcode-27.1.app/Contents/Developer`.
 - [ ] Install XcodeGen and generate the project:
   ```bash
   brew install xcodegen

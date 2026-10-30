@@ -6,3 +6,4 @@ spike/*
 .claude/
 .wrangler/
 AppStore/*.xcodeproj/
+.build/
