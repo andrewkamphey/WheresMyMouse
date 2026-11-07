@@ -91,12 +91,12 @@
     <summary>Show as a table</summary>
     <table id="table"></table>
   </details>
-  <p class="note">Visitors are counted once per day without cookies; bots are filtered by user agent. Downloads are clicks through wheresmymouse.com/download. Times are UTC.</p>
+  <p class="note">Visitors are counted once per day without cookies; bots are filtered by user agent. Downloads are clicks through wheresmymouse.com/download from someone who visited the site that day or followed a link; requests with neither (scanners and bots) are left out. Times are UTC.</p>
 
   <h2 class="src-head">Where visitors come from <span>· last 30 days</span></h2>
   <p class="sub" id="src-sub">Loading…</p>
   <div class="card"><h2>Sources</h2><div id="t-source"></div></div>
-  <p class="note">Source is the site that sent the visitor (google, tiktok, github…), or direct when the browser didn't say. Each visitor counts once a day, and a download is credited to where that visitor came from. Downloads from a link straight to /download (like the one in the GitHub README) count without a visit, so a download rate can go over 100%. No cookies or IP addresses are stored.</p>
+  <p class="note">Source is the site that sent the visitor (google, tiktok, github…), or direct when the browser didn't say. Each visitor counts once a day, and a download is credited to where that visitor came from. Downloads from a link straight to /download (like the one in the GitHub README) count without a visit, so a source's download rate can go over 100%. No cookies or IP addresses are stored.</p>
 </div>
 
 <script>
@@ -168,7 +168,9 @@
       tile('All-time downloads', gh !== null ? gh : all('download'),
         gh !== null ? fmt.format(all('download')) + ' via the site since tracking began · total from GitHub Releases'
                     : 'via the site since tracking began'),
-      tile('All-time page views', all('view'), fmt.format(all('visitor')) + ' visitor-days')
+      tile('All-time page views', all('view'), fmt.format(all('visitor')) + ' visitor-days'),
+      tile('Unverified hits this month', sumRange(ms, td, 'download_direct'),
+        'requests to /download with no visit and no link, mostly bots · not counted as downloads')
     ];
     document.getElementById('tiles').innerHTML = html.join('');
   }

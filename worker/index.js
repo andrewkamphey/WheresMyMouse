@@ -35,10 +35,19 @@ async function countView(req, env, form) {
   await recordVisit(req, env, form, day, h);
 }
 
+// Scanners and link checkers fetch /download with browser user agents, no referrer, and no visit to the
+// site, so only a download from today's visitor, or through a link (referrer or utm_source), counts as
+// 'download'. The rest go in 'download_direct', shown apart on /stats.
 async function countDownload(req, env, url) {
   const day = today();
+  const visit = await env.DB.prepare('SELECT src FROM seen WHERE day = ?1 AND h = ?2')
+    .bind(day, await visitorHash(req, env, day)).first();
+  if (!visit && !req.headers.get('referer') && !url.searchParams.has('utm_source')) {
+    await bump(env, 'download_direct', day);
+    return;
+  }
   await bump(env, 'download', day);
-  await recordDownload(req, env, url, day);
+  await recordDownload(req, env, url, day, visit);
 }
 
 // Sources: where visitors and downloads come from, for the bottom half of /stats.
@@ -144,7 +153,7 @@ async function recordVisit(req, env, form, day, h) {
   }
 }
 
-async function recordDownload(req, env, url, day) {
+async function recordDownload(req, env, url, day, visit) {
   try {
     const ua = req.headers.get('user-agent') || '';
     const page = parseURL(req.headers.get('referer'));
@@ -155,9 +164,7 @@ async function recordDownload(req, env, url, day) {
       a = attribution(url.searchParams, ref, ua, url.pathname);
     } else {
       // A Download button on the site: credit where this visitor arrived from today.
-      const row = await env.DB.prepare('SELECT src FROM seen WHERE day = ?1 AND h = ?2')
-        .bind(day, await visitorHash(req, env, day)).first();
-      a = row?.src ? JSON.parse(row.src)
+      a = visit?.src ? JSON.parse(visit.src)
         : attribution(page && OWN.test(ref) ? page.searchParams : url.searchParams, '', ua, page?.pathname || url.pathname);
     }
     const file = `${await latestVersion()} ${DOWNLOADS[url.pathname].split('.').pop()}`;
